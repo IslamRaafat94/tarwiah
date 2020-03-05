@@ -1,0 +1,70 @@
+﻿@using nwc.Tarwya.Application.ViewModels.Toilet
+@{
+	ViewData["Title"] = "Index";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+	<div>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb breadcrumb-style1 mg-b-10">
+				<li class="breadcrumb-item"><a href="#">Tarwya</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Toilets</li>
+			</ol>
+		</nav>
+		<h4 class="mg-b-0 tx-spacing--1">All Toilets</h4>
+	</div>
+	<div class="d-none d-md-block">
+		<button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5" onclick="importToilets()">Import</button>
+
+	</div>
+</div>
+<div class="row">
+
+	@(Html.Kendo().Grid<ToiletVm>()
+			.Name("Toiletsgrid")
+			.Columns(columns =>
+			{
+				columns.Bound(p => p.Id).Filterable(false).Visible(false);
+				columns.Bound(p => p.Code);
+				columns.Bound(p => p.Longitude);
+				columns.Bound(p => p.Latitude);
+				columns.Bound(p => p.IsActive)
+						.ClientTemplate("<input type='checkbox' id='toiletgrid-switch_#=data.Id#' aria-label='Notifications Switch' #if(data.IsActive){#checked='checked'#}# />");
+
+			})
+			.Pageable(pageable => pageable
+					.Refresh(true)
+					.PageSizes(true)
+					.ButtonCount(5))
+			.Sortable()
+			.Scrollable()
+			.Filterable()
+			.Resizable(resize => resize.Columns(true))
+			.HtmlAttributes(new { style = "height:430px;" })
+			.DataSource(dataSource => dataSource
+				.Ajax()
+				.PageSize(20)
+				.Read(read => read.Action("GetToilets", "Toilets"))
+			 )
+			.HtmlAttributes(new { style = "height: 95%;width:100%" })
+	)
+	<script>
+		function importToilets() {
+			var kwind = $("#GeneralWnd").data("kendoWindow");
+			if (kwind) {
+				kwind.setOptions({
+					content: { url: "@Url.Action("ImportFile","Home",new { importType=(int)ImportType.Toilets})" },
+					title: 'Import Toilets',
+					width: "26%"
+
+				});
+				kwind.bind("close", function (e) {
+					$("#Toiletsgrid").data('kendoGrid').dataSource.read();
+				});
+
+				kwind.refresh().center().open();
+			}
+		}
+	</script>
+</div>
+

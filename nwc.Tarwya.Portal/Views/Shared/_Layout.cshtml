@@ -1,0 +1,147 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>@ViewData["Title"] - NWC Tarwya</title>
+	<link href="~/lib/kendo/2019.3.917/css/kendo.default-v2.min.css" rel="stylesheet" type="text/css" />
+	<link href="~/lib/kendo/2019.3.917/css/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
+	<link href="~/lib/kendo/2019.3.917/css/kendo.dataviz.bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+	<script src="~/lib/kendo/2019.3.917//js/jquery.min.js"></script>
+	<script src="~/lib/kendo/2019.3.917/js/angular.min.js"></script>
+	<script src="~/lib/kendo/2019.3.917/js/jszip.min.js"></script>
+	<script src="~/lib/kendo/2019.3.917/js/kendo.all.min.js"></script>
+	<script src="~/lib/kendo/2019.3.917/js/kendo.aspnetmvc.min.js"></script>
+
+	<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+
+	<!-- vendor css -->
+	<link href="~/dist/lib/fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+	<link href="~/dist/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+	<link href="~/dist/lib/jqvmap/jqvmap.min.css" rel="stylesheet">
+
+	<!-- DashForge CSS -->
+	<link rel="stylesheet" href="~/dist/assets/css/dashforge.css">
+	<link rel="stylesheet" href="~/dist/assets/css/dashforge.dashboard.css">
+	<link id="dfMode" rel="stylesheet" href="~/dist/assets/css/skin.light.css">
+</head>
+<body class="page-profile">
+	<!-- navbar -->
+	<header class="navbar navbar-header navbar-header-fixed">
+		<a href="#" id="mainMenuOpen" class="burger-menu"><i data-feather="menu"></i></a>
+		<div class="navbar-brand">
+			<a href="" class="df-logo">
+				<img src="https://www.nwc.com.sa/Style%20Library/NWC2013/Images/files/nwc-logo.png" />
+			</a>
+		</div><!-- navbar-brand -->
+		<div id="navbarMenu" class="navbar-menu-wrapper">
+			<div class="navbar-menu-header">
+				<a href="" class="df-logo">
+					<img src="https://www.nwc.com.sa/Style%20Library/NWC2013/Images/files/nwc-logo.png" />
+				</a>
+				<a id="mainMenuClose" href="#"><i data-feather="x"></i></a>
+			</div><!-- navbar-menu-header -->
+			<ul class="nav navbar-menu">
+				<li class="nav-label pd-l-20 pd-lg-l-25 d-lg-none">Main Navigation</li>
+				<li class="nav-item active">
+					<a href="@Url.Action("Index","Home")" class="nav-link"><i data-feather="pie-chart"></i> Dashboard</a>
+				</li>
+				<li class="nav-item"><a href="@Url.Action("Index","Complaint")" class="nav-link"><i data-feather="archive"></i> Complaints</a></li>
+				<li class="nav-item with-sub">
+					<a href="#" class="nav-link"><i data-feather="package"></i> Catalog</a>
+					<ul class="navbar-menu-sub">
+						<li class="nav-sub-item"><a href="@Url.Action("Index","Category")" class="nav-sub-link"><i data-feather="calendar"></i>Categories</a></li>
+						<li class="nav-sub-item"><a href="@Url.Action("Index","Feedback")" class="nav-sub-link"><i data-feather="message-square"></i>Feedback Standards</a></li>
+						<li class="nav-sub-item"><a href="@Url.Action("Index","Toilets")" class="nav-sub-link"><i data-feather="message-square"></i>Toilets</a></li>
+						<li class="nav-sub-item"><a href="@Url.Action("Index","Campaign")" class="nav-sub-link"><i data-feather="message-square"></i>Campaign</a></li>
+						<li class="nav-sub-item"><a href="@Url.Action("Index","ZamZam")" class="nav-sub-link"><i data-feather="message-square"></i>ZamZam Locations</a></li>
+					</ul>
+				</li>
+				<li class="nav-item"><a href="@Url.Action("Users","Account")" class="nav-link"><i data-feather="archive"></i> Users</a></li>
+				<li class="nav-item"><a href="/SyncJobs" class="nav-link"><i data-feather="archive"></i> Sync Scheduler</a></li>
+				<li class="nav-item"><a href="#" class="nav-link"><i data-feather="archive"></i> System Logs</a></li>
+			</ul>
+		</div><!-- navbar-menu-wrapper -->
+		<div class="navbar-right">
+			<div class="dropdown dropdown-profile">
+				<a href="#" class="dropdown-link" data-toggle="dropdown" data-display="static">
+					<div class="avatar avatar-sm"><img src="~/dist/assets/img/pp.jpg" class="rounded-circle" alt=""></div>
+				</a><!-- dropdown-link -->
+				<div class="dropdown-menu dropdown-menu-right tx-13">
+					<div class="avatar avatar-lg mg-b-15"><img src="~/dist/assets/img/pp.jpg" class="rounded-circle" alt=""></div>
+					<h6 class="tx-semibold mg-b-5">Islam Raafat</h6>
+					<p class="mg-b-25 tx-12 tx-color-03">Administrator</p>
+
+					<a href="#" class="dropdown-item"><i data-feather="user"></i> View Profile</a>
+					<div class="dropdown-divider"></div>
+					<a href="@Url.Action("Login","Account")" class="dropdown-item"><i data-feather="log-out"></i>Sign Out</a>
+				</div><!-- dropdown-menu -->
+			</div><!-- dropdown -->
+		</div><!-- navbar-right -->
+	</header>
+
+	<div class="content content-fixed">
+		<div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+			@RenderBody()
+		</div><!-- container -->
+	</div><!-- content -->
+
+	<footer class="footer">
+		<div>
+			<span>&copy; @DateTime.Now.Year NWC Tarwya Portal. </span>
+		</div>
+		<div>
+			<nav class="nav">
+
+			</nav>
+		</div>
+	</footer>
+
+	@(Html.Kendo().Window()
+				.Name("GeneralWnd")
+				.Modal(true)
+				.Iframe(false)
+				.Actions(a =>
+				{
+					a.Close();
+					a.Maximize();
+					a.Pin();
+					a.Refresh();
+				})
+				.Title("")
+				.Visible(false)
+				.Scrollable(true)
+				.Resizable()
+				.Draggable(true)
+
+	)
+
+	<script src="~/lib/bootstrap/js/bootstrap.js"></script>
+
+	@*<script src="~/dist/lib/jquery/jquery.min.js"></script>*@
+	<script src="~/dist/lib/jquery.validate.min.js"></script>
+	<script src="~/dist/lib/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/dist/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="~/dist/lib/feather-icons/feather.min.js"></script>
+	<script src="~/dist/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script src="~/dist/lib/jquery.flot/jquery.flot.js"></script>
+	<script src="~/dist/lib/jquery.flot/jquery.flot.stack.js"></script>
+	<script src="~/dist/lib/jquery.flot/jquery.flot.resize.js"></script>
+	<script src="~/dist/lib/chart.js/Chart.bundle.min.js"></script>
+	<script src="~/dist/lib/jqvmap/jquery.vmap.min.js"></script>
+	<script src="~/dist/lib/jqvmap/maps/jquery.vmap.usa.js"></script>
+
+	<script src="~/dist/assets/js/dashforge.js"></script>
+	<script src="~/dist/assets/js/dashforge.sampledata.js"></script>
+
+	<!-- append theme customizer -->
+	<script src="~/dist/lib/js-cookie/js.cookie.js"></script>
+
+
+
+</body>
+</html>

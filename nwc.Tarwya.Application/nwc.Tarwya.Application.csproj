@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\nwc.Logger\nwc.Logger.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Core\nwc.Tarwya.Infra.Core.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Domain\nwc.Tarwya.Domain.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Infra.Identity\nwc.Tarwya.Infra.Identity.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Infra.Resources\nwc.Tarwya.Infra.Resources.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Integrations\nwc.Tarwya.Integrations.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,92 @@
+﻿@using nwc.Tarwya.Application.ViewModels.Feedback
+@{
+	ViewData["Title"] = "Index";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+	<div>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb breadcrumb-style1 mg-b-10">
+				<li class="breadcrumb-item"><a href="#">Tarwya</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Feedback Standards</li>
+			</ol>
+		</nav>
+		<h4 class="mg-b-0 tx-spacing--1">All Feedback Standards</h4>
+	</div>
+	<div class="d-none d-md-block">
+		<a href="/Feedback/CreateFeedbackQuestion" class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5">Create New Standard</a>
+	</div>
+</div>
+
+<div class="row">
+
+	@(Html.Kendo().Grid<FeedbackQuestionVm>()
+			.Name("feedbackstanderdsGrid")
+			.Columns(columns =>
+			{
+				columns.Bound(p => p.Id).Filterable(false).Visible(false);
+				columns.Bound(p => p.NameAr);
+				columns.Bound(p => p.NameEn);
+				columns.Bound(p => p.NameFa);
+				columns.Bound(p => p.NameFr);
+				columns.Bound(p => p.NameId);
+				columns.Bound(p => p.NameTr);
+				columns.Bound(p => p.NameUr);
+				columns.Bound(p => p.IsActive).Width("10%")
+				.ClientTemplate("<input type='checkbox' id='standerdsgrid-switch_#=data.Id#' aria-label='Notifications Switch' #if(data.IsActive){#checked='checked'#}# />");
+			})
+			.ToolBar(t =>
+			{
+				t.Create().Text("New Feedback Standerd");
+			})
+			.Editable(e =>
+			{
+				e.Mode(GridEditMode.PopUp);
+				//e.TemplateName("CategeroyEditorTemplate");
+			})
+			.Pageable(pageable => pageable
+					.Refresh(true)
+					.PageSizes(true)
+					.ButtonCount(5))
+			.Sortable()
+			.Scrollable()
+			.Resizable(resize => resize.Columns(true))
+			.DataSource(dataSource => dataSource
+				.Ajax()
+				.PageSize(10)
+				.Read(read => read.Action("GetFeedbackQuestions", "Feedback"))
+				.Events(e => e.Error("OnError"))
+			 )
+				.HtmlAttributes(new { style = "height: 95%;width:100%" })
+				.Events(events => events.DataBound("standerdsGridDataBound"))
+
+	)
+
+	@(Html.Kendo().Window()
+			.Name("EditorWnd")
+			.Modal(true)
+			.Iframe(false)
+			.Title("")
+			.Visible(false)
+			.Scrollable(true)
+			.Resizable()
+
+	)
+
+	<script>
+		function OnError(e, states) {
+			debugger;
+			alert("Error: " + e.errors);
+		}
+		function standerdsGridDataBound() {
+			this.expandRow(this.tbody.find("tr.k-master-row").first());
+			$('[id^=standerdsgrid-switch]').kendoSwitch({
+				messages: {
+					checked: "YES",
+					unchecked: "NO"
+				}
+			});
+		}
+	</script>
+</div>
+

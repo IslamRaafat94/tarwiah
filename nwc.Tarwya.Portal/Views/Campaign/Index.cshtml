@@ -1,0 +1,105 @@
+﻿@using nwc.Tarwya.Application.ViewModels.Campaign
+@{
+	ViewData["Title"] = "Index";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+	<div>
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb breadcrumb-style1 mg-b-10">
+				<li class="breadcrumb-item"><a href="#">Tarwya</a></li>
+				<li class="breadcrumb-item active" aria-current="page">Campaign</li>
+			</ol>
+		</nav>
+		<h4 class="mg-b-0 tx-spacing--1">All Campaigns</h4>
+	</div>
+	<div class="d-none d-md-block">
+		<button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5" onclick="importCampaigns()">Import</button>
+
+	</div>
+</div>
+<div class="row">
+
+	@(Html.Kendo().Grid<CampaignVm>()
+			.Name("Campaignsgrid")
+			.Columns(columns =>
+			{
+				columns.Bound(p => p.Id).Filterable(false).Visible(false);
+				columns.Bound(p => p.Type);
+				columns.Bound(p => p.NameAr);
+				columns.Bound(p => p.NameEn);
+				columns.Bound(p => p.NameFa);
+				columns.Bound(p => p.NameFr);
+				columns.Bound(p => p.NameId);
+				columns.Bound(p => p.NameTr);
+				columns.Bound(p => p.NameUr);
+				columns.Bound(p => p.Longitude);
+				columns.Bound(p => p.Latitude);
+				columns.Bound(p => p.IsActive)
+						.ClientTemplate("<input type='checkbox' id='Campaigngrid-switch_#=data.Id#' aria-label='Notifications Switch' #if(data.IsActive){#checked='checked'#}#  disabled />");
+
+			})
+			.ToolBar(t => t.Search())
+			.Search(search =>
+			{
+				search.Field(f => f.NameAr);
+				search.Field(f => f.NameEn);
+				search.Field(f => f.NameFa);
+				search.Field(f => f.NameFr);
+				search.Field(f => f.NameId);
+				search.Field(f => f.NameTr);
+				search.Field(f => f.NameUr);
+				//search.Field(f => f.Longitude);
+				//search.Field(f => f.Latitude);
+				search.Field(f => f.Type);
+			})
+			.Pageable(pageable => pageable
+					.Refresh(true)
+					.PageSizes(true)
+					.ButtonCount(5))
+			.Sortable()
+			.Scrollable()
+			.Resizable(resize => resize.Columns(true))
+			.HtmlAttributes(new { style = "height:430px;" })
+			.DataSource(dataSource => dataSource
+				.Ajax()
+				.PageSize(20)
+				.Read(read => read.Action("GetCampaigns", "Campaign"))
+				.Events(e => e.Error("onGridError"))
+			 )
+			.HtmlAttributes(new { style = "height: 95%;width:100%" })
+	)
+	<script>
+		function importCampaigns() {
+			var kwind = $("#GeneralWnd").data("kendoWindow");
+			if (kwind) {
+				kwind.setOptions({
+					content: { url: "@Url.Action("ImportFile","Home",new { importType=(int)ImportType.Campaigns})" },
+					title: 'Import Campaigns',
+					width: "26%"
+
+				});
+				kwind.bind("close", function (e) {
+					$("#Campaignsgrid").data('kendoGrid').dataSource.read();
+				});
+
+				kwind.refresh().center().open();
+			}
+		}
+		function onGridError(e) {
+			debugger;
+			if (e.errors) {
+				var message = "Errors:\n";
+				$.each(e.errors, function (key, value) {
+					if ('errors' in value) {
+						$.each(value.errors, function () {
+							message += this + "\n";
+						});
+					}
+				});
+				alert(message);
+			}
+		}
+	</script>
+</div>
+

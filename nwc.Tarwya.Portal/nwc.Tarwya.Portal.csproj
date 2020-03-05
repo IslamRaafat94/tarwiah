@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web" ToolsVersion="15.0">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>nwc.Tarwya.Portal</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Hangfire.Dashboard.Customize" Version="1.0.0" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.9" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Telerik.UI.for.AspNet.Core" Version="2019.3.917" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Hangfire.Core" Version="1.7.9" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.9" />
+
+
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Templates\**" />
+    <Content Remove="Templates\**" />
+    <EmbeddedResource Remove="Templates\**" />
+    <None Remove="Templates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\dist\assets\js\calendar-events.js" />
+    <None Include="wwwroot\dist\assets\js\dashforge.calendar.js" />
+    <None Include="wwwroot\dist\assets\js\dashforge.chat.js" />
+    <None Include="wwwroot\dist\assets\js\dashforge.contacts.js" />
+    <None Include="wwwroot\dist\assets\js\dashforge.filemgr.js" />
+    <None Include="wwwroot\dist\assets\js\dashforge.js" />
+    <None Include="wwwroot\dist\assets\js\dashforge.mail.js" />
+    <None Include="wwwroot\dist\assets\js\dashforge.sampledata.js" />
+    <None Include="wwwroot\dist\assets\js\dashforge.settings.js" />
+    <None Include="wwwroot\dist\lib\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\dist\lib\chart.js\Chart.bundle.min.js" />
+    <None Include="wwwroot\dist\lib\feather-icons\feather.min.js" />
+    <None Include="wwwroot\dist\lib\flot.curvedlines\curvedLines.js" />
+    <None Include="wwwroot\dist\lib\fullcalendar\fullcalendar.min.js" />
+    <None Include="wwwroot\dist\lib\jquery.flot\jquery.flot.js" />
+    <None Include="wwwroot\dist\lib\jquery.flot\jquery.flot.resize.js" />
+    <None Include="wwwroot\dist\lib\jquery.flot\jquery.flot.stack.js" />
+    <None Include="wwwroot\dist\lib\jqueryui\jquery-ui.min.js" />
+    <None Include="wwwroot\dist\lib\jquery\jquery.min.js" />
+    <None Include="wwwroot\dist\lib\jqvmap\jquery.vmap.min.js" />
+    <None Include="wwwroot\dist\lib\jqvmap\maps\jquery.vmap.usa.js" />
+    <None Include="wwwroot\dist\lib\js-cookie\js.cookie.js" />
+    <None Include="wwwroot\dist\lib\moment\min\moment.min.js" />
+    <None Include="wwwroot\dist\lib\peity\jquery.peity.min.js" />
+    <None Include="wwwroot\dist\lib\perfect-scrollbar\perfect-scrollbar.min.js" />
+    <None Include="wwwroot\dist\lib\quill\quill.min.js" />
+    <None Include="wwwroot\dist\lib\select2\js\select2.full.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\nwc.Tarwya.Application\nwc.Tarwya.Application.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Core\nwc.Tarwya.Infra.Core.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Infra.Identity\nwc.Tarwya.Infra.Identity.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Infra.Resources\nwc.Tarwya.Infra.Resources.csproj" />
+    <ProjectReference Include="..\nwc.Tarwya.Ioc\nwc.Tarwya.Infra.Ioc.csproj" />
+  </ItemGroup>
+
+</Project>
