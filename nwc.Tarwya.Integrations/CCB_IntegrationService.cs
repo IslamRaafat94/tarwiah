@@ -1,6 +1,7 @@
 ﻿using Flurl.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using nwc.Logger;
 using nwc.Tarwya.Infra.Core;
 using nwc.Tarwya.Integrations.Contracts;
 using nwc.Tarwya.Integrations.Models;
@@ -12,22 +13,25 @@ using System.Xml;
 
 namespace nwc.Tarwya.Integrations
 {
-    public class CCB_WOIntegrationService : ICCB_WO_IntegrationService
+    public class CCB_IntegrationService : ICCB_IntegrationService
     {
 
         public ServicesSettings settings { get; set; }
 
-        public CCB_WOIntegrationService(IOptions<SystemSettings> options)
+        public CCB_IntegrationService(IOptions<SystemSettings> options)
         {
             settings = options.Value.IntegratedServices;
         }
 
-        public async Task<bool> CreateNewOperation(WorkOrderCreationRequest request)
+        public bool CreateNewOperation(WorkOrderCreationRequest request)
         {
             bool createResult = false;
             try
             {
                 XmlDocument soapEnvelopeXml = BuildCreateNewOperationRequest(request);
+
+
+                
 
                 HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(settings.CCB_WO_Creation.Url);
                 webRequest.ContentType = "text/xml;charset=\"utf-8\"";
@@ -55,14 +59,13 @@ namespace nwc.Tarwya.Integrations
             }
             catch (Exception ex)
             {
-
+                nwcLogger.Error(ex.Message, ex);
                 createResult = false;
             }
             return createResult;
         }
         public async Task<Response<WorkOrderInqueryResponce>> GetOperationStatus(WorkOrderInqueryRequest request)
         {
-
             var result = await settings.CCB_WO_Inquery.Url
                     .WithHeader("Accept", "application/json")
                     .WithHeader("Content-Type", "application/json")
@@ -78,7 +81,6 @@ namespace nwc.Tarwya.Integrations
 
         private XmlDocument BuildCreateNewOperationRequest(WorkOrderCreationRequest request)
         {
-            DateTime d = DateTime.Now;
             string xml = @"
 			<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:cm='http://oracle.com/CM-EAMRequest.xsd'>
 			<soapenv:Header/>
@@ -124,4 +126,3 @@ namespace nwc.Tarwya.Integrations
 
 
 }
-

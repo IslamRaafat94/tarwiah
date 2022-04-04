@@ -113,7 +113,7 @@ namespace nwc.Tarwya.Application.Services
 				catiegorislist.Add(category);
 			}
 
-			await CategoryRepo.BulkAddAsync(catiegorislist, o => { o.IncludeGraph = true; });
+			await CategoryRepo.BulkInsertAsync(catiegorislist, new EFCore.BulkExtensions.BulkConfig() { IncludeGraph = true });
 			return true;
 		}
 	}

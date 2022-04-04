@@ -1,5 +1,6 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using nwc.Logger;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace nwc.Tarwya.Portal.Controllers
 {
+    [Authorize]
     public class CampaignController : Controller
     {
         private readonly ICampaignService campaignService;

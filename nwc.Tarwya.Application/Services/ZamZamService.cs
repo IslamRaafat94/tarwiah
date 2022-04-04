@@ -68,7 +68,7 @@ namespace nwc.Tarwya.Application.Services
 				locationslist.Add(category);
 			}
 
-			await zamzamLocationsRepository.BulkAddAsync(locationslist);
+			await zamzamLocationsRepository.BulkInsertAsync(locationslist);
 			return true;
 		}
 	}

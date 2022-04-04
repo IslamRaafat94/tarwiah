@@ -1,7 +1,9 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using nwc.Logger;
 using nwc.Tarwya.Application.Services.Contracts;
 using nwc.Tarwya.Application.ViewModels.Toilet;
@@ -14,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace nwc.Tarwya.Portal.Controllers
 {
+    [Authorize]
     public class ToiletsController : Controller
     {
         private readonly IToiletService toiletService;
@@ -51,7 +54,7 @@ namespace nwc.Tarwya.Portal.Controllers
                     inputContent = await inputStreamReader.ReadToEndAsync();
                 }
 
-                var FileContentObject = SerializerHelper.FromJson<ToiletFileVm>(inputContent);
+                var FileContentObject = JsonConvert.DeserializeObject<ToiletFileVm>(inputContent);
                 return await toiletService.ImportToilets(FileContentObject);
             }
             catch (Exception ex)

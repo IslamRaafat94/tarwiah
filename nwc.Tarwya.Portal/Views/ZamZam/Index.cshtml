@@ -1,74 +1,68 @@
 ﻿@using nwc.Tarwya.Application.ViewModels.ZamZam
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
+    ViewData["breadcrumb1"] = Labels.ZamZam;
+
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
-	<div>
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb breadcrumb-style1 mg-b-10">
-				<li class="breadcrumb-item"><a href="#">Tarwya</a></li>
-				<li class="breadcrumb-item active" aria-current="page">ZamZam</li>
-			</ol>
-		</nav>
-		<h4 class="mg-b-0 tx-spacing--1">ZamZam Locations</h4>
-	</div>
-	<div class="d-none d-md-block">
-		<button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5" onclick="importZamZamLocatios()">Import</button>
 
-	</div>
+    <div class="d-none d-md-block">
+        <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5" onclick="importZamZamLocatios()">@Labels.Import</button>
+
+    </div>
 </div>
 <div class="row">
 
-	@(Html.Kendo().Grid<ZamZamLocationVm>()
-			.Name("ZamZamLocationsgrid")
-			.Columns(columns =>
-			{
-				columns.Bound(p => p.Id).Filterable(false).Visible(false);
-				columns.Bound(p => p.NameAr);
-				columns.Bound(p => p.NameEn);
-				columns.Bound(p => p.NameFa);
-				columns.Bound(p => p.NameFr);
-				columns.Bound(p => p.NameId);
-				columns.Bound(p => p.NameTr);
-				columns.Bound(p => p.NameUr);
-				columns.Bound(p => p.Longitude);
-				columns.Bound(p => p.Latitude);
-			})
-			.ToolBar(t => t.Search())
-			.Search(search =>
-			{
-				search.Field(f => f.NameAr);
-				search.Field(f => f.NameEn);
-				search.Field(f => f.NameFa);
-				search.Field(f => f.NameFr);
-				search.Field(f => f.NameId);
-				search.Field(f => f.NameTr);
-				search.Field(f => f.NameUr);
-			})
-			.Pageable(pageable => pageable
-					.Refresh(true)
-					.PageSizes(true)
-					.ButtonCount(5))
-			.Sortable()
-			.Scrollable()
-			.Resizable(resize => resize.Columns(true))
-			.HtmlAttributes(new { style = "height:430px;" })
-			.DataSource(dataSource => dataSource
-				.Ajax()
-				.PageSize(20)
-				.Read(read => read.Action("GetZamZamLocations", "ZamZam"))
-				.Events(e => e.Error("onGridError"))
-			 )
-			.HtmlAttributes(new { style = "height: 95%;width:100%" })
-	)
-	<script>
+    @(Html.Kendo().Grid<ZamZamLocationVm>()
+            .Name("ZamZamLocationsgrid")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.Id).Filterable(false).Visible(false);
+                columns.Bound(p => p.NameAr).Title(Labels.NameAr).Width(300);
+                columns.Bound(p => p.NameEn).Title(Labels.NameEn).Width(300);
+                columns.Bound(p => p.NameFa).Title(Labels.NameFa).Width(300);
+                columns.Bound(p => p.NameFr).Title(Labels.NameFr).Width(300);
+                columns.Bound(p => p.NameId).Title(Labels.NameId).Width(300);
+                columns.Bound(p => p.NameTr).Title(Labels.NameTr).Width(300);
+                columns.Bound(p => p.NameUr).Title(Labels.NameUr).Width(300);
+                columns.Bound(p => p.Longitude).Title(Labels.Longitude);
+                columns.Bound(p => p.Latitude).Title(Labels.Latitude);
+            })
+            .ToolBar(t => t.Search())
+            .Search(search =>
+            {
+                search.Field(f => f.NameAr);
+                search.Field(f => f.NameEn);
+                search.Field(f => f.NameFa);
+                search.Field(f => f.NameFr);
+                search.Field(f => f.NameId);
+                search.Field(f => f.NameTr);
+                search.Field(f => f.NameUr);
+            })
+            .Pageable(pageable => pageable
+                    .Refresh(true)
+                    .PageSizes(true)
+                    .ButtonCount(5))
+            .Sortable()
+            .Scrollable()
+            .Resizable(resize => resize.Columns(true))
+            .HtmlAttributes(new { style = "height:430px;" })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(20)
+                .Read(read => read.Action("GetZamZamLocations", "ZamZam"))
+                .Events(e => e.Error("onGridError"))
+             )
+            .HtmlAttributes(new { style = "height: 95%;width:100%" })
+    )
+    <script>
 		function importZamZamLocatios() {
 			var kwind = $("#GeneralWnd").data("kendoWindow");
 			if (kwind) {
 				kwind.setOptions({
 					content: { url: "@Url.Action("ImportFile","Home",new { importType=(int)ImportType.ZamZamLocations})" },
-					title: 'Import ZamZam Locations',
+					title: '@Html.Raw(Labels.Import) @Html.Raw(Labels.ZamZam)',
 					width: "27%"
 
 				});
@@ -93,6 +87,6 @@
 				alert(message);
 			}
 		}
-	</script>
+    </script>
 </div>
 

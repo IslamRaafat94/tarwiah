@@ -1,14 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
+using nwc.Tarwya.Domain.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Z.BulkOperations;
 
 namespace nwc.Tarwya.Domain.Repositories
 {
-	public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
+	public class EfRepository<TEntity> : IRepository<TEntity>, IEFBulkOperations<TEntity> where TEntity : class
 	{
 		private readonly DbContext db;
 		private DbSet<TEntity> dbSet;
@@ -18,8 +19,6 @@ namespace nwc.Tarwya.Domain.Repositories
 			db = dbContext;
 			dbSet = dbContext.Set<TEntity>();
 		}
-
-		#region Insert Methods
 		public void Add(TEntity entity)
 		{
 			dbSet.Add(entity);
@@ -29,17 +28,7 @@ namespace nwc.Tarwya.Domain.Repositories
 		{
 			await dbSet.AddAsync(entity);
 		}
-		public void BulkAdd(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			dbSet.BulkInsert(entities, options);
-		}
-		public async Task BulkAddAsync(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			await dbSet.BulkInsertAsync(entities, options);
-		}
-		#endregion
 
-		#region Update Methods
 		public void Edit(TEntity entity)
 		{
 			db.Entry(entity).State = EntityState.Modified;
@@ -49,17 +38,6 @@ namespace nwc.Tarwya.Domain.Repositories
 		{
 			await Task.Run(() => Edit(entity));
 		}
-		public void BulkEdit(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			db.BulkUpdate(entities, options);
-		}
-		public async Task BulkEditAsync(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			await db.BulkUpdateAsync(entities, options);
-		}
-		#endregion
-
-		#region Delete Methods
 
 		public void Delete(TEntity entity)
 		{
@@ -83,15 +61,6 @@ namespace nwc.Tarwya.Domain.Repositories
 		{
 			await Task.Run(() => Delete(id));
 		}
-		public void BulkDelete(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			db.BulkDelete(entities, options);
-		}
-		public async Task BulkDeleteAsync(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			await db.BulkDeleteAsync(entities, options);
-		}
-		#endregion
 
 		#region Fetch Methods
 		public IEnumerable<TEntity> ExecuteRawSql(string query, params object[] parameters)
@@ -125,27 +94,6 @@ namespace nwc.Tarwya.Domain.Repositories
 		}
 		#endregion
 
-		#region Bulk Operations
-
-
-		public void BulkMerge(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			db.BulkMerge(entities, options);
-		}
-		public async Task BulkMergeAsync(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			await db.BulkMergeAsync(entities, options);
-		}
-		public void BulkSynchronize(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			db.BulkSynchronize(entities, options);
-		}
-		public async Task BulkSynchronizeAsync(IEnumerable<TEntity> entities, Action<BulkOperation<TEntity>> options = null)
-		{
-			await db.BulkSynchronizeAsync(entities, options);
-		}
-		#endregion
-
 		#region Save Changes
 		public int SaveChanges()
 		{
@@ -157,16 +105,56 @@ namespace nwc.Tarwya.Domain.Repositories
 			return await db.SaveChangesAsync();
 
 		}
-		public void BulkSaveChanges(Action<BulkOperation> options = null)
-		{
-			db.BulkSaveChanges(options);
+
+        public void BulkInsert(IList<TEntity> entities, BulkConfig bulkConfig = null)
+        {
+			db.BulkInsert<TEntity>(entities, bulkConfig);
+        }
+
+        public async Task BulkInsertAsync(IList<TEntity> entities, BulkConfig bulkConfig = null)
+        {
+            await db.BulkInsertAsync<TEntity>(entities, bulkConfig);
 		}
 
-		public async Task BulkSaveChangesAsync(Action<BulkOperation> options = null)
-		{
-			await db.BulkSaveChangesAsync(options);
-
+        public void BulkUpdate(IList<TEntity> entities, BulkConfig bulkConfig = null)
+        {
+			db.BulkUpdate<TEntity>(entities, bulkConfig);
 		}
-		#endregion
-	}
+
+		public async Task BulkUpdateAsync(IList<TEntity> entities, BulkConfig bulkConfig = null)
+        {
+			await db.BulkUpdateAsync<TEntity>(entities, bulkConfig);
+		}
+
+        public void BulkRemove(IList<TEntity> entities, BulkConfig bulkConfig = null)
+        {
+			db.BulkDelete<TEntity>(entities, bulkConfig);
+		}
+
+        public async Task BulkRemoveAsync(IList<TEntity> entities, BulkConfig bulkConfig = null)
+        {
+            await db.BulkDeleteAsync<TEntity>(entities, bulkConfig);
+		}
+
+        public void BulkTruncate(IList<TEntity> entities, BulkConfig bulkConfig = null)
+        {
+			db.Truncate<TEntity>();
+		}
+
+        public async Task BulkTruncateAsync(IList<TEntity> entities, BulkConfig bulkConfig = null)
+        {
+			await db.TruncateAsync<TEntity>();
+		}
+
+        public void EFBulkSaveChanges(BulkConfig bulkConfig = null)
+        {
+			db.BulkSaveChanges(bulkConfig);
+        }
+
+        public async Task EFBulkSaveChangesAsync(BulkConfig bulkConfig = null)
+        {
+			await db.BulkSaveChangesAsync(bulkConfig);
+        }
+        #endregion
+    }
 }

@@ -78,9 +78,6 @@ namespace nwc.Tarwya.RESTFUL_API
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             AutoMapperConfig.RegisterMappings();
 
-            Z.EntityFramework.Extensions.LicenseManager.AddLicense("202;100-NWC", "6B61B61-9223280-796231B-A0779A7-C11A");
-            Z.BulkOperations.LicenseManager.AddLicense("987;300-NWC", "9686281-2135560-9455C4F-98294AD-D8B6");
-
             services.AddSwaggerGen(s =>
             {
                 s.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme()

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,10 @@ using nwc.Tarwya.Infra.Identity;
 using nwc.Tarwya.Infra.Identity.Managers;
 using nwc.Tarwya.Infra.Ioc;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace nwc.Tarwya.Portal
 {
@@ -107,13 +111,11 @@ namespace nwc.Tarwya.Portal
             // Add framework services.
             services
                 .AddMvc(opt => opt.EnableEndpointRouting = false)
-                .SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
             // Maintain property names during serialization. See:
             // https://github.com/aspnet/Announcements/issues/194
             .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
-
 
             // Add Kendo UI services to the services container
             services.AddKendo();
@@ -131,6 +133,24 @@ namespace nwc.Tarwya.Portal
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var supportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("ar-SA"),
+                };
+
+            var options = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("ar-SA"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures,
+                RequestCultureProviders = new List<IRequestCultureProvider>
+                {
+                    new QueryStringRequestCultureProvider(),
+                    new CookieRequestCultureProvider()
+                }
+            };
+            app.UseRequestLocalization(options);
             NLog.GlobalDiagnosticsContext.Set("DefaultConnection", connectionString);
             if (env.IsDevelopment())
             {
@@ -147,17 +167,18 @@ namespace nwc.Tarwya.Portal
 
                 if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
                     response.StatusCode == (int)HttpStatusCode.Forbidden)
-                    response.Redirect("/Account/AccessDenied");
+                    await Task.Run(()=>response.Redirect("/Account/AccessDenied"));
             });
             app.UseStaticFiles();
             app.UseAuthentication();
             var Hngfiretorage = new SqlServerStorage(connectionString);
-            app.UseHangfireDashboardCustomOptions(new HangfireDashboardCustomOptions
-            {
-                DashboardTitle = () => "Tarwya Jobs",
 
-            });
-            app.UseHangfireDashboard("/SyncJobs", new DashboardOptions(), Hngfiretorage);
+            app.UseHangfireDashboard("/SyncJobs", new DashboardOptions()
+            {
+                DashboardTitle = "Tarwya Background Tasks",
+                DisplayStorageConnectionString = false,
+
+            }, Hngfiretorage);
 
             app.UseMvc(routes =>
             {

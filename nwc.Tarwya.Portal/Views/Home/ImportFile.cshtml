@@ -1,41 +1,40 @@
 ﻿@using nwc.Tarwya.Application
 @model ImportType
 @{
-	Layout = null;
+    Layout = null;
 }
 <script>
-	function onSuccess(e) {
-		debugger;
-		if (e.response) {
-			$("#files").closest(".k-window-content").data("kendoWindow").close();
-		}
-	}
+    function onSuccess(e) {
+        debugger;
+        if (e.response) {
+            $("#files").closest(".k-window-content").data("kendoWindow").close();
+        }
+    }
 
 
-	function onComplete(e) {
-		debugger;
-	}
+    function onComplete(e) {
+        debugger;
+    }
 </script>
-<div class="demo-hint"><strong style="color:red">Note:</strong> this will update all current records to 'inActive' state.</div>
+<div class="demo-hint" style="display:flex"><strong style="color:red">@Labels.Note:</strong> @Labels.UpdateCurrentRecordsToInActiveStateMsg.</div>
 @(Html.Kendo().Upload()
-	.Name("files")
-	.Multiple(false)
+    .Name("files")
+    .Multiple(false)
+    .Async(a =>
+        {
+            if (Model == ImportType.Categories)
+                a.Save("ImportCategoiesFromFile", "Category");
+            else if (Model == ImportType.Toilets)
+                a.Save("ImportToiletsFromFile", "Toilets");
+            else if (Model == ImportType.Campaigns)
+                a.Save("ImportCampaignsFromFile", "Campaign");
+            else if (Model == ImportType.ZamZamLocations)
+                a.Save("ImportZamZamLocationssFromFile", "ZamZam");
 
-	.Async(a =>
-		{
-			if (Model == ImportType.Categories)
-				a.Save("ImportCategoiesFromFile", "Category");
-			else if (Model == ImportType.Toilets)
-				a.Save("ImportToiletsFromFile", "Toilets");
-			else if (Model == ImportType.Campaigns)
-				a.Save("ImportCampaignsFromFile", "Campaign");
-			else if (Model == ImportType.ZamZamLocations)
-				a.Save("ImportZamZamLocationssFromFile", "ZamZam");
-
-		a.SaveField("files");
-	})
-	.Validation(i => i.AllowedExtensions(".json"))
-	.Events(e => e.Success("onSuccess"))
+        a.SaveField("files");
+    })
+    .Validation(i => i.AllowedExtensions(".json"))
+    .Events(e => e.Success("onSuccess"))
 )
-<div class="demo-hint">You can only upload <strong>json</strong> files.</div>
+<div class="demo-hint" style="display:flex">@Labels.YouCanOnlyUpload <strong>@Labels.Json</strong> @Labels.files.</div>
 

@@ -5,9 +5,9 @@ namespace nwc.Tarwya.Application.ViewModels.Toilet
 {
 	public class ToiletFileVm
 	{
-		public List<Co> co { get; set; }
+		public List<ToiletItem> co { get; set; }
 	}
-	public class Co
+	public class ToiletItem
 	{
 		public string FIELD1 { get; set; }
 		public string FIELD2 { get; set; }

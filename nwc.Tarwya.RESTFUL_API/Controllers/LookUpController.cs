@@ -40,10 +40,6 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
             try
             {
                 var result = await campaignService.GetCampaignsLookUp();
-
-                if (result == null || result.Count == 0)
-                    return new Response<List<CampaignLookUp>>(string.Empty, "Work Order not found.");
-
                 return new Response<List<CampaignLookUp>>(result);
             }
             catch (Exception ex)
@@ -61,10 +57,6 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
                 var result = await toiletService.GetAllToilets()
                     .Where(i => i.IsActive)
                     .ToListAsync();
-
-                if (result == null || result.Count == 0)
-                    return new Response<List<ToiletVm>>(string.Empty, "no Toilets found.");
-
                 return new Response<List<ToiletVm>>(result);
             }
             catch (Exception ex)
@@ -80,9 +72,6 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
             try
             {
                 var result = await zamzamLocationsService.GetamZamLocationsLookUp();
-
-                if (result == null || result.Count == 0)
-                    return new Response<List<ZamZamLocationLookUpVm>>(string.Empty, "no Toilets found.");
 
                 return new Response<List<ZamZamLocationLookUpVm>>(result);
             }

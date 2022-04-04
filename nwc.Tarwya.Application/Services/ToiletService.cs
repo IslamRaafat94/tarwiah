@@ -33,28 +33,12 @@ namespace nwc.Tarwya.Application.Services
 				.ProjectTo<ToiletVm>(mapper.ConfigurationProvider);
 
 			return list;
-
 		}
 
 		public async Task<bool> ImportToilets(ToiletFileVm fileObject)
 		{
-			var toiletsList = new List<Toilet>();
-			foreach (var obj in fileObject.co)
-			{
-				var entity = new Toilet()
-				{
-					IsActive = true,
-					IsDeleted = false,
-					Code = obj.toilitNumber,
-					Latitude = obj.latitude,
-					Longitude = obj.longitude,
-					P1 = obj.FIELD1,
-					P2 = obj.FIELD2,
-					P3 = obj.FIELD3,
-				};
-				toiletsList.Add(entity);
-			}
-			await ToiletRepo.BulkAddAsync(toiletsList);
+			var data = mapper.Map<List<Toilet>>(fileObject.co);
+			await ToiletRepo.BulkInsertAsync(data);
 			return true;
 		}
 	}

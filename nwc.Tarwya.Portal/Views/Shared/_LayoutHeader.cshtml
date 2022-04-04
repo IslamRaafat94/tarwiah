@@ -1,0 +1,65 @@
+﻿@{
+    bool isRTL = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+    string queryString = Context.Request.QueryString.HasValue ? Context.Request.QueryString.Value : string.Empty;
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{queryString}";
+
+}
+<header class="navbar navbar-header navbar-header-fixed">
+    <a href="#" id="mainMenuOpen" class="burger-menu"><i data-feather="menu"></i></a>
+    <div class="navbar-brand">
+        <a href="" class="df-logo">
+            <img src="~/dist/img/nwc-logo.png" />
+        </a>
+    </div><!-- navbar-brand -->
+    <div id="navbarMenu" class="navbar-menu-wrapper">
+        <div class="navbar-menu-header">
+            <a href="" class="df-logo">
+                <img src="~/dist/img/nwc-logo.png" />
+            </a>
+            <a id="mainMenuClose" href="#"><i data-feather="x"></i></a>
+        </div><!-- navbar-menu-header -->
+        <ul class="nav navbar-menu">
+            <li class="nav-label pd-l-20 pd-lg-l-25 d-lg-none">Main Navigation</li>
+            <li class="nav-item active">
+                <a href="@Url.Action("Index","Home")" class="nav-link"><i data-feather="pie-chart"></i>@Labels.Dashboard</a>
+            </li>
+            <li class="nav-item with-sub">
+                <a href="#" class="nav-link"><i data-feather="package"></i>@Labels.Catalog</a>
+                <ul class="navbar-menu-sub">
+                    <li class="nav-sub-item"><a href="@Url.Action("Index","Category")" class="nav-sub-link"><i data-feather="calendar"></i>@Labels.Categories</a></li>
+                    <li class="nav-sub-item"><a href="@Url.Action("Index","Feedback")" class="nav-sub-link"><i data-feather="message-square"></i>@Labels.FeedbackStandards</a></li>
+                    <li class="nav-sub-item"><a href="@Url.Action("Index","Toilets")" class="nav-sub-link"><i data-feather="message-square"></i>@Labels.Toilets</a></li>
+                    <li class="nav-sub-item"><a href="@Url.Action("Index","Campaign")" class="nav-sub-link"><i data-feather="message-square"></i>@Labels.Campaigns</a></li>
+                    <li class="nav-sub-item"><a href="@Url.Action("Index","ZamZam")" class="nav-sub-link"><i data-feather="message-square"></i>@Labels.ZamZam</a></li>
+                </ul></li>
+            <li class="nav-item"><a href="@Url.Action("Index","Complaint")" class="nav-link"><i data-feather="archive"></i>@Labels.Complaints</a></li>
+            <li class="nav-item"><a href="@Url.Action("Users","Account")" class="nav-link"><i data-feather="archive"></i>@Labels.Users</a></li>
+            <li class="nav-item"><a href="/SyncJobs" class="nav-link"><i data-feather="archive"></i>@Labels.Tasks</a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i data-feather="archive"></i>@Labels.Logs</a></li>
+        </ul>
+    </div><!-- navbar-menu-wrapper -->
+    <div class="navbar-right">
+        <div>
+            <form id="selectLanguage" asp-controller="Home" asp-area=""
+                  asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="@(isRTL?"en-US":"ar-SA")"
+                  method="post" class="form-horizontal" role="form">
+                <button class="k-button" onclick="this.form.submit();" data-toggle="dropdown" aria-expanded="true">
+                    <span>@(isRTL ? "English" : "عربي")</span>
+                </button>
+            </form>
+
+        </div>
+        <div class="dropdown dropdown-profile">
+            <a href="#" class="dropdown-link" data-toggle="dropdown" data-display="static">
+                <div class="avatar avatar-sm"><img src="~/dist/assets/img/pp.jpg" class="rounded-circle" alt=""></div>
+            </a><!-- dropdown-link -->
+            <div class="dropdown-menu dropdown-menu-@(isRTL?"left":"right") tx-13">
+                <div class="avatar avatar-lg mg-b-15"><img src="~/dist/assets/img/pp.jpg" class="rounded-circle" alt=""></div>
+                <h6 class="tx-semibold mg-b-5" style="display:flex">@User.Identity.Name</h6>
+                <a href="#" class="dropdown-item"><i data-feather="user"></i>@Labels.ViewProfile</a>
+                <div class="dropdown-divider"></div>
+                <a href="@Url.Action("LogOut","Account",new { area=""})" class="dropdown-item"><i data-feather="log-out"></i>@Labels.SignOut</a>
+            </div><!-- dropdown-menu -->
+        </div><!-- dropdown -->
+    </div><!-- navbar-right -->
+</header>

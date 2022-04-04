@@ -4,61 +4,61 @@
 }
 
 <form asp-controller="Account" asp-action="CreateUser" method="post" data-parsley-validate>
-	<div class="tx-danger">
-		@Html.ValidationSummary()
-	</div>
+    <div class="tx-danger">
+        @Html.ValidationSummary()
+    </div>
 
-	<fieldset class="form-fieldset">
-		<legend style="background-color:transparent">User Information</legend>
-		<div class="form-group">
-			<label class="d-block">UserName</label>
-			@(Html.ValidationMessageFor(m => m.UserName, "", new { @class = "tx-danger" }))
+    <fieldset class="form-fieldset">
+        @*<legend style="background-color:transparent">User Information</legend>*@
+        <div class="form-group">
+            <label class="d-flex">@Labels.UserName</label>
+            @(Html.ValidationMessageFor(m => m.UserName, "", new { @class = "tx-danger" }))
 
-			@(Html.Kendo()
-			.TextBoxFor(m => m.UserName)
-			.HtmlAttributes(new { @class = "form-control", placeholder = "Enter User Name" }))
-		</div>
-		<div class="form-group">
-			<label class="d-block">Email</label>
-			@(Html.ValidationMessageFor(m => m.Email, "", new { @class = "tx-danger" }))
+            @(Html.Kendo()
+            .TextBoxFor(m => m.UserName)
+            .HtmlAttributes(new { @class = "form-control", placeholder = "Enter User Name" }))
+        </div>
+        <div class="form-group">
+            <label class="d-flex">@Labels.Email</label>
+            @(Html.ValidationMessageFor(m => m.Email, "", new { @class = "tx-danger" }))
 
-			@(Html.Kendo()
-			.TextBoxFor(m => m.Email)
-			.HtmlAttributes(new { @class = "form-control", placeholder = "Enter User Email" }))
-		</div>
-		<div class="form-group">
-			<label class="d-block">Phone Number</label>
-			@(Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "tx-danger" }))
+            @(Html.Kendo()
+            .TextBoxFor(m => m.Email)
+            .HtmlAttributes(new { @class = "form-control", placeholder = "Enter User Email" }))
+        </div>
+        <div class="form-group">
+            <label class="d-flex">@Labels.PhoneNumber</label>
+            @(Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "tx-danger" }))
 
-			@(Html.Kendo()
-			.TextBoxFor(m => m.PhoneNumber)
-			.HtmlAttributes(new { @class = "form-control", placeholder = "Enter User Phone Number", required = "required" }))
-		</div>
-		<div class="form-group">
-			<label class="d-block">Role</label>
-			@(Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "tx-danger" }))
+            @(Html.Kendo()
+            .TextBoxFor(m => m.PhoneNumber)
+            .HtmlAttributes(new { @class = "form-control", placeholder = "Enter User Phone Number", required = "required" }))
+        </div>
+        <div class="form-group">
+            <label class="d-flex">@Labels.Roles</label>
+            @(Html.ValidationMessageFor(m => m.RoleId, "", new { @class = "tx-danger" }))
 
-			@(Html.Kendo()
-			.DropDownListFor(m => m.RoleId)
-			.DataTextField("Name")
-			.DataValueField("Id")
-			.DataSource(source =>
-			{
-				source.Read(read =>
-				{
-					read.Action("GetRoles", "Account");
-				});
-				source.Events(e => e.Error("onDDLError"));
-			})
-			.HtmlAttributes(new { @class = "form-control", required = "required" }))
-		</div>
-		<button class="btn btn-primary" type="submit">Submit</button>
-		<a href="@Url.Action("Users","Account")" class="btn btn-secondary">Cancel</a>
-		<script>
-			function onDDLError(e) {
-				debugger;
-				console.log(e);
-			}
-		</script>
-	</fieldset>
+            @(Html.Kendo()
+            .DropDownListFor(m => m.RoleId)
+            .DataTextField("Name")
+            .DataValueField("Id")
+            .DataSource(source =>
+            {
+                source.Read(read =>
+                {
+                    read.Action("GetRoles", "Account");
+                });
+                source.Events(e => e.Error("onDDLError"));
+            })
+            .HtmlAttributes(new { @class = "form-control", required = "required" }))
+        </div>
+        <button class="btn btn-primary" type="submit">@Labels.Save</button>
+        <a href="@Url.Action("Users","Account")" class="btn btn-secondary">@Labels.Cancel</a>
+        <script>
+            function onDDLError(e) {
+                debugger;
+                console.log(e);
+            }
+        </script>
+    </fieldset>
 </form>

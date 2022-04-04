@@ -90,6 +90,16 @@ namespace nwc.Tarwya.Portal.Controllers
                 throw;
             }
         }
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).ConfigureAwait(false);
+            return RedirectToAction("Login");
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
+
+        }
         public async Task<IActionResult> GetUsers([DataSourceRequest] DataSourceRequest request)
         {
             try

@@ -1,63 +1,40 @@
 ﻿@using nwc.Tarwya.Application.ViewModels.Complains
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
+    ViewData["breadcrumb1"] = Labels.Complaints;
 }
-
-<div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
-	<div>
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb breadcrumb-style1 mg-b-10">
-				<li class="breadcrumb-item"><a href="#">Tarwya</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Complaints</li>
-			</ol>
-		</nav>
-		<h4 class="mg-b-0 tx-spacing--1">All Complaints</h4>
-	</div>
-	<div class="d-none d-md-block">
-
-	</div>
-</div>
 
 <div class="row">
 
 
-	@(Html.Kendo().Grid<ComplaintVm>()
-	.Name("grid")
-	.Columns(columns =>
-	{
-		columns.Bound(p => p.Id).Filterable(false).Visible(false);
-		columns.Bound(p => p.Date).Format("{0:dd/MM/yyyy HH:mm}").Width("15%");
-		columns.Bound(p => p.AssetNo).Width("10%");
-		columns.Bound(p => p.SubCatigory).Width("20%");
-		columns.Bound(p => p.Description).Width("30%");
-		columns.Bound(p => p.IssuerName).Width("15%");
-		columns.Bound(p => p.IssuerMobile).Width("15%");
-	})
-	.ToolBar(t => t.Search())
-			.Search(search =>
-			{
-				search.Field(f => f.AssetNo);
-				search.Field(f => f.SubCatigory);
-				search.Field(f => f.Description);
-				search.Field(f => f.IssuerName);
-				search.Field(f => f.IssuerMobile);
-			})
-	.Pageable(pageable => pageable
-			.Refresh(true)
-			.PageSizes(true)
-			.ButtonCount(5))
-	.Sortable()
-	.Scrollable()
-	.Groupable()
-	//.Filterable()
-	.Resizable(resize => resize.Columns(true))
-	.HtmlAttributes(new { style = "height:430px;" })
-	.DataSource(dataSource => dataSource
-		.Ajax()
-		.PageSize(20)
-		.Read(read => read.Action("GetComplaints", "Complaint"))
-	 )
-	.HtmlAttributes(new { style = "height: 95%;width:100%" })
-	)
+    @(Html.Kendo().Grid<ComplaintVm>()
+    .Name("grid")
+    .Columns(columns =>
+            {
+                columns.Bound(p => p.Id).Filterable(false).Visible(false);
+                columns.Bound(p => p.Date).Title(Labels.Date).Format("{0:dd/MM/yyyy HH:mm}").Width("15%");
+                columns.Bound(p => p.AssetNo).Title(Labels.AssetNo).Width("10%");
+                columns.Bound(p => p.SubCatigory).Title(Labels.Type).Width("20%");
+                columns.Bound(p => p.Description).Title(Labels.Description).Width("30%");
+                columns.Bound(p => p.IssuerName).Title(Labels.IssuerName).Width("15%");
+                columns.Bound(p => p.IssuerMobile).Title(Labels.IssuerMobile).Width("15%");
+            })
+    .Pageable(pageable => pageable
+            .Refresh(true)
+            .PageSizes(true)
+            .ButtonCount(5))
+    .Sortable()
+    .Scrollable()
+    .Groupable()
+    //.Filterable()
+    .Resizable(resize => resize.Columns(true))
+    .HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(500)
+        .Read(read => read.Action("GetComplaints", "Complaint"))
+     )
+    .HtmlAttributes(new { style = "height: 95%;width:100%" })
+    )
 </div>
 

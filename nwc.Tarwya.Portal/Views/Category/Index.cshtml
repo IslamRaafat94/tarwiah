@@ -1,127 +1,95 @@
 ﻿@using nwc.Tarwya.Application.ViewModels.Categories
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
+    ViewData["breadcrumb1"] = Labels.Categories;
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
-	<div>
-		<nav aria-label="breadcrumb">
-			<ol class="breadcrumb breadcrumb-style1 mg-b-10">
-				<li class="breadcrumb-item"><a href="#">Tarwya</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Categories</li>
-			</ol>
-		</nav>
-		<h4 class="mg-b-0 tx-spacing--1">All Categories/Category Items</h4>
-	</div>
-	<div class="d-none d-md-block">
-		<button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5" onclick="importCategories()">Import</button>
-	</div>
+
+    <div class="d-none d-md-block">
+        <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5" onclick="importCategories()">@Labels.Import</button>
+    </div>
 </div>
 
 <div class="row">
 
-	@(Html.Kendo().Grid<CategoryVm>()
-			.Name("categoryGrid")
-			.Columns(columns =>
-			{
-				columns.Bound(p => p.Id).Filterable(false).Visible(false);
-				columns.Bound(p => p.NameAr);
-				columns.Bound(p => p.NameEn);
-				columns.Bound(p => p.NameFa);
-				columns.Bound(p => p.NameFr);
-				columns.Bound(p => p.NameId);
-				columns.Bound(p => p.NameTr);
-				columns.Bound(p => p.NameUr);
-				columns.Bound(p => p.ItemsCount).Width("10%");
-				columns.Bound(p => p.IsActive).Width("20%")
-				.ClientTemplate("<input type='checkbox' id='categorygrid-switch_#=data.Id#' aria-label='Notifications Switch' #if(data.IsActive){#checked='checked'#}# />");
-			})
-			.ClientDetailTemplateId("CategoryItemstemplate")
-			.Pageable(pageable => pageable
-					.Refresh(true)
-					.PageSizes(true)
-					.ButtonCount(5))
-			.Sortable()
-			.Scrollable()
-			.Resizable(resize => resize.Columns(true))
-			.HtmlAttributes(new { style = "height:430px;" })
-			.DataSource(dataSource => dataSource
-				.Ajax()
-				.PageSize(20)
-				.Read(read => read.Action("GetCategories", "Category"))
-				.Create(create => create.Action("Create", "Departments", new { LID = "#=Id#" }))
-				.Model(model =>
-				{
-					model.Id(p => p.Id);
-				})
-				.Events(e => e.Error("OnError"))
-			 )
-				.HtmlAttributes(new { style = "height: 95%;width:100%" })
-				.Events(events => events.DataBound("categoryGridDataBound"))
+    @(Html.Kendo().Grid<CategoryVm>()
+            .Name("categoryGrid")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.Id).Filterable(false).Visible(false);
+                columns.Bound(p => p.NameAr).Title(Labels.NameAr).Width(300);
+                columns.Bound(p => p.NameEn).Title(Labels.NameEn).Width(300);
+                columns.Bound(p => p.NameFa).Title(Labels.NameFa).Width(300);
+                columns.Bound(p => p.NameFr).Title(Labels.NameFr).Width(300);
+                columns.Bound(p => p.NameId).Title(Labels.NameId).Width(300);
+                columns.Bound(p => p.NameTr).Title(Labels.NameTr).Width(300);
+                columns.Bound(p => p.NameUr).Title(Labels.NameUr).Width(300);
+            })
+            .ClientDetailTemplateId("CategoryItemstemplate")
+            .Pageable(pageable => pageable
+                    .Refresh(true)
+                    .PageSizes(true)
+                    .ButtonCount(5))
+            .Sortable()
+            .Scrollable()
+            .Resizable(resize => resize.Columns(true))
+            .HtmlAttributes(new { style = "height:430px;" })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(100)
+                .Read(read => read.Action("GetCategories", "Category"))
+                .Create(create => create.Action("Create", "Departments", new { LID = "#=Id#" }))
+                .Model(model =>
+                {
+                    model.Id(p => p.Id);
+                })
+                .Events(e => e.Error("OnError"))
+             )
+                .HtmlAttributes(new { style = "height: 95%;width:100%" })
 
-	)
+    )
 
-	<script id="CategoryItemstemplate" type="text/kendo-tmpl">
-		<strong>Items:</strong>
+    <script id="CategoryItemstemplate" type="text/kendo-tmpl">
+        @*<strong>Items:</strong>*@
 
-		@(Html.Kendo().Grid<SubCategoryVm>()
-				.Name("grid_#=Id#")
-				.Columns(columns =>
-				{
-					columns.Bound(p => p.Id).Filterable(false).Visible(false);
-					columns.Bound(p => p.Code);
-					columns.Bound(p => p.NameAr);
-					columns.Bound(p => p.NameEn);
-					columns.Bound(p => p.NameFa);
-					columns.Bound(p => p.NameFr);
-					columns.Bound(p => p.NameId);
-					columns.Bound(p => p.NameTr);
-					columns.Bound(p => p.NameUr);
-					columns.Bound(p => p.ComplaintsCount);
-					columns.Bound(p => p.IsActive)
-						.ClientTemplate("<input type='checkbox' id='subCategorygrid-switch_#=data.Id#' aria-label='Notifications Switch' #if(data.IsActive){#checked='checked'#}# />");
-				})
-			  .DataSource(dataSource => dataSource
-				  .Ajax()
-				  .PageSize(10)
-				  .Read(read => read.Action("GetCategoryItems", "Category", new { CategoryId = "#=Id#" }))
-			  )
+        @(Html.Kendo().Grid<SubCategoryVm>()
+                .Name("grid_#=Id#")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.Id).Filterable(false).Visible(false);
+                    columns.Bound(p => p.Code).Title(Labels.Code);
+                    columns.Bound(p => p.NameAr).Title(Labels.NameAr);
+                    columns.Bound(p => p.NameEn).Title(Labels.NameEn);
+                    columns.Bound(p => p.NameFa).Title(Labels.NameFa);
+                    columns.Bound(p => p.NameFr).Title(Labels.NameFr);
+                    columns.Bound(p => p.NameId).Title(Labels.NameId);
+                    columns.Bound(p => p.NameTr).Title(Labels.NameTr);
+                    columns.Bound(p => p.NameUr).Title(Labels.NameUr);
+                })
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .PageSize(100)
+                  .Read(read => read.Action("GetCategoryItems", "Category", new { CategoryId = "#=Id#" }))
+              )
 
-			  .Pageable()
-			  .Sortable()
-			  .Events(events => events.DataBound("subCategoryGridDataBound"))
-			  .ToClientTemplate()
-		)
-	</script>
+              .Pageable()
+              .Sortable()
+              .ToClientTemplate()
+        )
+    </script>
 
-	<script>
+    <script>
 		function OnError(e, states) {
 			debugger;
 			alert("Error: " + e.errors);
-		}
-		function categoryGridDataBound() {
-			this.expandRow(this.tbody.find("tr.k-master-row").first());
-			$('[id^=categorygrid-switch]').kendoSwitch({
-				messages: {
-					checked: "YES",
-					unchecked: "NO"
-				}
-			});
-		}
-		function subCategoryGridDataBound() {
-			$('[id^=subCategorygrid-switch]').kendoSwitch({
-				messages: {
-					checked: "YES",
-					unchecked: "NO"
-				}
-			});
 		}
 		function importCategories() {
 			var kwind = $("#GeneralWnd").data("kendoWindow");
 			if (kwind) {
 				kwind.setOptions({
 					content: { url: "@Url.Action("ImportFile","Home",new { importType=(int)ImportType.Categories})" },
-					title: 'Import Categories',
+					title: '@Html.Raw(Labels.Import) @Html.Raw(Labels.Categories)',
 					width:"26%"
 				});
 				kwind.bind("close", function (e) {
@@ -131,6 +99,6 @@
 				kwind.refresh().center().open();
 			}
 		}
-	</script>
+    </script>
 </div>
 

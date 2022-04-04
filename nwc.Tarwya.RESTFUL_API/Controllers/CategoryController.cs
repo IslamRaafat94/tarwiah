@@ -36,8 +36,8 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
             }
         }
         [HttpGet]
-        [Route("CategoriesLookUp/{CategoryId}")]
-        public async Task<Response<List<CategoryItemLookUpVm>>> GetComplaintDetails(int CategoryId)
+        [Route("SubCategoriesLookUp/{CategoryId}")]
+        public async Task<Response<List<CategoryItemLookUpVm>>> GetSubCategoriesLookUp(int CategoryId)
         {
             try
             {

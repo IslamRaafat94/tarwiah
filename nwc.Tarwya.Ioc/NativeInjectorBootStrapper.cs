@@ -42,8 +42,8 @@ namespace nwc.Tarwya.Infra.Ioc
 
 
 			// integrations
-			services.AddScoped<ICCB_WO_IntegrationService, CCB_WOIntegrationService>();
-			services.AddScoped<IECM_UpploadIntegrationService, ECM_UploadIntegrationService>();
+			services.AddScoped<ICCB_IntegrationService, CCB_IntegrationService>();
+			services.AddScoped<IECM_IntegrationService, ECM_IntegrationService>();
 
 
 

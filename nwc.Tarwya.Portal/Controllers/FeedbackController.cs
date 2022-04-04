@@ -1,5 +1,6 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using nwc.Logger;
 using nwc.Tarwya.Application.Services.Contracts;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace nwc.Tarwya.Portal.Controllers
 {
+    [Authorize]
     public class FeedbackController : Controller
     {
         private readonly IFeedbackService feedBackService;

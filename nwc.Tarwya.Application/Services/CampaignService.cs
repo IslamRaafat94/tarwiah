@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using nwc.Tarwya.Application.Services.Contracts;
@@ -70,7 +71,7 @@ namespace nwc.Tarwya.Application.Services
 				};
 				campaignsList.Add(entity);
 			}
-			await CampaignRepo.BulkAddAsync(campaignsList, o => { o.IncludeGraph = true; });
+			await CampaignRepo.BulkInsertAsync(campaignsList, new BulkConfig() { IncludeGraph = true });
 			return true;
 		}
 	}

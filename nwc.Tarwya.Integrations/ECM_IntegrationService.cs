@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace nwc.Tarwya.Integrations
 {
-    public class ECM_UploadIntegrationService : IECM_UpploadIntegrationService
+    public class ECM_IntegrationService : IECM_IntegrationService
     {
-
         private readonly IntegrationSetting ECM_UploadServiceSettings;
         BasicHttpBinding basicHttpBinding = null;
         ChannelFactory<IECMUploadService> factory = null;
         IECMUploadService serviceProxy = null;
-        public ECM_UploadIntegrationService(IOptions<SystemSettings> options)
+        public ECM_IntegrationService(IOptions<SystemSettings> options)
         {
             ECM_UploadServiceSettings = options.Value.IntegratedServices.ECM_Upload;
             basicHttpBinding = new BasicHttpBinding();

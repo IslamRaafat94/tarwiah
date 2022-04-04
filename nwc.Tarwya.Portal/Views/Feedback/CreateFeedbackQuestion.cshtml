@@ -2,86 +2,79 @@
 @model FeedbackQuestionEditableVm
 
 @{
-	ViewData["Title"] = "Create Feedback Question";
+    ViewData["Title"] = "Create Feedback Question";
 }
 
 <form asp-controller="Feedback" asp-action="CreateFeedbackQuestion" method="post" data-parsley-validate>
-	<div class="tx-danger">
-		@Html.ValidationSummary()
-	</div>
+    <div class="tx-danger">
+        @Html.ValidationSummary()
+    </div>
 
-	<fieldset class="form-fieldset">
-		<legend style="background-color:transparent">Standard Information</legend>
-		<div class="row">
-			<div class="form-group col-md-5">
-				<label class="d-block">Name (Arabic)</label>
-				@(Html.ValidationMessageFor(m => m.NameAr, "", new { @class = "tx-danger" }))
+    <fieldset class="form-fieldset">
+        <legend style="background-color:transparent">Standard Information</legend>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="d-flex">@Labels.NameAr</label>
+                @(Html.ValidationMessageFor(m => m.NameAr, "", new { @class = "tx-danger" }))
 
-				@(Html.Kendo()
-				.TextBoxFor(m => m.NameAr)
-				.HtmlAttributes(new { @class = "form-control", placeholder = "" }))
-			</div>
-			<div class="form-group col-md-5">
-				<label class="d-block">Name (English)</label>
-				@(Html.ValidationMessageFor(m => m.NameEn, "", new { @class = "tx-danger" }))
+                @(Html.Kendo()
+                .TextBoxFor(m => m.NameAr)
+                .HtmlAttributes(new { @class = "form-control", placeholder = "" }))
+            </div>
+            <div class="form-group col-md-4">
+                <label class="d-flex">@Labels.NameEn</label>
+                @(Html.ValidationMessageFor(m => m.NameEn, "", new { @class = "tx-danger" }))
 
-				@(Html.Kendo()
-				.TextBoxFor(m => m.NameEn)
-				.HtmlAttributes(new { @class = "form-control", placeholder = "" }))
-			</div>
-			<div class="form-group col-md-5">
-				<label class="d-block">Name (Farsy)</label>
-				@(Html.ValidationMessageFor(m => m.NameFa, "", new { @class = "tx-danger" }))
+                @(Html.Kendo()
+                .TextBoxFor(m => m.NameEn)
+                .HtmlAttributes(new { @class = "form-control", placeholder = "" }))
+            </div>
+            <div class="form-group col-md-4">
+                <label class="d-flex">@Labels.NameFa</label>
+                @(Html.ValidationMessageFor(m => m.NameFa, "", new { @class = "tx-danger" }))
 
-				@(Html.Kendo()
-				.TextBoxFor(m => m.NameFa)
-				.HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
-			</div>
-			<div class="form-group col-md-5">
-				<label class="d-block">Name (franc)</label>
-				@(Html.ValidationMessageFor(m => m.NameFr, "", new { @class = "tx-danger" }))
+                @(Html.Kendo()
+                .TextBoxFor(m => m.NameFa)
+                .HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
+            </div>
+            <div class="form-group col-md-4">
+                <label class="d-flex">@Labels.NameFr</label>
+                @(Html.ValidationMessageFor(m => m.NameFr, "", new { @class = "tx-danger" }))
 
-				@(Html.Kendo()
-				.TextBoxFor(m => m.NameFr)
-				.HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
-			</div>
-			<div class="form-group col-md-5">
-				<label class="d-block">Name (Indonesian)</label>
-				@(Html.ValidationMessageFor(m => m.NameId, "", new { @class = "tx-danger" }))
+                @(Html.Kendo()
+                .TextBoxFor(m => m.NameFr)
+                .HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
+            </div>
+            <div class="form-group col-md-4">
+                <label class="d-flex">@Labels.NameId</label>
+                @(Html.ValidationMessageFor(m => m.NameId, "", new { @class = "tx-danger" }))
 
-				@(Html.Kendo()
-				.TextBoxFor(m => m.NameId)
-				.HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
-			</div>
-			<div class="form-group col-md-5">
-				<label class="d-block">Name (Turkey)</label>
-				@(Html.ValidationMessageFor(m => m.NameTr, "", new { @class = "tx-danger" }))
+                @(Html.Kendo()
+                .TextBoxFor(m => m.NameId)
+                .HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
+            </div>
+            <div class="form-group col-md-4">
+                <label class="d-flex">@Labels.NameTr</label>
+                @(Html.ValidationMessageFor(m => m.NameTr, "", new { @class = "tx-danger" }))
 
-				@(Html.Kendo()
-				.TextBoxFor(m => m.NameTr)
-				.HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
-			</div>
-			<div class="form-group col-md-5">
-				<label class="d-block">Name (Urdu)</label>
-				@(Html.ValidationMessageFor(m => m.NameUr, "", new { @class = "tx-danger" }))
+                @(Html.Kendo()
+                .TextBoxFor(m => m.NameTr)
+                .HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
+            </div>
+            <div class="form-group col-md-4">
+                <label class="d-flex">@Labels.NameUr</label>
+                @(Html.ValidationMessageFor(m => m.NameUr, "", new { @class = "tx-danger" }))
 
-				@(Html.Kendo()
-				.TextBoxFor(m => m.NameUr)
-				.HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
-			</div>
-			<div class="form-group col-md-5" style="margin:auto">
-				<button class="btn btn-primary" type="submit">Submit</button>
-				<a href="@Url.Action("index","Feedback")" class="btn btn-secondary">Cancel</a>
-			</div>
+                @(Html.Kendo()
+                .TextBoxFor(m => m.NameUr)
+                .HtmlAttributes(new { @class = "form-control", placeholder = "", required = "required" }))
+            </div>
+            <div class="form-group col-md-4" style="margin:auto">
+                <button class="btn btn-primary" type="submit">@Labels.Save</button>
+                <a href="@Url.Action("index","Feedback")" class="btn btn-secondary">@Labels.Cancel</a>
+            </div>
 
-		</div>
-
-		<script>
-			function onDDLError(e) {
-				debugger;
-				console.log(e);
-			}
-		</script>
-	</fieldset>
+        </div>
+    </fieldset>
 </form>
 
