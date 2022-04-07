@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using nwc.Tarwya.Infra.Core;
 using nwc.Tarwya.Integrations.Contracts;
 using nwc.Tarwya.Integrations.Helpers;
+using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace nwc.Tarwya.Integrations
             basicHttpBinding = new BasicHttpBinding();
         }
 
-        public async Task<bool> UploadDocuments(byte[] content, string metadata)
+        public async Task<string> UploadDocumentsSync(byte[] content, string metadata)
         {
             factory = new ChannelFactory<IECMUploadService>(basicHttpBinding, new EndpointAddress(ECM_UploadServiceSettings.Url));
             serviceProxy = factory.CreateChannel();
@@ -34,13 +35,16 @@ namespace nwc.Tarwya.Integrations
                 OperationContext.Current.OutgoingMessageHeaders.Add(new SecurityHeader("", ECM_UploadServiceSettings.UserName, ECM_UploadServiceSettings.Password));
                 var result = await serviceProxy.UploadDocumentsToSPECMAsync(content, metadata).ConfigureAwait(false);
 
-                // cleanup
-                factory.Close();
-                ((ICommunicationObject)serviceProxy).Close();
-                return result.Status.ToLower().Equals("ok");
+                if (result.Status.ToLower().Equals("ok"))
+                    return result.DocumentUrl;
+                else
+                    throw new Exception(result.FaultMessage);
             }
             finally
             {
+                // cleanup
+                factory.Close();
+                ((ICommunicationObject)serviceProxy).Close();
                 // *** ENSURE CLEANUP *** \\
                 //CloseCommunicationObjects((ICommunicationObject)serviceProxy, factory);
                 OperationContext.Current = prevOpContext; // Or set to null if you didn't capture the previous context

@@ -25,7 +25,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 				.ForMember(i => i.IssuarMobile, s => s.MapFrom(d => d.IssuarMobile))
 				.ForMember(i => i.Description, s => s.MapFrom(d => d.Description))
 				.ForMember(i => i.EsriLocation, s => s.MapFrom(d => d.EsriLocation))
-				.ForMember(i => i.SubCategoryId, s => s.MapFrom(d => d.CategoryItemId))
+				.ForMember(i => i.SubCategoryCode, s => s.MapFrom(d => d.CategoryItemId))
 				.ForMember(i => i.AssetNumber, s => s.MapFrom(d => d.AssetNumber));
 
 			CreateMap<WorkOrderInqueryResponce, ComplaintStatus>()

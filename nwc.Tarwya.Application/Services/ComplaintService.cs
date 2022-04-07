@@ -7,7 +7,9 @@ using nwc.Tarwya.Application.ViewModels.Complains;
 using nwc.Tarwya.Domain.Models.Models;
 using nwc.Tarwya.Domain.Repositories.Contracts;
 using nwc.Tarwya.Infra.Core;
+using nwc.Tarwya.Integrations.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,39 +35,11 @@ namespace nwc.Tarwya.Application.Services
 
 		public async Task<bool> CreateComplaint(ComplaintEditableVm vm)
 		{
-			var entity = mapper.Map<Complaint>(vm);
-			entity.MantinanceArea = string.IsNullOrEmpty(vm.MentinanceArea) ?
-				systemSettings.appSettings.DefaultMentinanceArea : vm.MentinanceArea;
+			int ComplaintId = await SaveComplaintinDB(vm);
+			
+			await SyncComplaint(ComplaintId);
 
-			entity.ComplaintImages = new List<ComplaintImage>();
-			if (!string.IsNullOrEmpty(vm.Image))
-				entity.ComplaintImages.Add(new ComplaintImage()
-				{
-					LocalName = vm.Image
-				});
-
-			await complaintsRepo.AddAsync(entity);
-			var result = await complaintsRepo.SaveChangesAsync() > 0;
-			vm.FieldActivityId = entity.Id.ToString();
-			// Sync Complaint to Middelware
-			if (result)
-			{
-				try
-				{
-					var syncResult = await integrationService.SaveComplaintInCCB(vm);
-					if (syncResult)
-					{
-						entity.IsSyncedToCcb = true;
-						await complaintsRepo.SaveChangesAsync();
-					}
-				}
-				catch
-				{
-
-				}
-			}
-
-			return result;
+			return true;
 		}
 
 
@@ -83,6 +57,90 @@ namespace nwc.Tarwya.Application.Services
 								  .ToListAsync();
 
 			return list;
+		}
+
+		private async Task<int> SaveComplaintinDB(ComplaintEditableVm vm)
+        {
+			var entity = mapper.Map<Complaint>(vm);
+			entity.MantinanceArea = string.IsNullOrEmpty(vm.MentinanceArea) ?
+				systemSettings.appSettings.DefaultMentinanceArea : vm.MentinanceArea;
+
+			entity.ComplaintImages = new List<ComplaintImage>();
+
+			for (int i=1;i<=vm.Images.Length;i++)
+			{
+				var localpath = await SaveDocumentToDisk($"{entity.Id}", null, $"{entity.Id}_{i}.jpg");
+				entity.ComplaintImages.Add(new ComplaintImage()
+				{
+					LocalName = localpath
+				}); 
+			}
+			entity.IsSyncedToCcb = false;
+			await complaintsRepo.AddAsync(entity);
+			await complaintsRepo.SaveChangesAsync();
+
+			return entity.Id;
+        }
+		private async Task<bool> SyncComplaint(int ComplaintId)
+		{
+			var complaint = await complaintsRepo.GetByIdAsync(ComplaintId);
+
+            try
+            {
+				await UploadComplaintImages(complaint);
+			}
+            catch
+            {}
+
+			var request = new WorkOrderCreationRequest()
+			{
+				FieldActivityId = complaint.Id.ToString(),
+				AssetNumber = complaint.AssetId,
+				Description = complaint.Description,
+				utm=complaint.Coordintes,
+				IssuarMobile=complaint.IssuerMobileNumber,
+				IssuarName=complaint.IssuerName,
+				SubCategoryCode=complaint.SubCategory?.Code,
+				SubCategoryName=complaint.SubCategory?.ServerName,
+				ECM_Image = (complaint.ComplaintImages.Count() == 0) ? "" : $"{systemSettings.appSettings.ComplaintImageViewer}{complaint.Id}-00"
+			};
+			var syncResult = integrationService.SaveComplaintInCCB(request);
+			return syncResult;
+		}
+		private async Task UploadComplaintImages(Complaint model)
+        {
+			foreach(var image in model.ComplaintImages)
+            {
+				string filename=Path.GetFileName(image.LocalName);
+				string metaData = GetComplaintMetadata(model, filename);
+				byte[] data = await File.ReadAllBytesAsync(image.LocalName);
+
+				string URL = await integrationService.UploadDocumentSync(metaData, data);
+            }
+        }
+		private string GetComplaintMetadata(Complaint model,string fileName)
+        {
+			string metadata = $@"	<ECMService>
+										<SystemData>
+											<SourceSystem>EAM</SourceSystem>
+											<ProcessName>EAMWODP</ProcessName>
+											<DocumentType>EAMWOMID</DocumentType>
+											<OwnerID>nwc\\dloganathan</OwnerID>
+											<FileName>{fileName}</FileName>
+											<PrivilegeKey>Payables Manager</PrivilegeKey>
+										</SystemData>
+										<Metadata>
+											<Mdata><DataType>eam_DocumentType</DataType><DataValue>EAM Mobility Image</DataValue></Mdata>
+											<Mdata><DataType>eam_WorkOrderNumber</DataType><DataValue>MOB-{model.Id}</DataValue></Mdata>
+											<Mdata><DataType>eam_AssetID</DataType><DataValue>{model.AssetId}</DataValue></Mdata>
+											<Mdata><DataType>eam_AssetCode</DataType><DataValue>{string.Empty}</DataValue></Mdata>
+											<Mdata><DataType>eam_AssetClassification</DataType><DataValue>{string.Empty}</DataValue></Mdata>
+											<Mdata><DataType>eam_MaintenanceArea</DataType><DataValue>{model.MantinanceArea}</DataValue></Mdata>
+											<Mdata><DataType>EAM_Operation</DataType><DataValue>{string.Empty}</DataValue></Mdata>
+										</Metadata>
+									</ECMService>";
+
+			return metadata;
 		}
 	}
 }

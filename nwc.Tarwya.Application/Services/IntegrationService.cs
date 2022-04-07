@@ -46,43 +46,16 @@ namespace nwc.Tarwya.Application.Services
                 return null;
         }
 
-        public async Task<bool> SaveComplaintInCCB(ComplaintEditableVm model)
+        public bool SaveComplaintInCCB(WorkOrderCreationRequest model)
         {
-            bool saveResult = false;
-            bool uploadeImageResult = true;
 
-            if (!string.IsNullOrEmpty(model.Image))
-                uploadeImageResult = await UploadComplaintImagesInECM(model);
-
-            if (uploadeImageResult)
-            {
-                var EAM_WO_CreationRequest = mapper.Map<WorkOrderCreationRequest>(model);
-                saveResult = _WO_IntegrationService.CreateNewOperation(EAM_WO_CreationRequest);
-            }
+            var saveResult = _WO_IntegrationService.CreateNewOperation(model);
             return saveResult;
         }
 
-        private async Task<bool> UploadComplaintImagesInECM(ComplaintEditableVm model)
+        public async Task<string> UploadDocumentSync(string metadata,byte[] document)
         {
-            string filePath = Path.Combine(_hostingEnvironment.WebRootPath, "Uploads", model.Image);
-            var imageBinary = await ReadBase64ImageByts(filePath);
-            string metadata = "<ECMService><SystemData>"
-                                 + "<SourceSystem>EAM</SourceSystem>"
-                                 + "<ProcessName>EAMWODP</ProcessName>"
-                                 + "<DocumentType>EAMWOMID</DocumentType>"
-                                 + "<OwnerID>nwc\\dloganathan</OwnerID>"
-                                 + "<FileName>" + model.Image + "</FileName>"
-                                 + "<PrivilegeKey>Payables Manager</PrivilegeKey>"
-                                 + "</SystemData><Metadata>"
-                                 + "<Mdata><DataType>eam_DocumentType</DataType><DataValue>EAM Mobility Image</DataValue></Mdata>"
-                                 + "<Mdata><DataType>eam_WorkOrderNumber</DataType><DataValue>" + model.FieldActivityId + "</DataValue></Mdata>"
-                                 + "<Mdata><DataType>eam_AssetID</DataType><DataValue>" + string.Format("MOB-{0}", model.AssetNumber) + "</DataValue></Mdata>"
-                                 + "<Mdata><DataType>eam_AssetCode</DataType><DataValue>" + string.Empty + "</DataValue></Mdata>"
-                                 + "<Mdata><DataType>eam_AssetClassification</DataType><DataValue>" + string.Empty + "</DataValue></Mdata>"
-                                 + "<Mdata><DataType>eam_MaintenanceArea</DataType><DataValue>" + model.MentinanceArea + "</DataValue></Mdata>"
-                                 + "<Mdata><DataType>EAM_Operation</DataType><DataValue>" + string.Empty + "</DataValue></Mdata>"
-                                 + "</Metadata></ECMService>";
-            var result = await _UpploadIntegrationService.UploadDocuments(imageBinary, metadata);
+            var result = await _UpploadIntegrationService.UploadDocumentsSync(document, metadata);
             return result;
         }
         private async Task<string> ReadBase64ImageString(string Path)

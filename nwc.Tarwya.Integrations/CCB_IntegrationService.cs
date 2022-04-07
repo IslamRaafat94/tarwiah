@@ -94,13 +94,13 @@ namespace nwc.Tarwya.Integrations
                             "<scheduleDateTime>" + DateTime.Now.ToString("yyyy-MM-dd-HH.mm.ss") + "</scheduleDateTime>" +
                             "<fieldActivityStatus>P</fieldActivityStatus>" +
                             "<comments>" + request.Description + "</comments>" +
-                            "<imagesURL>" + request.localImage + "</imagesURL>" +
+                            "<imagesURL>" + request.ECM_Image + "</imagesURL>" +
                             "<assetNumber>" + request.AssetNumber + "</assetNumber>" +
                             "<appSource>MOB</appSource>" +
                         "</fieldActivityDetails>" +
                         "<caseAttributes>" +
-                            "<caseDescription>" + request.SubCategoryId + "</caseDescription>" +
-                            "<caseClassificationCode>" + request.SubCategoryId + "</caseClassificationCode>" +
+                            "<caseDescription>" + request.SubCategoryName + "</caseDescription>" +
+                            "<caseClassificationCode>" + request.SubCategoryCode + "</caseClassificationCode>" +
                         "</caseAttributes>" +
                         "<customerDetails>" +
                             "<entityName>" + request.IssuarName + "</entityName>" +
@@ -111,8 +111,8 @@ namespace nwc.Tarwya.Integrations
                             "<lifeSupportSensitiveLoad></lifeSupportSensitiveLoad>" +
                         "</customerDetails>" +
                             "<serviceLocationDetails>" +
-                            "<xyCoordinates>" + request.EsriLocation + "</xyCoordinates>" +
-                            "<maintenanceArea> </maintenanceArea>" +
+                            "<xyCoordinates>" + request.utm + "</xyCoordinates>" +
+                            "<maintenanceArea></maintenanceArea>" +
                             "<houseConnectionNumber></houseConnectionNumber>" +
                         "</serviceLocationDetails>" +
                     "</cm:CM-EAMRequest>" +

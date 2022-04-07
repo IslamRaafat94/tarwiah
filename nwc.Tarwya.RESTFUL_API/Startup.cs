@@ -3,6 +3,7 @@ using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -14,6 +15,8 @@ using Microsoft.OpenApi.Models;
 using nwc.Tarwya.Application.MapperProfiles;
 using nwc.Tarwya.Domain.Models.Models;
 using nwc.Tarwya.Infra.Core;
+using nwc.Tarwya.Infra.Identity;
+using nwc.Tarwya.Infra.Identity.Managers;
 using nwc.Tarwya.Infra.Ioc;
 using nwc.Tarwya.RESTFUL_API.Configurations;
 using System;
@@ -50,6 +53,12 @@ namespace nwc.Tarwya.RESTFUL_API
                 options.UseLazyLoadingProxies();
                 options.UseSqlServer(connectionString);
             });
+            services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddIdentity<IdentityUser<long>, IdentityRole<long>>()
+                .AddUserManager<ApplicationUserManager>()
+                .AddRoleManager<ApplicationRoleManager>()
+                .AddEntityFrameworkStores<IdentityContext>();
 
             services.AddHangfire(configuration => configuration
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -72,9 +81,7 @@ namespace nwc.Tarwya.RESTFUL_API
                 options.EnableEndpointRouting = false;
                 options.OutputFormatters.Remove(new XmlDataContractSerializerOutputFormatter());
                 options.UseCentralRoutePrefix(new RouteAttribute("api"));
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Latest);
-
+            });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             AutoMapperConfig.RegisterMappings();
 

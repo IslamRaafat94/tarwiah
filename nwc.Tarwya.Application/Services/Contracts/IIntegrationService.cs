@@ -1,11 +1,13 @@
 ﻿using nwc.Tarwya.Application.ViewModels.Complains;
+using nwc.Tarwya.Integrations.Models;
 using System.Threading.Tasks;
 
 namespace nwc.Tarwya.Application.Services.Contracts
 {
 	public interface IIntegrationService
 	{
-		Task<bool> SaveComplaintInCCB(ComplaintEditableVm model);
+		bool SaveComplaintInCCB(WorkOrderCreationRequest model);
 		Task<ComplaintStatus> GetComplaintStatus(string WorkOrderNumber);
+		Task<string> UploadDocumentSync(string metadata, byte[] document);
 	}
 }
