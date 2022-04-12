@@ -26,7 +26,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 
 			CreateMap<CategoryItem, CategoryItemLookUpVm>()
 				.ForMember(i => i.Id, s => s.MapFrom(d => d.Id))
-				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedSubCategoryName(d)))
+				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedSubCategoryName(d, CultureCode)))
 				.ForMember(i => i.Code, s => s.MapFrom(d => d.Code))
 				.ForMember(i => i.serverName, s => s.MapFrom(d => d.ServerName));
 
@@ -81,7 +81,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 					}
 			}
 		}
-		private string GetLoclaizedSubCategoryName(CategoryItem item)
+		private static string GetLoclaizedSubCategoryName(CategoryItem item, string CultureCode)
 		{
 			switch (CultureCode)
 			{
