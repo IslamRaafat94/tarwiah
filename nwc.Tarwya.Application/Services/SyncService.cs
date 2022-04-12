@@ -32,20 +32,20 @@ namespace nwc.Tarwya.Application.Services
                 .Include(i => i.ComplaintImages)
                 .ToListAsync();
 
-            foreach (var complaint in unSyncedComplaints)
-            {
-                var complaintVm = mapper.Map<ComplaintEditableVm>(complaint);
-                bool saveToCCBStatus = await integrationService.SaveComplaintInCCB(complaintVm);
+            //foreach (var complaint in unSyncedComplaints)
+            //{
+            //    var complaintVm = mapper.Map<ComplaintEditableVm>(complaint);
+            //    bool saveToCCBStatus = await integrationService.SaveComplaintInCCB(complaintVm);
 
-                if (saveToCCBStatus)
-                {
-                    complaint.IsSyncedToCcb = true;
-                    syncedCount++;
-                }
-            }
+            //    if (saveToCCBStatus)
+            //    {
+            //        complaint.IsSyncedToCcb = true;
+            //        syncedCount++;
+            //    }
+            //}
 
-            if (syncedCount > 0)
-                await complaintsRepository.SaveChangesAsync();
+            //if (syncedCount > 0)
+            //    await complaintsRepository.SaveChangesAsync();
             return syncedCount;
         }
     }

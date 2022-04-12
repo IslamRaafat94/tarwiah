@@ -1,1 +1,111 @@
-﻿{"ContextClassName":"TarwyaContext","DefaultDacpacSchema":null,"IdReplace":false,"IncludeConnectionString":false,"OutputPath":"Models","ProjectRootNamespace":"nwc.Tarwya.Domain.Models","SelectedToBeGenerated":0,"Tables":[{"HasPrimaryKey":true,"Name":"dbo.Campaigns"},{"HasPrimaryKey":true,"Name":"dbo.Categories"},{"HasPrimaryKey":true,"Name":"dbo.CategoryItems"},{"HasPrimaryKey":true,"Name":"dbo.ComplaintImages"},{"HasPrimaryKey":true,"Name":"dbo.Complaints"},{"HasPrimaryKey":true,"Name":"dbo.FeedbackQuestionAnswers"},{"HasPrimaryKey":true,"Name":"dbo.FeedbackQuestions"},{"HasPrimaryKey":true,"Name":"dbo.Feedbacks"},{"HasPrimaryKey":true,"Name":"dbo.Toilets"},{"HasPrimaryKey":true,"Name":"dbo.ZamZamLocations"},{"HasPrimaryKey":true,"Name":"Security.RoleClaims"},{"HasPrimaryKey":true,"Name":"Security.Roles"},{"HasPrimaryKey":true,"Name":"Security.UserClaims"},{"HasPrimaryKey":true,"Name":"Security.UserLogins"},{"HasPrimaryKey":true,"Name":"Security.UserRoles"},{"HasPrimaryKey":true,"Name":"Security.Users"},{"HasPrimaryKey":true,"Name":"Security.UserTokens"}],"UseDatabaseNames":false,"UseFluentApiOnly":true,"UseHandleBars":false,"UseInflector":true}
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "TarwyaContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "nwc.Tarwya.Domain.Models",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[AreaCoordinates]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Areas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Campaigns]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Categories]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CategoryItems]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ComplaintImages]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Complaints]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FeedbackQuestionAnswers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[FeedbackQuestions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Feedbacks]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Toilets]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ZamZamLocations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Security].[RoleClaims]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Security].[Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Security].[UserClaims]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Security].[UserLogins]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Security].[UserRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Security].[Users]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Security].[UserTokens]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "HQP02763-7.Tarwya",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

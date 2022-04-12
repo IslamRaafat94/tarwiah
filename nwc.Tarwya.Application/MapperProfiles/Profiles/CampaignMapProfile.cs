@@ -8,7 +8,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 		{
 			CreateMap<Campaign, CampaignLookUp>()
 				.ForMember(i => i.Id, s => s.MapFrom(d => d.Id))
-				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedName(d)))
+				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedName(d, CultureCode)))
 				.ForMember(i => i.Type, s => s.MapFrom(d => d.Type))
 				.ForMember(i => i.Longitude, s => s.MapFrom(d => d.Longitude))
 				.ForMember(i => i.Latitude, s => s.MapFrom(d => d.Latitude));
@@ -20,7 +20,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 		}
 
 
-		private string GetLoclaizedName(Campaign category)
+		private static string GetLoclaizedName(Campaign category,string CultureCode)
 		{
 			switch (CultureCode)
 			{

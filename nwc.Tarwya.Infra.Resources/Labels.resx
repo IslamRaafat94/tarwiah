@@ -385,4 +385,7 @@
   <data name="UpdateCurrentRecordsToInActiveStateMsg" xml:space="preserve">
     <value>this will update all current records to 'inActive' state</value>
   </data>
+  <data name="DefaultAreas" xml:space="preserve">
+    <value>Default Areas</value>
+  </data>
 </root>

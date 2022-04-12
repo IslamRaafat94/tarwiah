@@ -30,6 +30,8 @@
                 a.Save("ImportCampaignsFromFile", "Campaign");
             else if (Model == ImportType.ZamZamLocations)
                 a.Save("ImportZamZamLocationssFromFile", "ZamZam");
+            else if (Model == ImportType.Araes)
+                a.Save("ImportAreasFromFile", "Areas");
 
         a.SaveField("files");
     })

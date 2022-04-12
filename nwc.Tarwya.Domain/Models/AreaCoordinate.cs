@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace nwc.Tarwya.Domain.Models.Models
 {
-    public partial class UserClaim
+    public partial class AreaCoordinate
     {
         public int Id { get; set; }
-        public long UserId { get; set; }
-        public string ClaimType { get; set; }
-        public string ClaimValue { get; set; }
+        public int AreaId { get; set; }
+        public string Lat { get; set; }
+        public string Lng { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual Area Area { get; set; }
     }
 }

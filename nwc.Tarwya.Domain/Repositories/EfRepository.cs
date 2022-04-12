@@ -1,5 +1,6 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using nwc.Tarwya.Domain.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,14 @@ namespace nwc.Tarwya.Domain.Repositories
 		{
 			db = dbContext;
 			dbSet = dbContext.Set<TEntity>();
+		}
+		public EntityEntry Attach<T>(T entity)
+		{
+			return db.Attach(entity);
+		}
+		public EntityEntry GetEntry<T>(T entity)
+		{
+			return db.Entry(entity);
 		}
 		public void Add(TEntity entity)
 		{

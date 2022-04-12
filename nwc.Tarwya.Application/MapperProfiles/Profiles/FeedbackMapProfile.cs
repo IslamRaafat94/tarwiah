@@ -18,7 +18,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 
 			CreateMap<FeedbackQuestion, LookUpVm>()
 				.ForMember(i => i.Id, s => s.MapFrom(d => d.Id))
-				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedQuestionName(d)));
+				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedQuestionName(d, CultureCode)));
 
 			CreateMap<FeedbackQuestion, FeedbackQuestionVm>()
 				.ForMember(i => i.Id, s => s.MapFrom(d => d.Id))
@@ -45,7 +45,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 
 		}
 
-		private string GetLoclaizedQuestionName(FeedbackQuestion questions)
+		private static string GetLoclaizedQuestionName(FeedbackQuestion questions,string CultureCode)
 		{
 			switch (CultureCode)
 			{

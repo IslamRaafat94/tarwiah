@@ -9,7 +9,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 		{
 			CreateMap<Category, LookUpVm>()
 				.ForMember(i => i.Id, s => s.MapFrom(d => d.Id))
-				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedCategoryName(d)));
+				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedCategoryName(d, CultureCode)));
 
 			CreateMap<Category, CategoryVm>()
 				.ForMember(i => i.Id, s => s.MapFrom(d => d.Id))
@@ -47,7 +47,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 		}
 
 
-		private string GetLoclaizedCategoryName(Category category)
+		private static string GetLoclaizedCategoryName(Category category,string CultureCode)
 		{
 			switch (CultureCode)
 			{

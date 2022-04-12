@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using nwc.Logger;
 using nwc.Tarwya.Application.Services.Contracts;
+using nwc.Tarwya.Application.ViewModels.Areas;
 using nwc.Tarwya.Application.ViewModels.Campaign;
 using nwc.Tarwya.Application.ViewModels.Toilet;
 using nwc.Tarwya.Application.ViewModels.ZamZam;
@@ -21,16 +22,19 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         private readonly ICampaignService campaignService;
         private readonly IToiletService toiletService;
         private readonly IZamZamService zamzamLocationsService;
+        private readonly IAreasService areasService;
 
         public LookUpController(
             ICampaignService _campaignService,
             IToiletService _toiletService,
-            IZamZamService _zamzamLocationsService
+            IZamZamService _zamzamLocationsService,
+            IAreasService _areasService
             )
         {
             this.campaignService = _campaignService;
             this.toiletService = _toiletService;
             this.zamzamLocationsService = _zamzamLocationsService;
+            this.areasService = _areasService;
         }
 
         [HttpGet]
@@ -79,6 +83,22 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
             {
                 nwcLogger.Error(ex.Message, ex);
                 return new Response<List<ZamZamLocationLookUpVm>>(ex.GetHashCode().ToString(), ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("GetAreas")]
+        public async Task<Response<List<AreaVm>>> GetAreasLookUp()
+        {
+            try
+            {
+                var result = await areasService.GetAllAreas().ToListAsync();
+
+                return new Response<List<AreaVm>>(result);
+            }
+            catch (Exception ex)
+            {
+                nwcLogger.Error(ex.Message, ex);
+                return new Response<List<AreaVm>>(ex.GetHashCode().ToString(), ex.Message);
             }
         }
     }

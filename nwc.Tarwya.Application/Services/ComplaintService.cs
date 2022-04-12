@@ -8,6 +8,7 @@ using nwc.Tarwya.Domain.Models.Models;
 using nwc.Tarwya.Domain.Repositories.Contracts;
 using nwc.Tarwya.Infra.Core;
 using nwc.Tarwya.Integrations.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,9 +36,9 @@ namespace nwc.Tarwya.Application.Services
 
 		public async Task<bool> CreateComplaint(ComplaintEditableVm vm)
 		{
-			int ComplaintId = await SaveComplaintinDB(vm);
+			var Complaint = await SaveComplaintinDB(vm);
 			
-			await SyncComplaint(ComplaintId);
+			await SyncComplaint(Complaint);
 
 			return true;
 		}
@@ -59,49 +60,56 @@ namespace nwc.Tarwya.Application.Services
 			return list;
 		}
 
-		private async Task<int> SaveComplaintinDB(ComplaintEditableVm vm)
+		private async Task<Complaint> SaveComplaintinDB(ComplaintEditableVm vm)
         {
 			var entity = mapper.Map<Complaint>(vm);
-			entity.MantinanceArea = string.IsNullOrEmpty(vm.MentinanceArea) ?
-				systemSettings.appSettings.DefaultMentinanceArea : vm.MentinanceArea;
+			entity.MantinanceArea = string.IsNullOrEmpty(vm.MentinanceArea) ? systemSettings.appSettings.DefaultMentinanceArea : vm.MentinanceArea;
+			entity.IsSyncedToCcb = false;
 
-			entity.ComplaintImages = new List<ComplaintImage>();
+			await complaintsRepo.AddAsync(entity);
+			await complaintsRepo.SaveChangesAsync();
+
+			var Complaint = await complaintsRepo.GetByIdAsync(entity.Id);
+
+			Complaint.ComplaintImages = new List<ComplaintImage>();
 
 			for (int i=1;i<=vm.Images.Length;i++)
 			{
-				var localpath = await SaveDocumentToDisk($"{entity.Id}", null, $"{entity.Id}_{i}.jpg");
-				entity.ComplaintImages.Add(new ComplaintImage()
+				var localpath = await SaveDocumentToDisk($"{Complaint.Id}", null, $"{Complaint.Id}_{i}.jpg");
+				Complaint.ComplaintImages.Add(new ComplaintImage()
 				{
 					LocalName = localpath
 				}); 
 			}
-			entity.IsSyncedToCcb = false;
-			await complaintsRepo.AddAsync(entity);
+			
+			await complaintsRepo.EditAsync(Complaint);
 			await complaintsRepo.SaveChangesAsync();
 
-			return entity.Id;
+			return Complaint;
         }
-		private async Task<bool> SyncComplaint(int ComplaintId)
+		private async Task<bool> SyncComplaint(Complaint Complaint)
 		{
-			var complaint = await complaintsRepo.GetByIdAsync(ComplaintId);
+			//var complaint = await complaintsRepo.GetByIdAsync(ComplaintId);
 
-            try
-            {
+			var complaint = Complaint;
+
+			try
+			{
 				await UploadComplaintImages(complaint);
 			}
-            catch
-            {}
-
+			catch
+			{ throw new Exception("ImgUploadIssue"); }
+			
 			var request = new WorkOrderCreationRequest()
 			{
 				FieldActivityId = complaint.Id.ToString(),
 				AssetNumber = complaint.AssetId,
 				Description = complaint.Description,
-				utm=complaint.Coordintes,
-				IssuarMobile=complaint.IssuerMobileNumber,
-				IssuarName=complaint.IssuerName,
-				SubCategoryCode=complaint.SubCategory?.Code,
-				SubCategoryName=complaint.SubCategory?.ServerName,
+				utm = complaint.Coordintes,
+				IssuarMobile = complaint.IssuerMobileNumber,
+				IssuarName = complaint.IssuerName,
+				SubCategoryCode = complaint.SubCategory?.Code,
+				SubCategoryName = complaint.SubCategory?.ServerName,
 				ECM_Image = (complaint.ComplaintImages.Count() == 0) ? "" : $"{systemSettings.appSettings.ComplaintImageViewer}{complaint.Id}-00"
 			};
 			var syncResult = integrationService.SaveComplaintInCCB(request);
@@ -116,6 +124,9 @@ namespace nwc.Tarwya.Application.Services
 				byte[] data = await File.ReadAllBytesAsync(image.LocalName);
 
 				string URL = await integrationService.UploadDocumentSync(metaData, data);
+				image.EamPath = URL;
+				complaintsRepo.GetEntry(image).State = EntityState.Modified;
+				await complaintsRepo.SaveChangesAsync();
             }
         }
 		private string GetComplaintMetadata(Complaint model,string fileName)

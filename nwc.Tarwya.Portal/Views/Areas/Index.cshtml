@@ -1,0 +1,57 @@
+﻿@using nwc.Tarwya.Application.ViewModels.Areas
+@{
+    ViewData["Title"] = "Index";
+    ViewData["breadcrumb1"] = Labels.DefaultAreas;
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+    <div class="d-none d-md-block">
+        <button class="btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5" onclick="importAreas()">@Labels.Import</button>
+
+    </div>
+</div>
+<div class="row">
+
+    @(Html.Kendo().Grid<AreaVm>()
+            .Name("Areasgrid")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.Id).Filterable(false).Visible(false);
+                columns.Bound(p => p.DefaultAssetId).Title(Labels.Code);
+            })
+            .Pageable(pageable => pageable
+                    .Refresh(true)
+                    .PageSizes(true)
+                    .ButtonCount(5))
+            .Sortable()
+            .Scrollable()
+            .Filterable()
+            .Resizable(resize => resize.Columns(true))
+            .HtmlAttributes(new { style = "height:430px;" })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(500)
+                .Read(read => read.Action("GetAreas", "Areas"))
+             )
+            .HtmlAttributes(new { style = "height: 95%;width:100%" })
+    )
+    <script>
+		function importAreas() {
+			var kwind = $("#GeneralWnd").data("kendoWindow");
+			if (kwind) {
+				kwind.setOptions({
+					content: { url: "@Url.Action("ImportFile","Home",new { importType=(int)ImportType.Araes})" },
+					title: '@Html.Raw(Labels.Import) @Html.Raw(Labels.DefaultAreas)',
+					width: "26%"
+
+				});
+				kwind.bind("close", function (e) {
+					$("#Areasgrid").data('kendoGrid').dataSource.read();
+				});
+
+				kwind.refresh().center().open();
+			}
+		}
+    </script>
+</div>
+

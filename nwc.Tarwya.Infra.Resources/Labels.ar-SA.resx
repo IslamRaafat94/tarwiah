@@ -405,4 +405,7 @@
   <data name="UpdateCurrentRecordsToInActiveStateMsg" xml:space="preserve">
     <value>سيتم تعديل التسجيلات الحاليه للحاله الغير مفعله</value>
   </data>
+  <data name="DefaultAreas" xml:space="preserve">
+    <value>المناطق</value>
+  </data>
 </root>

@@ -12,19 +12,19 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 				.ForMember(i => i.IssuerName, s => s.MapFrom(d => d.IssuarName))
 				.ForMember(i => i.IssuerMobileNumber, s => s.MapFrom(d => d.IssuarMobile))
 				.ForMember(i => i.Description, s => s.MapFrom(d => d.Description))
-				.ForMember(i => i.AgentLocation, s => s.MapFrom(d => d.wgs84Location))
+				.ForMember(i => i.AgentLocation, s => s.MapFrom(d => d.AgentLocation))
 				.ForMember(i => i.AgetOs, s => s.MapFrom(d => d.AgentOs))
 				.ForMember(i => i.AgetLanguage, s => s.MapFrom(d => d.AgentLanguage))
 				.ForMember(i => i.SubCategoryId, s => s.MapFrom(d => d.CategoryItemId))
 				.ForMember(i => i.AssetId, s => s.MapFrom(d => d.AssetNumber))
-				.ForMember(i => i.Coordintes, s => s.MapFrom(d => d.EsriLocation))
+				.ForMember(i => i.Coordintes, s => s.MapFrom(d => d.UTM))
 				.ReverseMap();
 
 			CreateMap<ComplaintEditableVm, WorkOrderCreationRequest>()
 				.ForMember(i => i.IssuarName, s => s.MapFrom(d => d.IssuarName))
 				.ForMember(i => i.IssuarMobile, s => s.MapFrom(d => d.IssuarMobile))
 				.ForMember(i => i.Description, s => s.MapFrom(d => d.Description))
-				.ForMember(i => i.EsriLocation, s => s.MapFrom(d => d.EsriLocation))
+				.ForMember(i => i.utm, s => s.MapFrom(d => d.UTM))
 				.ForMember(i => i.SubCategoryCode, s => s.MapFrom(d => d.CategoryItemId))
 				.ForMember(i => i.AssetNumber, s => s.MapFrom(d => d.AssetNumber));
 

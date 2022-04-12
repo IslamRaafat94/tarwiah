@@ -21,14 +21,14 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 
 			CreateMap<ZamZamLocation, ZamZamLocationLookUpVm>()
 				.ForMember(i => i.Id, s => s.MapFrom(d => d.Id))
-				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedName(d)))
+				.ForMember(i => i.Name, s => s.MapFrom(d => GetLoclaizedName(d, CultureCode)))
 				.ForMember(i => i.Longitude, s => s.MapFrom(d => d.Longitude))
 				.ForMember(i => i.Latitude, s => s.MapFrom(d => d.Latitude))
 				;
 
 		}
 
-		private string GetLoclaizedName(ZamZamLocation category)
+		private static string GetLoclaizedName(ZamZamLocation category,string CultureCode)
 		{
 			switch (CultureCode)
 			{

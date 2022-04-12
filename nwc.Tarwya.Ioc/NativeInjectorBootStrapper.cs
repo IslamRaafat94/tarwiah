@@ -32,6 +32,7 @@ namespace nwc.Tarwya.Infra.Ioc
 			services.AddScoped<ICategoryService, CategoryService>();
 			services.AddScoped<IFeedbackService, FeedbackService>();
 			services.AddScoped<IToiletService, ToiletService>();
+			services.AddScoped<IAreasService, AreasService>();
 			services.AddScoped<ICampaignService, CampaignService>();
 			services.AddScoped<IIdentityService, IdentityService>();
 			services.AddScoped<IUploadeService, UploadeService>();

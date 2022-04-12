@@ -48,7 +48,6 @@ namespace nwc.Tarwya.Application.Services
 
         public bool SaveComplaintInCCB(WorkOrderCreationRequest model)
         {
-
             var saveResult = _WO_IntegrationService.CreateNewOperation(model);
             return saveResult;
         }

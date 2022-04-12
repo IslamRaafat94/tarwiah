@@ -14,7 +14,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 				.ForMember(i => i.UserName, s => s.MapFrom(d => d.UserName))
 				.ForMember(i => i.Email, s => s.MapFrom(d => d.Email))
 				.ForMember(i => i.PhoneNumber, s => s.MapFrom(d => d.PhoneNumber))
-				.ForMember(i => i.Role, s => s.MapFrom(d => string.Join(",", d.UserRoles.Select(i => i.Role.Name))))
+				.ForMember(i => i.Role, s => s.MapFrom(d => string.Join(",", d.Roles.Select(i => i.Name))))
 				;
 
 			CreateMap<Role, LookUpVm>()
