@@ -17,6 +17,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
 {
     [ApiKeyAuth]
     [Route("[controller]")]
+    [ResponseCache(Duration =6*60*60,Location =ResponseCacheLocation.Any)]
     public class LookUpController : ControllerBase
     {
         private readonly ICampaignService campaignService;
@@ -58,7 +59,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-                var result = await toiletService.GetAllToilets()
+                var result = await toiletService.GetAllActiveToilets()
                     .Where(i => i.IsActive)
                     .ToListAsync();
                 return new Response<List<ToiletVm>>(result);

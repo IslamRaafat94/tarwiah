@@ -34,6 +34,14 @@ namespace nwc.Tarwya.Application.Services
 
 			return list;
 		}
+		public IQueryable<ToiletVm> GetAllActiveToilets()
+		{
+			var list = ToiletRepo.Get(i => !i.IsDeleted && i.IsActive)
+				.AsNoTracking()
+				.ProjectTo<ToiletVm>(mapper.ConfigurationProvider);
+
+			return list;
+		}
 
 		public async Task<bool> ImportToilets(ToiletFileVm fileObject)
 		{

@@ -45,6 +45,7 @@ namespace nwc.Tarwya.RESTFUL_API
             Console.WriteLine(connectionString);
 
             services.AddOptions();
+            services.AddResponseCaching();
             services.Configure<SystemSettings>(Configuration.GetSection("SysSettings"));
             Configuration.Bind("SysSettings", systemConfigurations);
 
@@ -164,6 +165,7 @@ namespace nwc.Tarwya.RESTFUL_API
             };
 
             app.UseRequestLocalization(options);
+            app.UseResponseCaching();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

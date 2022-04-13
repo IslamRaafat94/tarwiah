@@ -7,6 +7,7 @@ namespace nwc.Tarwya.Application.Services.Contracts
 	public interface IToiletService
 	{
 		IQueryable<ToiletVm> GetAllToilets();
+		IQueryable<ToiletVm> GetAllActiveToilets();
 		Task<bool> ImportToilets(ToiletFileVm fileObject);
 	}
 }

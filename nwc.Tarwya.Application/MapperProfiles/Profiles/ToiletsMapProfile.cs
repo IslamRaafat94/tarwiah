@@ -12,8 +12,8 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 				.ForMember(i => i.Longitude, s => s.MapFrom(d => d.Longitude))
 				.ForMember(i => i.Latitude, s => s.MapFrom(d => d.Latitude))
 				.ForMember(i => i.P1, s => s.MapFrom(d => d.P1))
-				.ForMember(i => i.P2, s => s.MapFrom(d => d.P2))
-				.ForMember(i => i.P3, s => s.MapFrom(d => d.P3))
+				.ForMember(i => i.X, s => s.MapFrom(d => d.P2))
+				.ForMember(i => i.Y, s => s.MapFrom(d => d.P3))
 				.ForMember(i => i.IsActive, s => s.MapFrom(d => d.IsActive));
 
 			CreateMap<ToiletItem, Toilet>()
