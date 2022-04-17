@@ -18,8 +18,8 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 
 			CreateMap<ToiletItem, Toilet>()
 				.ForMember(i => i.Code, s => s.MapFrom(d => d.toilitNumber))
-				.ForMember(i => i.Longitude, s => s.MapFrom(d => d.longitude))
-				.ForMember(i => i.Latitude, s => s.MapFrom(d => d.latitude))
+				.ForMember(i => i.Longitude, s => s.MapFrom(d => d.latitude))
+				.ForMember(i => i.Latitude, s => s.MapFrom(d => d.longitude))
 				.ForMember(i => i.P1, s => s.MapFrom(d => d.FIELD1))
 				.ForMember(i => i.P2, s => s.MapFrom(d => d.FIELD2))
 				.ForMember(i => i.P3, s => s.MapFrom(d => d.FIELD3))

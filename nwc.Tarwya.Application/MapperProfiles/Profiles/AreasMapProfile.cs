@@ -25,7 +25,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 				.ForMember(i => i.Type, s => s.MapFrom(d => d.type))
 				.ForMember(i => i.Name, s => s.MapFrom(d => d.properties.name))
 				.ForMember(i => i.IsActive, s => s.MapFrom(d => true))
-				.ForMember(i => i.AreaCoordinates, s => s.MapFrom(d => d.geometry))
+				//.ForMember(i => i.AreaCoordinates, s => s.MapFrom(d => d.geometry))
 				;
 
 			CreateMap<AreaFeatureGeometry, AreaCoordinate>()

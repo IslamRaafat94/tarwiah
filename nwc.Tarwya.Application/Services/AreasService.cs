@@ -29,7 +29,7 @@ namespace nwc.Tarwya.Application.Services
 		}
 		public IQueryable<AreaVm> GetAllAreas()
 		{
-			var list = areaRepository.Get(i => !i.IsActive)
+			var list = areaRepository.Get(i => i.IsActive)
 				.AsNoTracking()
 				.ProjectTo<AreaVm>(mapper.ConfigurationProvider);
 
@@ -38,8 +38,18 @@ namespace nwc.Tarwya.Application.Services
 
 		public async Task<bool> ImportAreas(AreasFileVm fileObject)
 		{
-			var data = mapper.Map<List<Area>>(fileObject.features);
-			await areaRepository.BulkInsertAsync(data);
+			var data = mapper.Map<List<Area>>(fileObject.features, opt =>
+            {
+				opt.AfterMap((s, d) => { 
+				foreach(var x in d)
+                    {
+						x.AreaCoordinates = fileObject.features.FirstOrDefault(i => i.properties.name == x.Name)?
+						.geometry.coordinates[0][0].Select(i => new AreaCoordinate() { Lng = i[0].ToString(), Lat = i[1].ToString() })
+						.ToList();
+                    }
+				});
+            });
+			await areaRepository.BulkInsertAsync(data, new EFCore.BulkExtensions.BulkConfig() { IncludeGraph = true });
 			return true;
 		}
 	}
