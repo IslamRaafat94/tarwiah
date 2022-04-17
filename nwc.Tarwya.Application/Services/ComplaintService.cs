@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace nwc.Tarwya.Application.Services
@@ -75,7 +76,7 @@ namespace nwc.Tarwya.Application.Services
 
 			for (int i=1;i<=vm.Images.Length;i++)
 			{
-				var localpath = await SaveDocumentToDisk($"{Complaint.Id}", null, $"{Complaint.Id}_{i}.jpg");
+				var localpath = await SaveDocumentToDisk($"{Complaint.Id}", Convert.FromBase64String(vm.Images[i-1]) , $"{Complaint.Id}_{i}.jpg");
 				Complaint.ComplaintImages.Add(new ComplaintImage()
 				{
 					LocalName = localpath
