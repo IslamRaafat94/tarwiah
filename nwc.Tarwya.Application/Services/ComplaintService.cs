@@ -74,13 +74,13 @@ namespace nwc.Tarwya.Application.Services
 
 			Complaint.ComplaintImages = new List<ComplaintImage>();
 
-			for (int i=1;i<=vm.Images.Length;i++)
+			for (int i = 1; i <= (vm.Images ?? Enumerable.Empty<string>()).Count(); i++)
 			{
-				var localpath = await SaveDocumentToDisk($"{Complaint.Id}", Convert.FromBase64String(vm.Images[i-1]) , $"{Complaint.Id}_{i}.jpg");
+				var localpath = await SaveDocumentToDisk($"{Complaint.Id}", Convert.FromBase64String(vm.Images[i - 1]), $"{Complaint.Id}_{i}.jpg");
 				Complaint.ComplaintImages.Add(new ComplaintImage()
 				{
 					LocalName = localpath
-				}); 
+				});
 			}
 			
 			await complaintsRepo.EditAsync(Complaint);
