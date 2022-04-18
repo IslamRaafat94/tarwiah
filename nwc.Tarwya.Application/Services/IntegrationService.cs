@@ -51,6 +51,11 @@ namespace nwc.Tarwya.Application.Services
             var saveResult = _WO_IntegrationService.CreateNewOperation(model);
             return saveResult;
         }
+        public async Task<bool> SaveComplaintInCCBAsync(WorkOrderCreationRequest model)
+        {
+            var saveResult = await _WO_IntegrationService.CreateNewOperationAsync(model);
+            return saveResult;
+        }
 
         public async Task<string> UploadDocumentSync(string metadata,byte[] document)
         {

@@ -56,6 +56,40 @@ namespace nwc.Tarwya.Integrations
                             createResult = true;
                     }
                 }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                nwcLogger.Error(ex.Message, ex);
+                createResult = false;
+            }
+            return createResult;
+        }
+        public async Task<bool> CreateNewOperationAsync(WorkOrderCreationRequest request)
+        {
+            bool createResult = false;
+            try
+            {
+                XmlDocument soapEnvelopeXml = BuildCreateNewOperationRequest(request);
+
+
+                var stream = await settings.CCB_WO_Creation.Url
+                    .WithHeader("Content-Type", "text/xml;charset=\"utf-8\"")
+                    .WithHeader("Accept", "text/xml")
+                    .PostStringAsync(soapEnvelopeXml.OuterXml)
+                    .ReceiveStream();
+
+                using StreamReader rd = new StreamReader(stream);
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(rd.ReadToEnd());
+                XmlNodeList XmlNodeListObj = xmlDoc.GetElementsByTagName("Status");
+                // Return the first name.
+                string status = XmlNodeListObj[0].ChildNodes[0].Value;
+                if (status.ToLower().Equals("ok"))
+                    createResult = true;
             }
             catch (Exception ex)
             {

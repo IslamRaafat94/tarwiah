@@ -113,7 +113,7 @@ namespace nwc.Tarwya.Application.Services
 				SubCategoryName = complaint.SubCategory?.ServerName,
 				ECM_Image = (complaint.ComplaintImages.Count() == 0) ? "" : $"{systemSettings.appSettings.ComplaintImageViewer}{complaint.Id}-00"
 			};
-			var syncResult = integrationService.SaveComplaintInCCB(request);
+			var syncResult = await integrationService.SaveComplaintInCCBAsync(request);
 			return syncResult;
 		}
 		private async Task UploadComplaintImages(Complaint model)
