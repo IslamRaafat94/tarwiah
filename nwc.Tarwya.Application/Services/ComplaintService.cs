@@ -35,13 +35,13 @@ namespace nwc.Tarwya.Application.Services
 			this.integrationService = _integrationService;
 		}
 
-		public async Task<bool> CreateComplaint(ComplaintEditableVm vm)
+		public async Task<int> CreateComplaint(ComplaintEditableVm vm)
 		{
 			var Complaint = await SaveComplaintinDB(vm);
 			
 			await SyncComplaint(Complaint);
 
-			return true;
+			return Complaint.Id;
 		}
 
 
