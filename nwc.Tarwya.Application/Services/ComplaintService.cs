@@ -35,13 +35,13 @@ namespace nwc.Tarwya.Application.Services
 			this.integrationService = _integrationService;
 		}
 
-		public async Task<int> CreateComplaint(ComplaintEditableVm vm)
+		public async Task<string> CreateComplaint(ComplaintEditableVm vm)
 		{
 			var Complaint = await SaveComplaintinDB(vm);
 			
 			await SyncComplaint(Complaint);
 
-			return Complaint.Id;
+			return $"MOB-{Complaint.Id}";
 		}
 
 
@@ -76,7 +76,7 @@ namespace nwc.Tarwya.Application.Services
 
 			for (int i = 1; i <= (vm.Images ?? Enumerable.Empty<string>()).Count(); i++)
 			{
-				var localpath = await SaveDocumentToDisk($"{Complaint.Id}", Convert.FromBase64String(vm.Images[i - 1]), $"{Complaint.Id}_{i}.jpg");
+				var localpath = await SaveDocumentToDisk($"{Complaint.Id}", Convert.FromBase64String(vm.Images[i - 1]), $"MOB-{Complaint.Id}_{i}.jpg");
 				Complaint.ComplaintImages.Add(new ComplaintImage()
 				{
 					LocalName = localpath
@@ -103,7 +103,7 @@ namespace nwc.Tarwya.Application.Services
 			
 			var request = new WorkOrderCreationRequest()
 			{
-				FieldActivityId = complaint.Id.ToString(),
+				FieldActivityId = $"MOB-{Complaint.Id}",
 				AssetNumber = complaint.AssetId,
 				Description = complaint.Description,
 				utm = complaint.Coordintes,
@@ -111,7 +111,7 @@ namespace nwc.Tarwya.Application.Services
 				IssuarName = complaint.IssuerName,
 				SubCategoryCode = complaint.SubCategory?.Code,
 				SubCategoryName = complaint.SubCategory?.ServerName,
-				ECM_Image = (complaint.ComplaintImages.Count() == 0) ? "" : $"{systemSettings.appSettings.ComplaintImageViewer}{complaint.Id}-00"
+				ECM_Image = (complaint.ComplaintImages.Count() == 0) ? "" : $"{systemSettings.appSettings.ComplaintImageViewer}MOB-{Complaint.Id}-00"
 			};
 			var syncResult = await integrationService.SaveComplaintInCCBAsync(request);
 			return syncResult;

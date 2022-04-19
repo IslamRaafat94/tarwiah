@@ -20,17 +20,17 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         }
         [HttpPost]
         [Route("Create")]
-        public async Task<Response<int>> CreateComplaint([FromBody] ComplaintEditableVm model)
+        public async Task<Response<string>> CreateComplaint([FromBody] ComplaintEditableVm model)
         {
             try
             {
                 var result = await complaintService.CreateComplaint(model);
-                return new Response<int>(result);
+                return new Response<string>(result);
             }
             catch (Exception ex)
             {
                 nwcLogger.Error(ex.Message, ex);
-                return new Response<int>(ex.GetHashCode().ToString(), ex.Message);
+                return new Response<string>(ex.GetHashCode().ToString(), ex.Message);
             }
         }
         [HttpGet]

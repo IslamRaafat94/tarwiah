@@ -7,7 +7,7 @@ namespace nwc.Tarwya.Application.Services.Contracts
 	public interface IComplaintService
 	{
 		Task<List<ComplaintVm>> GetComplaints();
-		Task<int> CreateComplaint(ComplaintEditableVm vm);
+		Task<string> CreateComplaint(ComplaintEditableVm vm);
 		Task<ComplaintStatus> GetComplaint(string WorkOrderNumber);
 	}
 }

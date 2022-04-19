@@ -108,7 +108,12 @@ namespace nwc.Tarwya.Integrations
                     .ReceiveJson<WorkOrderInqueryResponce>();
 
             if (result.status.ToLower().Equals("ok"))
-                return new Response<WorkOrderInqueryResponce>(result);
+            {
+                if (!string.IsNullOrEmpty(result.workOrderStatus))
+                    return new Response<WorkOrderInqueryResponce>(result);
+                else
+                    return new Response<WorkOrderInqueryResponce>("WO_NOT_FOUND", "Work Order Not Found.");
+            }
             else
                 return new Response<WorkOrderInqueryResponce>(result.errorCode?.ToString(), result.errorDescription?.ToString());
         }
