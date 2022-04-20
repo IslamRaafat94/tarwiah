@@ -90,28 +90,26 @@ namespace nwc.Tarwya.Application.Services
         }
 		private async Task<bool> SyncComplaint(Complaint Complaint)
 		{
-			//var complaint = await complaintsRepo.GetByIdAsync(ComplaintId);
-
-			var complaint = Complaint;
-
+			var entity = await complaintsRepo.GetByIdAsync(Complaint.Id);
+			await complaintsRepo.GetEntry(entity).Reference("SubCategory").LoadAsync();
 			try
 			{
-				await UploadComplaintImages(complaint);
+				await UploadComplaintImages(entity);
 			}
 			catch
 			{ throw new Exception("ImgUploadIssue"); }
 			
 			var request = new WorkOrderCreationRequest()
 			{
-				FieldActivityId = $"MOB-{Complaint.Id}",
-				AssetNumber = complaint.AssetId,
-				Description = complaint.Description,
-				utm = complaint.Coordintes,
-				IssuarMobile = complaint.IssuerMobileNumber,
-				IssuarName = complaint.IssuerName,
-				SubCategoryCode = complaint.SubCategory?.Code,
-				SubCategoryName = complaint.SubCategory?.ServerName,
-				ECM_Image = (complaint.ComplaintImages.Count() == 0) ? "" : $"{systemSettings.appSettings.ComplaintImageViewer}MOB-{Complaint.Id}-00"
+				FieldActivityId = $"{Complaint.Id}",
+				AssetNumber = entity.AssetId,
+				Description = entity.Description,
+				utm = entity.Coordintes,
+				IssuarMobile = entity.IssuerMobileNumber,
+				IssuarName = entity.IssuerName,
+				SubCategoryCode = entity.SubCategory?.Code,
+				SubCategoryName = entity.SubCategory?.ServerName,
+				ECM_Image = (entity.ComplaintImages.Count() == 0) ? "" : $"{systemSettings.appSettings.ComplaintImageViewer}MOB-{Complaint.Id}-00"
 			};
 			var syncResult = await integrationService.SaveComplaintInCCBAsync(request);
 			return syncResult;
