@@ -135,7 +135,7 @@ namespace nwc.Tarwya.Application.Services
 											<SourceSystem>EAM</SourceSystem>
 											<ProcessName>EAMWODP</ProcessName>
 											<DocumentType>EAMWOMID</DocumentType>
-											<OwnerID>nwc\\dloganathan</OwnerID>
+											<OwnerID>nwc\\moali</OwnerID>
 											<FileName>{fileName}</FileName>
 											<PrivilegeKey>Payables Manager</PrivilegeKey>
 										</SystemData>
@@ -143,10 +143,8 @@ namespace nwc.Tarwya.Application.Services
 											<Mdata><DataType>eam_DocumentType</DataType><DataValue>EAM Mobility Image</DataValue></Mdata>
 											<Mdata><DataType>eam_WorkOrderNumber</DataType><DataValue>MOB-{model.Id}</DataValue></Mdata>
 											<Mdata><DataType>eam_AssetID</DataType><DataValue>{model.AssetId}</DataValue></Mdata>
-											<Mdata><DataType>eam_AssetCode</DataType><DataValue>{string.Empty}</DataValue></Mdata>
-											<Mdata><DataType>eam_AssetClassification</DataType><DataValue>{string.Empty}</DataValue></Mdata>
 											<Mdata><DataType>eam_MaintenanceArea</DataType><DataValue>{model.MantinanceArea}</DataValue></Mdata>
-											<Mdata><DataType>EAM_Operation</DataType><DataValue>{string.Empty}</DataValue></Mdata>
+											
 										</Metadata>
 									</ECMService>";
 
