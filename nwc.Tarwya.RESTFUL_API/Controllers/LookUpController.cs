@@ -17,7 +17,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
 {
     [ApiKeyAuth]
     [Route("[controller]")]
-    [ResponseCache(Duration =6*60*60,Location =ResponseCacheLocation.Any,VaryByQueryKeys =new string[] { "Culture","culture" })]
+    //[ResponseCache(Duration =6*60*60,Location =ResponseCacheLocation.Any,VaryByQueryKeys =new string[] { "Culture","culture" })]
     public class LookUpController : ControllerBase
     {
         private readonly ICampaignService campaignService;
