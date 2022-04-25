@@ -42,7 +42,9 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 				.ForMember(i => i.IssuerMobile, s => s.MapFrom(d => d.IssuerMobileNumber))
 				.ForMember(i => i.SubCatigory, s => s.MapFrom(d => d.SubCategory.NameEn))
 				.ForMember(i => i.Date, s => s.MapFrom(d => d.CreationDate))
-				.ForMember(i => i.IssuerName, s => s.MapFrom(d => d.IssuerName));
+				.ForMember(i => i.IssuerName, s => s.MapFrom(d => d.IssuerName))
+				.ForMember(i => i.IsSynced, s => s.MapFrom(d => d.IsSyncedToCcb))
+				;
 		}
 	}
 }

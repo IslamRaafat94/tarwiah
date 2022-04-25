@@ -11,5 +11,7 @@ namespace nwc.Tarwya.Application.ViewModels.Complains
 		public string SubCatigory { get; set; }
 		public string Description { get; set; }
 		public DateTime Date { get; set; }
+		public bool IsSynced { get; set; }
+		public string Image { get; set; }
 	}
 }

@@ -52,13 +52,16 @@ namespace nwc.Tarwya.Application.Services
 
 		public async Task<List<ComplaintVm>> GetComplaints()
 		{
-			var list = await complaintsRepo.Get(null, i => i.SubCategory)
+			var complaints = await complaintsRepo.Get(null, i => i.SubCategory)
 								  .OrderByDescending(i => i.CreationDate)
 								  .AsNoTracking()
 								  .ProjectTo<ComplaintVm>(mapper.ConfigurationProvider)
 								  .ToListAsync();
 
-			return list;
+			foreach (var i in complaints)
+				i.Image = $"{systemSettings.appSettings.ComplaintImageViewer}MOB-{i.Id}-00";
+
+			return complaints;
 		}
 
 		private async Task<Complaint> SaveComplaintinDB(ComplaintEditableVm vm)

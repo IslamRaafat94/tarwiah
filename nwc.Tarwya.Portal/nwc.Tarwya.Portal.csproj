@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\UAT.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\dist\assets\js\calendar-events.js" />
     <None Include="wwwroot\dist\assets\js\dashforge.calendar.js" />
     <None Include="wwwroot\dist\assets\js\dashforge.chat.js" />
@@ -69,6 +73,13 @@
 
   <ItemGroup>
     <Folder Include="logs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="UAT.pubxml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

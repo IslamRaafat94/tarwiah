@@ -124,9 +124,9 @@ namespace nwc.Tarwya.Portal
             AutoMapperConfig.RegisterMappings();
             NativeInjectorBootStrapper.RegisterServices(services);
 
-            JobManager = services.BuildServiceProvider().GetService<IJobManager>();
-            JobStorage.Current = new SqlServerStorage(connectionString);
-            JobManager.StartProcess();
+            //JobManager = services.BuildServiceProvider().GetService<IJobManager>();
+            //JobStorage.Current = new SqlServerStorage(connectionString);
+            //JobManager.StartProcess();
 
         }
 
@@ -171,14 +171,14 @@ namespace nwc.Tarwya.Portal
             });
             app.UseStaticFiles();
             app.UseAuthentication();
-            var Hngfiretorage = new SqlServerStorage(connectionString);
+            //var Hngfiretorage = new SqlServerStorage(connectionString);
 
-            app.UseHangfireDashboard("/SyncJobs", new DashboardOptions()
-            {
-                DashboardTitle = "Tarwya Background Tasks",
-                DisplayStorageConnectionString = false,
+            //app.UseHangfireDashboard("/SyncJobs", new DashboardOptions()
+            //{
+            //    DashboardTitle = "Tarwya Background Tasks",
+            //    DisplayStorageConnectionString = false,
 
-            }, Hngfiretorage);
+            //}, Hngfiretorage);
 
             app.UseMvc(routes =>
             {
