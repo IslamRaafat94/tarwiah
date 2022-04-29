@@ -37,6 +37,13 @@ namespace nwc.Tarwya.Application.Services
 
 		public async Task<string> CreateComplaint(ComplaintEditableVm vm)
 		{
+			vm.AssetNumber=vm.AssetNumber.Trim();
+			var exLimit = complaintsRepo.Get(i => i.AssetId == vm.AssetNumber&& i.SubCategoryId==vm.CategoryItemId && i.CreationDate.Date == DateTime.Now.Date)
+				.Count() > 5;
+
+			if (exLimit)
+				throw new Exception("Complaint Limit on Same Asset Is Reached.");
+
 			var Complaint = await SaveComplaintinDB(vm);
 			
 			await SyncComplaint(Complaint);

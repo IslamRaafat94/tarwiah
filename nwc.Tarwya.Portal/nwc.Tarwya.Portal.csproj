@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_WebToolingArtifacts Remove="Properties\PublishProfiles\PREPROD.pubxml" />
     <_WebToolingArtifacts Remove="Properties\PublishProfiles\UAT.pubxml" />
   </ItemGroup>
 
@@ -73,13 +74,6 @@
 
   <ItemGroup>
     <Folder Include="logs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="UAT.pubxml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
