@@ -48,7 +48,18 @@ namespace nwc.Tarwya.RESTFUL_API
             services.AddResponseCaching();
             services.Configure<SystemSettings>(Configuration.GetSection("SysSettings"));
             Configuration.Bind("SysSettings", systemConfigurations);
-
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    policy =>
+                    {
+                        policy.WithOrigins("http://10.48.24.195:2041",
+                                           "https://10.48.24.195:2031",
+                                           "http://apretarapp001.nwc.com.sa:2041",
+                                           "https://apretarapp001.nwc.com.sa:2031"
+                                           );
+                    });
+            });
             services.AddDbContext<TarwyaContext>(options =>
             {
                 options.UseLazyLoadingProxies();
@@ -171,6 +182,7 @@ namespace nwc.Tarwya.RESTFUL_API
                 app.UseDeveloperExceptionPage();
             }
             app.UseAuthentication();
+            app.UseCors();
             app.UseMvc();
             app.UseStaticFiles();
 

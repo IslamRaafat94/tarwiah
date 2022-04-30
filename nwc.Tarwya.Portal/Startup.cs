@@ -53,6 +53,18 @@ namespace nwc.Tarwya.Portal
             services.AddMemoryCache();
             services.AddOptions();
             services.AddLocalization();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    policy =>
+                    {
+                        policy.WithOrigins("http://10.48.24.195:2040",
+                                           "https://10.48.24.195:2030",
+                                           "http://apretarapp001.nwc.com.sa:2040",
+                                           "https://apretarapp001.nwc.com.sa:2030"
+                                           );
+                    });
+            });
 
             services.AddDbContext<TarwyaContext>(options =>
             {
@@ -127,6 +139,7 @@ namespace nwc.Tarwya.Portal
             //JobManager = services.BuildServiceProvider().GetService<IJobManager>();
             //JobStorage.Current = new SqlServerStorage(connectionString);
             //JobManager.StartProcess();
+            
 
         }
 
@@ -171,6 +184,7 @@ namespace nwc.Tarwya.Portal
             });
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseCors();
             //var Hngfiretorage = new SqlServerStorage(connectionString);
 
             //app.UseHangfireDashboard("/SyncJobs", new DashboardOptions()
