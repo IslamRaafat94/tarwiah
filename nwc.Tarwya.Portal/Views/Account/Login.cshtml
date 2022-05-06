@@ -43,9 +43,10 @@
                         <p class="tx-color-03 tx-16 mg-b-40">Welcome back! Please signin to continue.</p>
                         <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnurl="@TempData["ReturnUrl"]">
                             @Html.ValidationSummary(true, null, new { style = "color:red;" })
+                            @Html.AntiForgeryToken()
                             <div class="form-group">
                                 <label>UserName/Email</label>
-                                @Html.TextBoxFor(m => m.UserName, new { type = "text", @class = "form-control", placeholder = "yourname@yourmail.com" })
+                                @Html.TextBoxFor(m => m.UserName, new { type = "text", @class = "form-control", placeholder = "yourname@yourmail.com",autocomplete="off" })
                                 @Html.ValidationMessageFor(m => m.UserName, null, new { style = "color:red;" })
                                 @*<input name="UserName" type="text" class="form-control" placeholder="yourname@yourmail.com">*@
                             </div>
@@ -74,6 +75,7 @@
     </footer>
 
     <script src="~/dist/lib/jquery/jquery.min.js"></script>
+    <script src="~/out/js/jquery.validation.min.js"></script>
     <script src="~/dist/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/dist/lib/feather-icons/feather.min.js"></script>
     <script src="~/dist/lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>

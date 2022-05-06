@@ -41,6 +41,7 @@ namespace nwc.Tarwya.Portal.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginVm model, Uri ReturnUrl)
         {
             try

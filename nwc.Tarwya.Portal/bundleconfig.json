@@ -34,8 +34,8 @@
   {
     "outputFileName": "wwwroot/out/js/jquery.validation.min.js",
     "inputFiles": [
-      "wwwroot/dist/lib/jquery.validate.min.js",
-      "wwwroot/dist/lib/jquery.validate.unobtrusive.min.js"
+      "wwwroot/lib/jquery-validate/jquery.validate.min.js",
+      "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
     ]
   }
 

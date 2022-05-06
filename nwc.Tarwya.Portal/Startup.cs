@@ -172,6 +172,7 @@ namespace nwc.Tarwya.Portal
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
             app.UseStatusCodePages(async context =>
