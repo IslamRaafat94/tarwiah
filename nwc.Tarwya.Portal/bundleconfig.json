@@ -23,6 +23,7 @@
       "wwwroot/dist/lib/jqvmap/jqvmap.min.css"
     ]
   },
+
   {
     "outputFileName": "wwwroot/out/js/jquery.flot.min.js",
     "inputFiles": [
@@ -37,6 +38,8 @@
       "wwwroot/lib/jquery-validate/jquery.validate.min.js",
       "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
     ]
+
+
   }
 
 ]
