@@ -60,6 +60,12 @@ namespace nwc.Tarwya.RESTFUL_API
                                            );
                     });
             });
+            services.AddHsts(options => {
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+                options.IncludeSubDomains = true;
+                options.Preload = true;
+            });
             services.AddDbContext<TarwyaContext>(options =>
             {
                 options.UseLazyLoadingProxies();
@@ -185,7 +191,7 @@ namespace nwc.Tarwya.RESTFUL_API
             app.UseCors();
             app.UseMvc();
             app.UseStaticFiles();
-
+            app.UseHsts();
             app.UseCors(c =>
             {
                 c.AllowAnyHeader();
