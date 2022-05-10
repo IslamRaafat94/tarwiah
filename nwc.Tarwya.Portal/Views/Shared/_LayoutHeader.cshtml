@@ -32,6 +32,7 @@
                     <li class="nav-sub-item"><a href="@Url.Action("Index","Toilets")" class="nav-sub-link"><i data-feather="message-square"></i>@Labels.Toilets</a></li>
                     <li class="nav-sub-item"><a href="@Url.Action("Index","Campaign")" class="nav-sub-link"><i data-feather="message-square"></i>@Labels.Campaigns</a></li>
                     <li class="nav-sub-item"><a href="@Url.Action("Index","ZamZam")" class="nav-sub-link"><i data-feather="message-square"></i>@Labels.ZamZam</a></li>
+                    <li class="nav-sub-item"><a href="@Url.Action("Index","Seasons")" class="nav-sub-link"><i data-feather="calendar"></i>@Labels.Seasons</a></li>
                 </ul></li>
             <li class="nav-item"><a href="@Url.Action("Index","Complaint")" class="nav-link"><i data-feather="archive"></i>@Labels.Complaints</a></li>
             <li class="nav-item"><a href="@Url.Action("Users","Account")" class="nav-link"><i data-feather="archive"></i>@Labels.Users</a></li>
@@ -42,7 +43,7 @@
     <div class="navbar-right">
         <div>
             <form id="selectLanguage" asp-controller="Home" asp-area=""
-                  asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="@(isRTL?"en-US":"ar-SA")"
+                  asp-action="SetLanguage" asp-route-returnUrl="@returnUrl" asp-route-culture="@(isRTL?"en-US":"ar-EG")"
                   method="post" class="form-horizontal" role="form">
                 <button class="k-button" onclick="this.form.submit();" data-toggle="dropdown" aria-expanded="true">
                     <span>@(isRTL ? "English" : "عربي")</span>

@@ -5,8 +5,11 @@ using Microsoft.Extensions.Options;
 using nwc.Tarwya.Application.Services.Contracts;
 using nwc.Tarwya.Application.ViewModels.Complains;
 using nwc.Tarwya.Domain.Models.Models;
+using nwc.Tarwya.Domain.Repositories;
 using nwc.Tarwya.Domain.Repositories.Contracts;
 using nwc.Tarwya.Infra.Core;
+using nwc.Tarwya.Infra.Resources;
+using nwc.Tarwya.Infra.Resources.Messages;
 using nwc.Tarwya.Integrations.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,7 @@ namespace nwc.Tarwya.Application.Services
 	public class ComplaintService : ServiceBase, IComplaintService
 	{
 		private readonly IComplaintsRepo complaintsRepo;
+		private readonly IRepository<Season> seasonsrepository;
 		private readonly IIntegrationService integrationService;
 
 
@@ -27,16 +31,24 @@ namespace nwc.Tarwya.Application.Services
 			IOptions<SystemSettings> settings,
 			IMapper mapper,
 			IComplaintsRepo _complaintsRepo,
-			IIntegrationService _integrationService
+			IIntegrationService _integrationService,
+			IRepository<Season> _seasonsrepository
 			)
 			: base(settings, mapper)
 		{
 			this.complaintsRepo = _complaintsRepo;
 			this.integrationService = _integrationService;
+			this.seasonsrepository = _seasonsrepository;
 		}
 
 		public async Task<string> CreateComplaint(ComplaintEditableVm vm)
 		{
+			
+			bool inseason = await inSeason(DateTime.Now);
+			if (!inseason)
+				throw new Exception(GetLoclaizedMessage(CultureCode));
+
+
 			vm.AssetNumber=vm.AssetNumber.Trim();
 			var exLimit = complaintsRepo.Get(i => i.AssetId == vm.AssetNumber&& i.SubCategoryId==vm.CategoryItemId && i.CreationDate.Date == DateTime.Now.Date)
 				.Count() > 5;
@@ -159,6 +171,52 @@ namespace nwc.Tarwya.Application.Services
 									</ECMService>";
 
 			return metadata;
+		}
+		private async Task<bool> inSeason(DateTime CurrentdateTime)
+		{
+			var seasons = await seasonsrepository.Get(i => i.IsActive).ToListAsync();
+			foreach (var i in seasons)
+			{
+				if (CurrentdateTime >= i.StartDate && CurrentdateTime <= i.EndDate)
+					return true;
+			}
+			return false;
+		}
+
+		private  string GetLoclaizedMessage( string CultureCode)
+		{
+			switch (CultureCode)
+			{
+				case "ar-SA":
+					{
+						return Messages.NoSeasons_ar;
+					}
+				case "fr-LU":
+					{
+						return Messages.NoSeasons_fr;
+					}
+				case "fa-IR":
+					{
+						return Messages.NoSeasons_fa;
+					}
+				case "tr-TR":
+					{
+						return Messages.NoSeasons_tr;
+					}
+				case "ur-PK":
+					{
+						 return Messages.NoSeasons_ur;
+					}
+				case "id-ID":
+					{
+						return Messages.NoSeasons_id;
+					}
+				default:
+					{
+						return Messages.NoSeasons_en;
+
+					}
+			}
 		}
 	}
 }

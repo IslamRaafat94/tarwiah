@@ -1,0 +1,53 @@
+﻿
+@model nwc.Tarwya.Application.ViewModels.Seasons.SeasonVm
+
+
+@Html.HiddenFor(i => i.Id)
+@Html.HiddenFor(i => i.StartDate)
+@Html.HiddenFor(i => i.EndDate)
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+			@Html.ValidationMessageFor(m => m.Code, "", new { @class = "tx-danger" })
+			@Html.Kendo().TextBoxFor(m => m.Code).Placeholder(Labels.Code)
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+			@Html.ValidationMessageFor(m => m.NameEn, "", new { @class = "tx-danger" })
+			@Html.Kendo().TextBoxFor(m => m.NameEn).Placeholder(Labels.NameEn)
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			@Html.ValidationMessageFor(m => m.NameAr, "", new { @class = "tx-danger" })
+			@Html.Kendo().TextBoxFor(m => m.NameAr).Placeholder(Labels.NameAr)
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+			@Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "tx-danger" })
+			 @(Html.Kendo().DateRangePickerFor(item => item.StartDate,item => item.EndDate)
+                    .Events(ev => ev.Change("onDateRangePicker"))
+                    .HtmlAttributes(new { style = "width: 100%" })
+                    .Name("DateRangePicker")
+                    .Format("dd/MM/yyyy")
+                    .Range(r=>r.Start(DateTime.Now.Date).End(DateTime.Now.Date.AddDays(10))))
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+			@Html.Kendo().CheckBoxFor(m => m.IsActive).Label(Labels.IsActive)
+		</div>
+	</div>
+	<script>
+        
+	</script>
+</div>

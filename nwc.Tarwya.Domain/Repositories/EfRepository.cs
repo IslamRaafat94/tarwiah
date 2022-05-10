@@ -32,7 +32,10 @@ namespace nwc.Tarwya.Domain.Repositories
 		{
 			dbSet.Add(entity);
 		}
-
+		public EntityEntry Entry(TEntity entity)
+		{
+			return db.Entry(entity);
+		}
 		public async Task AddAsync(TEntity entity)
 		{
 			await dbSet.AddAsync(entity);

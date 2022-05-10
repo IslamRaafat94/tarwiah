@@ -9,19 +9,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>@ViewData["Title"] - NWC</title>
-    <link href="~/lib/kendo/2019.3.917/css/kendo.default-v2.min.css" rel="stylesheet" type="text/css" />
-    @*<link href="~/lib/kendo/2019.3.917/css/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
-        <link href="~/lib/kendo/2019.3.917/css/kendo.dataviz.bootstrap.min.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/lib/kendo/css/kendo.default-v2.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/lib/kendo//css/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/lib/kendo//css/kendo.dataviz.bootstrap.min.css" rel="stylesheet" type="text/css" />*@
 
-    <script src="~/lib/kendo/2019.3.917/js/jquery.min.js"></script>
-    <script src="~/lib/kendo/2019.3.917/js/angular.min.js"></script>
-    <script src="~/lib/kendo/2019.3.917/js/jszip.min.js"></script>
-    <script src="~/lib/kendo/2019.3.917/js/kendo.all.min.js"></script>
-    <script src="~/lib/kendo/2019.3.917/js/kendo.aspnetmvc.min.js"></script>
+    <script src="~/lib/kendo/js/jquery.min.js"></script>
+    <script src="~/lib/kendo/js/angular.min.js"></script>
+    <script src="~/lib/kendo/js/jszip.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.all.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.aspnetmvc.min.js"></script>
     @if (isRTL)
-    {
-        <script src="~/lib/kendo/2019.3.917/js/kendo.messages.ar-SA.min.js"></script>
-    }
+	{
+		<script src="~/lib/kendo/js/kendo.messages.ar-SA.min.js"></script>
+		<script src="~/lib/kendo/js/kendo.culture.ar-EG.min.js" asp-append-version="true"></script>
+
+		<script>
+            kendo.culture("ar-EG");
+		</script>
+
+	}
+	else{
+        <script src="~/lib/kendo/js/kendo.culture.en-US.min.js" asp-append-version="true"></script>
+        <script>
+            kendo.culture("en-US");
+		</script>
+	}
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
 
     <!-- vendor css -->

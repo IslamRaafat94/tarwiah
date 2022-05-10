@@ -1,0 +1,130 @@
+﻿@using nwc.Tarwya.Application.ViewModels.Seasons
+@{
+    ViewData["Title"] = "Index";
+    ViewData["breadcrumb1"] = Labels.Seasons;
+}
+
+<style>
+
+	
+	/* reset everything to the default box model */
+
+	*, :before, :after {
+		-webkit-box-sizing: content-box;
+		-moz-box-sizing: content-box;
+		box-sizing: content-box;
+	}
+
+	/* set a border-box model only to elements that need it */
+
+	.form-control, /* if this class is applied to a Kendo UI widget, its layout may change */
+	.container,
+	.container-fluid,
+	.row,
+	.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1,
+	.col-xs-2, .col-sm-2, .col-md-2, .col-lg-2,
+	.col-xs-3, .col-sm-3, .col-md-3, .col-lg-3,
+	.col-xs-4, .col-sm-4, .col-md-4, .col-lg-4,
+	.col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,
+	.col-xs-6, .col-sm-6, .col-md-6, .col-lg-6,
+	.col-xs-7, .col-sm-7, .col-md-7, .col-lg-7,
+	.col-xs-8, .col-sm-8, .col-md-8, .col-lg-8,
+	.col-xs-9, .col-sm-9, .col-md-9, .col-lg-9,
+	.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10,
+	.col-xs-11, .col-sm-11, .col-md-11, .col-lg-11,
+	.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	
+</style>
+
+<div class="row">
+
+	@(Html.Kendo().Grid<SeasonVm>()
+			.Name("SeasonsGrid")
+			.Columns(async columns =>
+			{
+				columns.Bound(p => p.Id).Filterable(false).Visible(false);
+				columns.Bound(p => p.Code).Title(Labels.Code).Width("15%");
+				columns.Bound(p => p.NameEn).Title(Labels.NameEn).Width("25%");
+				columns.Bound(p => p.NameAr).Title(Labels.NameAr).Width("25%");
+				columns.Bound(p => p.StartDate).Format("{0:dd/MM/yyyy}").Title(Labels.FromDate).Width("25%");
+				columns.Bound(p => p.EndDate).Format("{0:dd/MM/yyyy}").Title(Labels.ToDate).Width("25%");
+				columns.Bound(p => p.IsActive).Title(Labels.IsActive).Width("10%")
+				.ClientTemplate("<input type='checkbox' class='k-checkbox' #= IsActive ? checked='checked' :'' # disabled />")
+				.HtmlAttributes(new { style="text-align:center"});
+				//if ((await AuthorizationService.AuthorizeAsync(User, "Catalog.UpdateSeason")).Succeeded)
+				//{
+					columns.Command(c => c.Edit().Text(Labels.Edit).CancelText(Labels.Cancel).UpdateText(Labels.Save)).Width("25%");
+				//}
+
+
+			})
+			.ToolBar(async t =>
+			{
+				//t.Search();
+				//if ((await AuthorizationService.AuthorizeAsync(User, "Catalog.CreateSeason")).Succeeded)
+					t.Create().Text(Labels.Create);
+			})
+			.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("_SeasonEditor"))
+			@*.Search(search =>
+			{
+				search.Field(f => f.Code);
+				search.Field(f => f.NameEn);
+				search.Field(f => f.NameAr);
+
+			})*@
+			.Pageable(pageable => pageable
+					.Refresh(true)
+					.PageSizes(true)
+					.ButtonCount(5))
+			.Sortable()
+			.Scrollable()
+			.Editable()
+			.Resizable(resize => resize.Columns(true))
+			.HtmlAttributes(new { style = "height:430px;" })
+			.DataSource(dataSource => dataSource
+				.Ajax()
+				.PageSize(20)
+				.Read(read => read.Action("GetSeasons", "Seasons"))
+				.Create(create => create.Action("CreateSeason", "Seasons"))
+				.Update(update => update.Action("UpdateSeason", "Seasons"))
+				.Events(e => e.Error("onGridError"))
+				.Model(m =>
+				{
+					m.Id(i => i.Id);
+				})
+			 )
+			.Events(e=>e.Edit("onDataGridEdit"))
+			.DataSource(s=>s.Ajax()
+			.Events(events => events.Error("onGridError").Sync("sync_handler")))
+			.HtmlAttributes(new { style = "height: 95%;width:100%" })
+    )
+	<script>
+		function sync_handler(e) {
+   this.read();
+      }
+		function onDataGridEdit(e) {
+			
+			
+			var window = e.container.data('kendoWindow')
+			if (!e.model.Code) {
+				window.title('@Html.Raw(Labels.Create)');
+			}
+			else {
+				window.title('@Html.Raw(Labels.Edit)');
+			}
+
+		}
+        function onDateRangePicker() {
+			
+            var range = this.range();
+			$("#StartDate").val(kendo.toString(range.start, 'd'));
+			$("#EndDate").val(kendo.toString(range.end, 'd'));
+        }
+	</script>
+</div>
+
+

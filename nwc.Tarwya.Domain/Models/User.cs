@@ -9,6 +9,8 @@ namespace nwc.Tarwya.Domain.Models.Models
     {
         public User()
         {
+            SeasonCreatedByNavigations = new HashSet<Season>();
+            SeasonLastModifyByNavigations = new HashSet<Season>();
             UserClaims = new HashSet<UserClaim>();
             UserLogins = new HashSet<UserLogin>();
             UserTokens = new HashSet<UserToken>();
@@ -31,6 +33,8 @@ namespace nwc.Tarwya.Domain.Models.Models
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
 
+        public virtual ICollection<Season> SeasonCreatedByNavigations { get; set; }
+        public virtual ICollection<Season> SeasonLastModifyByNavigations { get; set; }
         public virtual ICollection<UserClaim> UserClaims { get; set; }
         public virtual ICollection<UserLogin> UserLogins { get; set; }
         public virtual ICollection<UserToken> UserTokens { get; set; }

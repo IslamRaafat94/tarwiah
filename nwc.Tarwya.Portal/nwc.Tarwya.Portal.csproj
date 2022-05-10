@@ -74,6 +74,7 @@
 
   <ItemGroup>
     <Folder Include="logs\" />
+    <Folder Include="Views\Seasons\EditorTemplates\" />
   </ItemGroup>
 
 </Project>

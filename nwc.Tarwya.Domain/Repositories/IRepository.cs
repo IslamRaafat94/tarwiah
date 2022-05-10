@@ -14,6 +14,7 @@ namespace nwc.Tarwya.Domain.Repositories
 		EntityEntry Attach<T>(T entity);
 		EntityEntry GetEntry<T>(T entity);
 		void Add(TEntity entity);
+		EntityEntry Entry(TEntity entity);
 		Task AddAsync(TEntity entity);
 		void Edit(TEntity entity);
 		Task EditAsync(TEntity entity);

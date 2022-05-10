@@ -149,12 +149,12 @@ namespace nwc.Tarwya.Portal
             var supportedCultures = new List<CultureInfo>
                 {
                     new CultureInfo("en-US"),
-                    new CultureInfo("ar-SA"),
+                    new CultureInfo("ar-EG"),
                 };
 
             var options = new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture("ar-SA"),
+                DefaultRequestCulture = new RequestCulture("ar-EG","ar-EG"),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures,
                 RequestCultureProviders = new List<IRequestCultureProvider>

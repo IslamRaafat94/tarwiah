@@ -412,6 +412,15 @@ namespace nwc.Tarwya.Infra.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From Date.
+        /// </summary>
+        public static string FromDate {
+            get {
+                return ResourceManager.GetString("FromDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group.
         /// </summary>
         public static string Group {
@@ -700,6 +709,15 @@ namespace nwc.Tarwya.Infra.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Required.
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Roles.
         /// </summary>
         public static string Roles {
@@ -723,6 +741,24 @@ namespace nwc.Tarwya.Infra.Resources {
         public static string ScheduleDateTimeStart {
             get {
                 return ResourceManager.GetString("ScheduleDateTimeStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Season Name.
+        /// </summary>
+        public static string SeasonName {
+            get {
+                return ResourceManager.GetString("SeasonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seasons.
+        /// </summary>
+        public static string Seasons {
+            get {
+                return ResourceManager.GetString("Seasons", resourceCulture);
             }
         }
         
@@ -768,6 +804,15 @@ namespace nwc.Tarwya.Infra.Resources {
         public static string Tasks {
             get {
                 return ResourceManager.GetString("Tasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Date.
+        /// </summary>
+        public static string ToDate {
+            get {
+                return ResourceManager.GetString("ToDate", resourceCulture);
             }
         }
         

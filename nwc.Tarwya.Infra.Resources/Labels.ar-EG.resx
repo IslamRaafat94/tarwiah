@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Dashboard" xml:space="preserve">
+    <value>الرئيسيه</value>
+  </data>
+  <data name="Catalog" xml:space="preserve">
+    <value>الاساسيه</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>خط الطول</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>سجل المخالفات</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>ملاحظة</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>المهام</value>
+  </data>
+  <data name="Logs" xml:space="preserve">
+    <value>سجل النظام</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>المستخدمين</value>
+  </data>
+  <data name="Areas" xml:space="preserve">
+    <value>المناطق</value>
+  </data>
+  <data name="ViolationsTypes" xml:space="preserve">
+    <value>انواع المخالفات</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>تسجيل الخروج</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>الملف الشخصي</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>الكود</value>
+  </data>
+  <data name="NameEn" xml:space="preserve">
+    <value>الاسم (الانجليزيه)</value>
+  </data>
+  <data name="NameAr" xml:space="preserve">
+    <value>الاسم (العربيه)</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>الغاء</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>مفعل</value>
+  </data>
+  <data name="WarningDays" xml:space="preserve">
+    <value>ايام التحذير</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>الصلاحيات</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الالكتروني</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>اضافة</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="AccountId" xml:space="preserve">
+    <value>رقم الحساب</value>
+  </data>
+  <data name="HassarNumber" xml:space="preserve">
+    <value>رقم الحصر</value>
+  </data>
+  <data name="IssuerMobile" xml:space="preserve">
+    <value>رقم هاتف المشتكي</value>
+  </data>
+  <data name="CustomerClass" xml:space="preserve">
+    <value>فئة العميل</value>
+  </data>
+  <data name="ZamZam" xml:space="preserve">
+    <value>زمزم</value>
+  </data>
+  <data name="CBUCode" xml:space="preserve">
+    <value>كود المنطقه</value>
+  </data>
+  <data name="ViolationType" xml:space="preserve">
+    <value>نوع المخالفه</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>التعليق</value>
+  </data>
+  <data name="CreatedAt" xml:space="preserve">
+    <value>تاريخ التسجيل</value>
+  </data>
+  <data name="Feedbacks" xml:space="preserve">
+    <value>التقيمات/ألاراء</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>التفاصيل</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحاله</value>
+  </data>
+  <data name="SystemAnalytics" xml:space="preserve">
+    <value>تحليل النظام</value>
+  </data>
+  <data name="WelcomeToHayatDashboard" xml:space="preserve">
+    <value>مرحبا بك في نظام حياة</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>خط العرض</value>
+  </data>
+  <data name="YouCanOnlyUpload" xml:space="preserve">
+    <value>يمكنك فقط رفع الملفات بصيغة</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>التصنيفات</value>
+  </data>
+  <data name="PendingComplaints" xml:space="preserve">
+    <value>الشكاوى المعلقه</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>موافقه</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>رفض</value>
+  </data>
+  <data name="TotalComplaints" xml:space="preserve">
+    <value>إجمالي الشكاوي</value>
+  </data>
+  <data name="ViolationStatusesStatistics" xml:space="preserve">
+    <value>احصائيات حالات المخالفات بالنظام</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>الكل</value>
+  </data>
+  <data name="UserInformation" xml:space="preserve">
+    <value>بيانات المستتخدم</value>
+  </data>
+  <data name="FeedbacksRate" xml:space="preserve">
+    <value>نسبة التقيمات/الاراء</value>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>الصور</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="WorkOrders" xml:space="preserve">
+    <value>أوامر الشغل</value>
+  </data>
+  <data name="Campaigns" xml:space="preserve">
+    <value>الحملات</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>استيراد</value>
+  </data>
+  <data name="FeedbackStandards" xml:space="preserve">
+    <value>معاير التقييم</value>
+  </data>
+  <data name="Officer" xml:space="preserve">
+    <value>موظف</value>
+  </data>
+  <data name="Worker" xml:space="preserve">
+    <value>عامل ميداني</value>
+  </data>
+  <data name="PendingFieldActivities" xml:space="preserve">
+    <value>الانشطه الميدانيه المعلقه</value>
+  </data>
+  <data name="ScheduleDateTimeStart" xml:space="preserve">
+    <value>التاريخ المجدول</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="Toilets" xml:space="preserve">
+    <value>دوراة المياه</value>
+  </data>
+  <data name="CBU" xml:space="preserve">
+    <value>المنطقه</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>المدينه</value>
+  </data>
+  <data name="Addrress1" xml:space="preserve">
+    <value>العنوان 1</value>
+  </data>
+  <data name="Addrress2" xml:space="preserve">
+    <value>العنوان 2</value>
+  </data>
+  <data name="ClientName" xml:space="preserve">
+    <value>اسم العميل</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>الاجمالي</value>
+  </data>
+  <data name="Approved" xml:space="preserve">
+    <value>موافق عليه</value>
+  </data>
+  <data name="Rejected" xml:space="preserve">
+    <value>مرفوض</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>الاشهر</value>
+  </data>
+  <data name="SingleDistribution" xml:space="preserve">
+    <value>توزيع فردي</value>
+  </data>
+  <data name="GroupDistribution" xml:space="preserve">
+    <value>توزيع جماعي</value>
+  </data>
+  <data name="Assign" xml:space="preserve">
+    <value>تخصيص</value>
+  </data>
+  <data name="CheckOut" xml:space="preserve">
+    <value>سحب</value>
+  </data>
+  <data name="CheckOutFAs" xml:space="preserve">
+    <value>سحب التخصيص</value>
+  </data>
+  <data name="IssuerName" xml:space="preserve">
+    <value>اسم المشتكي</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>مفعل</value>
+  </data>
+  <data name="InActive" xml:space="preserve">
+    <value>غير مفعل</value>
+  </data>
+  <data name="NewRecord" xml:space="preserve">
+    <value>تسجيل جديد</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>خطاء</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>الرئيسيه</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>تجميع</value>
+  </data>
+  <data name="Complaints" xml:space="preserve">
+    <value>الشكاوى</value>
+  </data>
+  <data name="AssetNo" xml:space="preserve">
+    <value>الرقم</value>
+  </data>
+  <data name="NameFr" xml:space="preserve">
+    <value>الاسم (الفرنسيه)</value>
+  </data>
+  <data name="NameFa" xml:space="preserve">
+    <value>الاسم (الفارسي)</value>
+  </data>
+  <data name="NameTr" xml:space="preserve">
+    <value>الاسم (التركيه)</value>
+  </data>
+  <data name="NameId" xml:space="preserve">
+    <value>الاسم (الاندنوسيه)</value>
+  </data>
+  <data name="NameUr" xml:space="preserve">
+    <value>الاسم (الاورديه)</value>
+  </data>
+  <data name="Json" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="files" xml:space="preserve">
+    <value>ملفات</value>
+  </data>
+  <data name="UpdateCurrentRecordsToInActiveStateMsg" xml:space="preserve">
+    <value>سيتم تعديل التسجيلات الحاليه للحاله الغير مفعله</value>
+  </data>
+  <data name="DefaultAreas" xml:space="preserve">
+    <value>المناطق</value>
+  </data>
+  <data name="Seasons" xml:space="preserve">
+    <value>مواسم الحج</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>من تاريخ</value>
+  </data>
+  <data name="SeasonName" xml:space="preserve">
+    <value>أسم الموسم</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>الي تاريخ</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+</root>

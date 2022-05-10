@@ -30,6 +30,7 @@ namespace nwc.Tarwya.Domain.Models.Models
         public virtual DbSet<FeedbackQuestionAnswer> FeedbackQuestionAnswers { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoleClaim> RoleClaims { get; set; }
+        public virtual DbSet<Season> Seasons { get; set; }
         public virtual DbSet<Toilet> Toilets { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserClaim> UserClaims { get; set; }
@@ -230,10 +231,6 @@ namespace nwc.Tarwya.Domain.Models.Models
             {
                 entity.ToTable("Roles", "Security");
 
-                entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedName] IS NOT NULL)");
-
                 entity.Property(e => e.Name).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
@@ -243,11 +240,42 @@ namespace nwc.Tarwya.Domain.Models.Models
             {
                 entity.ToTable("RoleClaims", "Security");
 
-                entity.HasIndex(e => e.RoleId, "IX_RoleClaims_RoleId");
-
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.RoleClaims)
                     .HasForeignKey(d => d.RoleId);
+            });
+
+            modelBuilder.Entity<Season>(entity =>
+            {
+                entity.HasIndex(e => e.Code, "IX_Seasons")
+                    .IsUnique();
+
+                entity.Property(e => e.Code)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CreatedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.EndDate).HasColumnType("date");
+
+                entity.Property(e => e.LastModifyAt).HasColumnType("datetime");
+
+                entity.Property(e => e.NameAr).IsRequired();
+
+                entity.Property(e => e.NameEn).IsRequired();
+
+                entity.Property(e => e.StartDate).HasColumnType("date");
+
+                entity.HasOne(d => d.CreatedByNavigation)
+                    .WithMany(p => p.SeasonCreatedByNavigations)
+                    .HasForeignKey(d => d.CreatedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Seasons_Users");
+
+                entity.HasOne(d => d.LastModifyByNavigation)
+                    .WithMany(p => p.SeasonLastModifyByNavigations)
+                    .HasForeignKey(d => d.LastModifyBy)
+                    .HasConstraintName("FK_Seasons_Users1");
             });
 
             modelBuilder.Entity<Toilet>(entity =>
@@ -258,12 +286,6 @@ namespace nwc.Tarwya.Domain.Models.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users", "Security");
-
-                entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
-
-                entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
-                    .IsUnique()
-                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
 
                 entity.Property(e => e.Email).HasMaxLength(256);
 
@@ -284,16 +306,12 @@ namespace nwc.Tarwya.Domain.Models.Models
                             j.HasKey("UserId", "RoleId");
 
                             j.ToTable("UserRoles", "Security");
-
-                            j.HasIndex(new[] { "RoleId" }, "IX_UserRoles_RoleId");
                         });
             });
 
             modelBuilder.Entity<UserClaim>(entity =>
             {
                 entity.ToTable("UserClaims", "Security");
-
-                entity.HasIndex(e => e.UserId, "IX_UserClaims_UserId");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserClaims)
@@ -308,8 +326,6 @@ namespace nwc.Tarwya.Domain.Models.Models
 
                 entity.HasIndex(e => new { e.LoginProvider, e.ProviderKey }, "AK_UserLogins_LoginProvider_ProviderKey")
                     .IsUnique();
-
-                entity.HasIndex(e => e.UserId, "IX_UserLogins_UserId");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserLogins)

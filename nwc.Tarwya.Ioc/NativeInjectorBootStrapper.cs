@@ -40,6 +40,7 @@ namespace nwc.Tarwya.Infra.Ioc
 			services.AddScoped<IDashboardService, DashboardService>();
 			services.AddScoped<ISyncService, SyncService>();
 			services.AddScoped<IJobManager, JobManager>();
+			services.AddScoped<ISeasonsService, SeasonsService>();
 
 
 			// integrations
