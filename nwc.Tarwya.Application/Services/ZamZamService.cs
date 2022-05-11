@@ -67,7 +67,13 @@ namespace nwc.Tarwya.Application.Services
 
 				locationslist.Add(category);
 			}
-
+			var results =  zamzamLocationsRepository.Get().ToList();
+            foreach (var item in results)
+            {
+				item.IsDeleted = true;
+            }
+				
+			await zamzamLocationsRepository.BulkUpdateAsync(results);
 			await zamzamLocationsRepository.BulkInsertAsync(locationslist);
 			return true;
 		}

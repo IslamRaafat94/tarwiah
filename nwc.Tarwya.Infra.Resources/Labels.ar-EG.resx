@@ -292,7 +292,7 @@
     <value>استيراد</value>
   </data>
   <data name="FeedbackStandards" xml:space="preserve">
-    <value>معاير التقييم</value>
+    <value>معايير التقييم</value>
   </data>
   <data name="Officer" xml:space="preserve">
     <value>موظف</value>
@@ -310,7 +310,7 @@
     <value>النوع</value>
   </data>
   <data name="Toilets" xml:space="preserve">
-    <value>دوراة المياه</value>
+    <value>دورات المياه</value>
   </data>
   <data name="CBU" xml:space="preserve">
     <value>المنطقه</value>
