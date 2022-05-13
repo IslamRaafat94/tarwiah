@@ -1,5 +1,6 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage;
 using nwc.Tarwya.Domain.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace nwc.Tarwya.Domain.Repositories
 {
 	public interface IRepository<TEntity> :IEFBulkOperations<TEntity> where TEntity : class 
 	{
+		Task<IDbContextTransaction> GetTransactionAsync();
+		IDbContextTransaction GetTransaction();
 		EntityEntry Attach<T>(T entity);
 		EntityEntry GetEntry<T>(T entity);
 		void Add(TEntity entity);

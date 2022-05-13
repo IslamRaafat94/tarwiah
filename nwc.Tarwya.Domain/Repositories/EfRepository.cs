@@ -1,6 +1,7 @@
 ﻿using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage;
 using nwc.Tarwya.Domain.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,14 @@ namespace nwc.Tarwya.Domain.Repositories
 			db = dbContext;
 			dbSet = dbContext.Set<TEntity>();
 		}
+		public IDbContextTransaction GetTransaction()
+        {
+			return db.Database.BeginTransaction();
+        }
+		public async Task<IDbContextTransaction> GetTransactionAsync()
+        {
+			return await db.Database.BeginTransactionAsync();
+        }
 		public EntityEntry Attach<T>(T entity)
 		{
 			return db.Attach(entity);

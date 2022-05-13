@@ -38,6 +38,9 @@ namespace nwc.Tarwya.Application.Services
 
 		public async Task<bool> ImportAreas(AreasFileVm fileObject)
 		{
+			using var tranc = areaRepository.GetTransaction();
+            try
+            {
 			var data = mapper.Map<List<Area>>(fileObject.features, opt =>
             {
 				opt.AfterMap((s, d) => { 
@@ -49,8 +52,33 @@ namespace nwc.Tarwya.Application.Services
                     }
 				});
             });
-			await areaRepository.BulkInsertAsync(data, new EFCore.BulkExtensions.BulkConfig() { IncludeGraph = true });
+				if (data.Count < 1)
+				{
+					return true;
+				}
+				var oldData = areaRepository.Get(i => i.IsActive == true).ToList();
+				foreach (var item in oldData)
+				{
+					item.IsActive = false;
+					
+				}
+				await areaRepository.BulkUpdateAsync(oldData);
+
+				await areaRepository.BulkInsertAsync(data, new EFCore.BulkExtensions.BulkConfig() { IncludeGraph = true });
+			await tranc.CommitAsync();	
 			return true;
+
+            }
+			catch
+			{
+				await tranc.RollbackAsync();
+
+				throw;
+			}
+			finally
+			{
+				await tranc.DisposeAsync();
+			}
 		}
 	}
 }
