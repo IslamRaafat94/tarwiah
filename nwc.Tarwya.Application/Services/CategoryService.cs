@@ -125,6 +125,10 @@ namespace nwc.Tarwya.Application.Services
                         item2.IsActive = false;
                     }
                 }
+                if (catiegorislist.Count < 1)
+                {
+                    return true;
+                }
                 await CategoryRepo.BulkUpdateAsync(oldData);
 
                 await CategoryRepo.BulkInsertAsync(catiegorislist, new EFCore.BulkExtensions.BulkConfig() { IncludeGraph = true });
