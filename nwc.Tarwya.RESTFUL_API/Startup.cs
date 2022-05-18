@@ -53,10 +53,15 @@ namespace nwc.Tarwya.RESTFUL_API
                 options.AddDefaultPolicy(
                     policy =>
                     {
-                        policy.WithOrigins("http://10.48.24.195:2041",
+                        policy.WithOrigins("https://tarwiahapi.nwc.com.sa",
+                            "http://10.48.24.195:2041",
                                            "https://10.48.24.195:2031",
                                            "http://apretarapp001.nwc.com.sa:2041",
-                                           "https://apretarapp001.nwc.com.sa:2031"
+                                           "https://apretarapp001.nwc.com.sa:2031",
+                                           "https://10.49.20.66:2051",
+                                           "https://10.49.20.66:2031",
+                                           "https://10.49.20.67:2051",
+                                           "https://10.49.20.67:2031"
                                            );
                     });
             });
@@ -200,11 +205,11 @@ namespace nwc.Tarwya.RESTFUL_API
             });
 
             app.UseSwagger();
-            app.UseSwaggerUI(s =>
-            {
-                s.SwaggerEndpoint("./swagger/v1/swagger.json", "Tarwya Project API v1.1");
-                s.RoutePrefix = string.Empty;
-            });
+            //app.UseSwaggerUI(s =>
+            //{
+            //    s.SwaggerEndpoint("./swagger/v1/swagger.json", "Tarwya Project API v1.1");
+            //    s.RoutePrefix = string.Empty;
+            //});
         }
     }
 }
