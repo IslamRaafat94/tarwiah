@@ -22,6 +22,7 @@ using nwc.Tarwya.RESTFUL_API.Configurations;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net;
 
 namespace nwc.Tarwya.RESTFUL_API
 {
@@ -192,24 +193,30 @@ namespace nwc.Tarwya.RESTFUL_API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStatusCodePages(async context =>
+            {
+                var response = context.HttpContext.Response;
+
+
+
+                if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
+                response.StatusCode == (int)HttpStatusCode.Forbidden || response.StatusCode == (int)HttpStatusCode.NotFound)
+                    response.Headers.AccessControlAllowOrigin = "https://tarwiahapi.nwc.com.sa";
+               
+            });
             app.UseAuthentication();
             app.UseCors();
             app.UseMvc();
             app.UseStaticFiles();
             app.UseHsts();
-            app.UseCors(c =>
-            {
-                c.AllowAnyHeader();
-                c.AllowAnyMethod();
-                c.AllowAnyOrigin();
-            });
+           
 
             app.UseSwagger();
-            //app.UseSwaggerUI(s =>
-            //{
-            //    s.SwaggerEndpoint("./swagger/v1/swagger.json", "Tarwya Project API v1.1");
-            //    s.RoutePrefix = string.Empty;
-            //});
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("./swagger/v1/swagger.json", "Tarwya Project API v1.1");
+                s.RoutePrefix = string.Empty;
+            });
         }
     }
 }
