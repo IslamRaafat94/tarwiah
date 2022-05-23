@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NoSeasons" xml:space="preserve">
-    <value>يبلاتىنةو</value>
+    <value>Service disponible pendant la saison du hajj uniquement</value>
+  </data>
+  <data name="FaildCreateComplaint" xml:space="preserve">
+    <value>Create Complaint Falid, Please Try Again Later.</value>
   </data>
 </root>

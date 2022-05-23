@@ -46,7 +46,7 @@ namespace nwc.Tarwya.Application.Services
 			
 			bool inseason = await inSeason(DateTime.Now);
 			if (!inseason)
-				throw new Exception(GetLoclaizedMessage(CultureCode));
+				throw new Exception(Messages.NoSeasons);
 
 
 			vm.AssetNumber=vm.AssetNumber.Trim();
@@ -55,11 +55,22 @@ namespace nwc.Tarwya.Application.Services
 
 			if (exLimit)
 				throw new Exception("Complaint Limit on Same Asset Is Reached.");
+			
 
 			var Complaint = await SaveComplaintinDB(vm);
-			
-			await SyncComplaint(Complaint);
 
+			bool isSynced = await SyncComplaint(Complaint);
+
+			if (!isSynced)
+				throw new Exception(Messages.FaildCreateComplaint);
+			
+			else
+            {
+				var entity = await complaintsRepo.GetByIdAsync(Complaint.Id);
+				entity.IsSyncedToCcb = true;
+				await complaintsRepo.EditAsync(entity);
+				await complaintsRepo.SaveChangesAsync();
+            }
 			return $"MOB-{Complaint.Id}";
 		}
 
@@ -181,42 +192,6 @@ namespace nwc.Tarwya.Application.Services
 					return true;
 			}
 			return false;
-		}
-
-		private  string GetLoclaizedMessage( string CultureCode)
-		{
-			switch (CultureCode)
-			{
-				case "ar-SA":
-					{
-						return Messages.NoSeasons_ar;
-					}
-				case "fr-LU":
-					{
-						return Messages.NoSeasons_fr;
-					}
-				case "fa-IR":
-					{
-						return Messages.NoSeasons_fa;
-					}
-				case "tr-TR":
-					{
-						return Messages.NoSeasons_tr;
-					}
-				case "ur-PK":
-					{
-						 return Messages.NoSeasons_ur;
-					}
-				case "id-ID":
-					{
-						return Messages.NoSeasons_id;
-					}
-				default:
-					{
-						return Messages.NoSeasons_en;
-
-					}
-			}
 		}
 	}
 }

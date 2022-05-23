@@ -25,12 +25,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Messages\Message.ar-SA.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Messages\Messages.ar-EG.resx">
-      <LastGenOutput>Messages.ar-EG.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Update="Messages\Messages.ar-SA.resx">
+      <Generator></Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Messages\Messages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

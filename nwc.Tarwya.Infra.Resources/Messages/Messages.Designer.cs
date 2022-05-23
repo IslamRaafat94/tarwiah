@@ -61,74 +61,20 @@ namespace nwc.Tarwya.Infra.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Complaint Falid, Please Try Again Later..
+        /// </summary>
+        public static string FaildCreateComplaint {
+            get {
+                return ResourceManager.GetString("FaildCreateComplaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Service Available while hajj season only.
         /// </summary>
         public static string NoSeasons {
             get {
                 return ResourceManager.GetString("NoSeasons", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to الخدمة متوفرة في موسم الحج فقط.
-        /// </summary>
-        public static string NoSeasons_ar {
-            get {
-                return ResourceManager.GetString("NoSeasons_ar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Service Available while hajj season only.
-        /// </summary>
-        public static string NoSeasons_en {
-            get {
-                return ResourceManager.GetString("NoSeasons_en", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to خدمات فقط در فصل حج در دسترس است.
-        /// </summary>
-        public static string NoSeasons_fa {
-            get {
-                return ResourceManager.GetString("NoSeasons_fa", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Service disponible pendant la saison du hajj uniquement.
-        /// </summary>
-        public static string NoSeasons_fr {
-            get {
-                return ResourceManager.GetString("NoSeasons_fr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Layanan Tersedia selama musim haji saja.
-        /// </summary>
-        public static string NoSeasons_id {
-            get {
-                return ResourceManager.GetString("NoSeasons_id", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hizmet sadece hac mevsiminde mevcuttur.
-        /// </summary>
-        public static string NoSeasons_tr {
-            get {
-                return ResourceManager.GetString("NoSeasons_tr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to سروس صرف حج کے موسم کے دوران دستیاب ہے.
-        /// </summary>
-        public static string NoSeasons_ur {
-            get {
-                return ResourceManager.GetString("NoSeasons_ur", resourceCulture);
             }
         }
     }

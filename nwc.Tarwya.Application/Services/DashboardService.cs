@@ -27,6 +27,7 @@ namespace nwc.Tarwya.Application.Services
 			var result = new DashBoardVm();
 			result.ComplaintsCount = await db.Complaints.CountAsync();
 			result.FeedbacksCount = await db.Feedbacks.CountAsync();
+			result.FeedbacksRate = await db.FeedbackQuestionAnswers.SumAsync(i => i.Value) / await db.Feedbacks.CountAsync();
 			result.SyncPendingComplaintsCount = await db.Complaints.Where(i => !i.IsSyncedToCcb).CountAsync();
 
 			return result;
