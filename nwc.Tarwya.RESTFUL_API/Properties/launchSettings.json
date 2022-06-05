@@ -14,10 +14,10 @@
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "PREPROD"
       }
     },
-    "nwc.Tarwya.RESTFUL_API": {
+    "nwc.Tarwya.API_DEV": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
@@ -26,7 +26,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "nwc.Tarwya.RESTFUL_API_PUBLIC": {
+    "nwc.Tarwya.API_PUBLIC": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
@@ -35,7 +35,16 @@
         "ASPNETCORE_ENVIRONMENT": "Public"
       }
     },
-    "nwc.Tarwya.RESTFUL_API_UAT": {
+    "nwc.Tarwya.API_UAT": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/values",
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "UAT"
+      }
+    },
+    "nwc.Tarwya.API_PREPROD": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
