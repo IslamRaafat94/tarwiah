@@ -9,6 +9,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 			CreateMap<Toilet, ToiletVm>()
 				.ForMember(i => i.Id, s => s.MapFrom(d => d.Id))
 				.ForMember(i => i.Code, s => s.MapFrom(d => d.Code))
+				.ForMember(i => i.KedanaCode, s => s.MapFrom(d => d.KedanaCode))
 				.ForMember(i => i.Longitude, s => s.MapFrom(d => d.Longitude))
 				.ForMember(i => i.Latitude, s => s.MapFrom(d => d.Latitude))
 				.ForMember(i => i.P1, s => s.MapFrom(d => d.P1))

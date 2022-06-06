@@ -529,6 +529,15 @@ namespace nwc.Tarwya.Infra.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kedana Number.
+        /// </summary>
+        public static string KedanaCode {
+            get {
+                return ResourceManager.GetString("KedanaCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latitude.
         /// </summary>
         public static string Latitude {

@@ -94,7 +94,7 @@
          "ObjectType": 0
       }
    ],
-   "UiHint": "LAPTOP-U9Q7J96C.Tarwya",
+   "UiHint": "ASITQATDBS001\\DEV16.TarwyaUATDB",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,

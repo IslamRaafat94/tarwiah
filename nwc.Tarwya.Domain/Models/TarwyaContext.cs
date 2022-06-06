@@ -106,9 +106,6 @@ namespace nwc.Tarwya.Domain.Models.Models
 
             modelBuilder.Entity<CategoryItem>(entity =>
             {
-                entity.HasIndex(e => e.Code, "IX_SubCategories")
-                    .IsUnique();
-
                 entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -231,6 +228,10 @@ namespace nwc.Tarwya.Domain.Models.Models
             {
                 entity.ToTable("Roles", "Security");
 
+                entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedName] IS NOT NULL)");
+
                 entity.Property(e => e.Name).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
@@ -239,6 +240,8 @@ namespace nwc.Tarwya.Domain.Models.Models
             modelBuilder.Entity<RoleClaim>(entity =>
             {
                 entity.ToTable("RoleClaims", "Security");
+
+                entity.HasIndex(e => e.RoleId, "IX_RoleClaims_RoleId");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.RoleClaims)
@@ -287,6 +290,12 @@ namespace nwc.Tarwya.Domain.Models.Models
             {
                 entity.ToTable("Users", "Security");
 
+                entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
+
+                entity.HasIndex(e => e.NormalizedUserName, "UserNameIndex")
+                    .IsUnique()
+                    .HasFilter("([NormalizedUserName] IS NOT NULL)");
+
                 entity.Property(e => e.Email).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
@@ -306,12 +315,16 @@ namespace nwc.Tarwya.Domain.Models.Models
                             j.HasKey("UserId", "RoleId");
 
                             j.ToTable("UserRoles", "Security");
+
+                            j.HasIndex(new[] { "RoleId" }, "IX_UserRoles_RoleId");
                         });
             });
 
             modelBuilder.Entity<UserClaim>(entity =>
             {
                 entity.ToTable("UserClaims", "Security");
+
+                entity.HasIndex(e => e.UserId, "IX_UserClaims_UserId");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserClaims)
@@ -326,6 +339,8 @@ namespace nwc.Tarwya.Domain.Models.Models
 
                 entity.HasIndex(e => new { e.LoginProvider, e.ProviderKey }, "AK_UserLogins_LoginProvider_ProviderKey")
                     .IsUnique();
+
+                entity.HasIndex(e => e.UserId, "IX_UserLogins_UserId");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserLogins)

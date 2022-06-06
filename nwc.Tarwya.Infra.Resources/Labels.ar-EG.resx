@@ -423,4 +423,7 @@
   <data name="Required" xml:space="preserve">
     <value>Required</value>
   </data>
+  <data name="KedanaCode" xml:space="preserve">
+    <value>رقم كيدانا</value>
+  </data>
 </root>
