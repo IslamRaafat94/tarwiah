@@ -50,7 +50,16 @@
       "launchUrl": "api/values",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "UAT"
+        "ASPNETCORE_ENVIRONMENT": "PREPROD"
+      }
+    },
+    "nwc.Tarwya.API_PROD": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/values",
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "PROD"
       }
     }
   }
