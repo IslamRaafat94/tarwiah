@@ -58,7 +58,8 @@ namespace nwc.Tarwya.Portal
                 options.AddDefaultPolicy(
                     policy =>
                     {
-                        policy.WithOrigins("http://10.48.24.195:2040",
+                        policy.WithOrigins("http://10.68.141.97:2030",
+                                           "http://10.48.24.195:2040",
                                            "https://10.48.24.195:2030",
                                            "http://apretarapp001.nwc.com.sa:2040",
                                            "https://apretarapp001.nwc.com.sa:2030"
@@ -165,7 +166,7 @@ namespace nwc.Tarwya.Portal
             };
             app.UseRequestLocalization(options);
             NLog.GlobalDiagnosticsContext.Set("DefaultConnection", connectionString);
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("UAT") || env.IsEnvironment("PREPROD"))
             {
                 app.UseDeveloperExceptionPage();
             }

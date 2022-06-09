@@ -30,6 +30,22 @@
         "ASPNETCORE_ENVIRONMENT": "UAT"
       },
       "applicationUrl": "http://localhost:5000/"
+    },
+    "PREPROD": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "PREPROD"
+      },
+      "applicationUrl": "http://localhost:5000/"
+    },
+    "PROD": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "PROD"
+      },
+      "applicationUrl": "http://localhost:5000/"
     }
   }
 }

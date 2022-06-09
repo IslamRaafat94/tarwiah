@@ -44,52 +44,63 @@ namespace nwc.Tarwya.Portal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginVm model, Uri ReturnUrl)
         {
-            try
+            if (ModelState.IsValid)
             {
-                var user = await applicationUserManager.FindByEmailAsync(model?.UserName).ConfigureAwait(false)
+                try
+                {
+
+                    var user = await applicationUserManager.FindByEmailAsync(model?.UserName).ConfigureAwait(false)
                        ?? await applicationUserManager.FindByNameAsync(model.UserName).ConfigureAwait(false);
 
-                if (user != null)
-                {
-                    var passwordIsCorrect = await applicationUserManager.CheckPasswordAsync(user, model.Password).ConfigureAwait(false);
-                    if (passwordIsCorrect)
+                    if (user != null)
                     {
-                        var customClaims = new List<Claim>
+                        var passwordIsCorrect = await applicationUserManager.CheckPasswordAsync(user, model.Password).ConfigureAwait(false);
+                        if (!passwordIsCorrect) ModelState.AddModelError(string.Empty, "Incorrect UserName or Password.");
+                        if (passwordIsCorrect)
+                        {
+                            var customClaims = new List<Claim>
                             {
                                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString(CultureInfo.CurrentCulture), ClaimValueTypes.String),
                                 new Claim(ClaimTypes.Name, user.UserName.ToString(CultureInfo.CurrentCulture), ClaimValueTypes.String),
                                 new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.String),
                             };
 
-                        var userRoles = await applicationUserManager.GetRolesAsync(user).ConfigureAwait(false);
-                        foreach (var role in userRoles)
-                            customClaims.Add(new Claim(ClaimTypes.Role, role, ClaimValueTypes.String));
+                            var userRoles = await applicationUserManager.GetRolesAsync(user).ConfigureAwait(false);
+                            foreach (var role in userRoles)
+                                customClaims.Add(new Claim(ClaimTypes.Role, role, ClaimValueTypes.String));
 
 
-                        var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                        identity.AddClaims(customClaims);
-                        var principal = new ClaimsPrincipal(identity);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true }).ConfigureAwait(false);
+                            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                            identity.AddClaims(customClaims);
+                            var principal = new ClaimsPrincipal(identity);
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true }).ConfigureAwait(false);
 
-                        if (Url.IsLocalUrl(ReturnUrl?.OriginalString))
-                            return Redirect(ReturnUrl.OriginalString);
-                        return RedirectToAction("Index", "Home");
+                            if (Url.IsLocalUrl(ReturnUrl?.OriginalString))
+                                return Redirect(ReturnUrl.OriginalString);
+                            return RedirectToAction("Index", "Home");
+                        }
+
+                        return RedirectToAction("Login", new
+                        {
+                            ReturnUrl = ReturnUrl
+                        });
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Incorrect UserName or Password.");
                     }
 
-                    return RedirectToAction("Login", new
-                    {
-                        ReturnUrl = ReturnUrl
-                    });
-
+                    return View(model);
                 }
 
-                return View(model);
+                catch (Exception ex)
+                {
+                    nwcLogger.Error(ex.Message, ex);
+                    throw;
+                }
             }
-            catch (Exception ex)
-            {
-                nwcLogger.Error(ex.Message, ex);
-                throw;
-            }
+            return View(model);
         }
         public async Task<IActionResult> LogOut()
         {

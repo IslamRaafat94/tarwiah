@@ -13,7 +13,8 @@
             {
                 columns.Bound(p => p.Id).Filterable(false).Visible(false);
                 columns.Bound(p => p.Image).Title(Labels.Images).ClientTemplate("<a class='k-button' href='#=data.Image#' target='_blank' rel='noopener noreferrer'>"+Labels.Images+"</a>").Width("20%");
-                columns.Bound(p => p.IsSynced).Title("#").Width("15%");
+                columns.Bound(p => p.IsSynced).Title("").Width(50)
+                        .ClientTemplate("#= GetStatusIcon(IsSynced)#").Filterable(false);
                 columns.Bound(p => p.Date).Title(Labels.Date).Format("{0:dd/MM/yyyy HH:mm}").Width("15%");
                 columns.Bound(p => p.AssetNo).Title(Labels.AssetNo).Width("10%");
                 columns.Bound(p => p.SubCatigory).Title(Labels.Type).Width("20%");
@@ -40,5 +41,11 @@
     )
 </div>
 <script>
+    function GetStatusIcon(status) {
+            if (status)
+                return "<li data-feather='check-circle' stroke='green'></li>";
+            else
+                return "<li data-feather='x-circle' stroke='red'></li>";
+        }
 </script>
 
