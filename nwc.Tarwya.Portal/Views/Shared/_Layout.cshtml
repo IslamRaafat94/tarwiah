@@ -131,6 +131,15 @@
             if (e.xhr && e.xhr.status == 404)
                 location.reload();
         }
+        function replaceFeatherIcons() {
+            feather.replace();
+        }
+        function GetStatusIcon(status) {
+            if (status)
+                return "<li data-feather='check-circle' stroke='green'></li>";
+            else
+                return "<li data-feather='x-circle' stroke='red'></li>";
+        }
     </script>
 </body>
 </html>

@@ -38,14 +38,10 @@
         .Read(read => read.Action("GetComplaints", "Complaint"))
      )
     .HtmlAttributes(new { style = "height: 95%;width:100%" })
+    .Events(e => e.DataBound("replaceFeatherIcons"))
     )
 </div>
 <script>
-    function GetStatusIcon(status) {
-            if (status)
-                return "<li data-feather='check-circle' stroke='green'></li>";
-            else
-                return "<li data-feather='x-circle' stroke='red'></li>";
-        }
+    
 </script>
 
