@@ -77,5 +77,14 @@ namespace nwc.Tarwya.Infra.Resources.Messages {
                 return ResourceManager.GetString("NoSeasons", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no work order with this number, please make sure that the work order number is entered correctly..
+        /// </summary>
+        public static string WorkOrderNotFound {
+            get {
+                return ResourceManager.GetString("WorkOrderNotFound", resourceCulture);
+            }
+        }
     }
 }

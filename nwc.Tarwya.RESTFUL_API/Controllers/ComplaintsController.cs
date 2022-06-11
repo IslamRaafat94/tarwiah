@@ -3,6 +3,7 @@ using nwc.Logger;
 using nwc.Tarwya.Application.Services.Contracts;
 using nwc.Tarwya.Application.ViewModels.Complains;
 using nwc.Tarwya.Infra.Core;
+using nwc.Tarwya.Infra.Resources.Messages;
 using nwc.Tarwya.RESTFUL_API.Handlers;
 using System;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
             {
                 var result = await complaintService.GetComplaint(WorkOrderNumber);
                 if (result == null)
-                    return new Response<ComplaintStatus>("Tost", "Work Order not found");
+                    return new Response<ComplaintStatus>(String.Empty, Messages.WorkOrderNotFound);
 
                 return new Response<ComplaintStatus>(result);
             }

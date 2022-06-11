@@ -13,7 +13,7 @@
 		public Response(string errorCode, string ErrorMessage)
 		{
 			this.IsSucess = false;
-			this.ErrorCode = errorCode;
+			this.ErrorCode = string.IsNullOrEmpty(errorCode) ? "ERROR" : errorCode;
 			this.Error = ErrorMessage;
 		}
 		public Response(T obj)

@@ -123,4 +123,7 @@
   <data name="FaildCreateComplaint" xml:space="preserve">
     <value>Create Complaint Falid, Please Try Again Later.</value>
   </data>
+  <data name="WorkOrderNotFound" xml:space="preserve">
+    <value>لا يوجد امر عمل بهذا الرقم, يرجى التاكد من ادخال رقم امر العمل بشكل صحيح.</value>
+  </data>
 </root>
