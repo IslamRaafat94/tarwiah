@@ -169,6 +169,8 @@ namespace nwc.Tarwya.RESTFUL_API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             NLog.GlobalDiagnosticsContext.Set("DefaultConnection", connectionString);
+            NLog.GlobalDiagnosticsContext.Set("App", "Api");
+
             var supportedCultures = new List<CultureInfo>
                 {
                     new CultureInfo("en-US"),

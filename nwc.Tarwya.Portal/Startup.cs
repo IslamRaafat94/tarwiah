@@ -147,6 +147,8 @@ namespace nwc.Tarwya.Portal
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            NLog.GlobalDiagnosticsContext.Set("DefaultConnection", connectionString);
+            NLog.GlobalDiagnosticsContext.Set("App", "Portal");
             var supportedCultures = new List<CultureInfo>
                 {
                     new CultureInfo("en-US"),
