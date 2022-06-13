@@ -22,6 +22,8 @@ namespace nwc.Tarwya.Application.Services
 {
 	public class ComplaintService : ServiceBase, IComplaintService
 	{
+		private readonly IRepository<Toilet> toiletsRepo;
+		private readonly IRepository<Area> areasRepo;
 		private readonly IComplaintsRepo complaintsRepo;
 		private readonly IRepository<Season> seasonsrepository;
 		private readonly IIntegrationService integrationService;
@@ -31,6 +33,8 @@ namespace nwc.Tarwya.Application.Services
 			IOptions<SystemSettings> settings,
 			IMapper mapper,
 			IComplaintsRepo _complaintsRepo,
+			IRepository<Toilet> _toiletsRepo,
+			IRepository<Area> _areasRepo,
 			IIntegrationService _integrationService,
 			IRepository<Season> _seasonsrepository
 			)
@@ -54,8 +58,11 @@ namespace nwc.Tarwya.Application.Services
 				.Count() > 5;
 
 			if (exLimit)
-				throw new Exception("Complaint Limit on Same Asset Is Reached.");
-			
+				throw new Exception(Messages.ComplaintLimitReached);
+
+			bool isValidAsset = await isValidAssetNumber(vm.AssetNumber);
+			if(!isValidAsset)
+				throw new Exception(Messages.InValidAsset);
 
 			var Complaint = await SaveComplaintinDB(vm);
 
@@ -192,6 +199,14 @@ namespace nwc.Tarwya.Application.Services
 					return true;
 			}
 			return false;
+		}
+		private async Task<bool> isValidAssetNumber(string assetNumber)
+		{
+			var assets = await toiletsRepo.Get(i => !i.IsDeleted && i.IsActive).Select(i => i.Code)
+				.Union(areasRepo.Get(i => i.IsActive).Select(i => i.Name))
+				.ToListAsync();
+
+			return assets.Contains(assetNumber);
 		}
 	}
 }

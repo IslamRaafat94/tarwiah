@@ -121,9 +121,15 @@
     <value>Service Available while hajj season only</value>
   </data>
   <data name="FaildCreateComplaint" xml:space="preserve">
-    <value>Create Complaint Falid, Please Try Again Later.</value>
+    <value>There was a problem creating your report, please try again later.</value>
   </data>
   <data name="WorkOrderNotFound" xml:space="preserve">
     <value>There is no work order with this number, please make sure that the work order number is entered correctly.</value>
+  </data>
+  <data name="InValidAsset" xml:space="preserve">
+    <value>The number of the asset to be reported is incorrect, please make sure to choose the correct asset number.</value>
+  </data>
+  <data name="ComplaintLimitReached" xml:space="preserve">
+    <value>The maximum number of reports submitted on this asset has been reached.</value>
   </data>
 </root>

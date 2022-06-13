@@ -121,9 +121,15 @@
     <value>الخدمة متوفرة في موسم الحج فقط</value>
   </data>
   <data name="FaildCreateComplaint" xml:space="preserve">
-    <value>Create Complaint Falid, Please Try Again Later.</value>
+    <value>توجد مشكله في انشاء البلاغ الخاص بك, برجاء المحاوله مره اخرى في وقت لاحق.</value>
   </data>
   <data name="WorkOrderNotFound" xml:space="preserve">
     <value>لا يوجد امر عمل بهذا الرقم, يرجى التاكد من ادخال رقم امر العمل بشكل صحيح.</value>
+  </data>
+  <data name="InValidAsset" xml:space="preserve">
+    <value>رقم الاصل المراد الابلاغ عنه غير صحيح, برجاء التاكد من اختيار رقم الاصل الصحيح.</value>
+  </data>
+  <data name="ComplaintLimitReached" xml:space="preserve">
+    <value>تم الوصول إلى الحد الأقصى لعدد التقارير التي تم إرسالها حول هذا الأصل.</value>
   </data>
 </root>

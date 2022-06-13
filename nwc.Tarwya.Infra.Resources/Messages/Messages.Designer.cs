@@ -61,11 +61,29 @@ namespace nwc.Tarwya.Infra.Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Complaint Falid, Please Try Again Later..
+        ///   Looks up a localized string similar to The maximum number of reports submitted on this asset has been reached..
+        /// </summary>
+        public static string ComplaintLimitReached {
+            get {
+                return ResourceManager.GetString("ComplaintLimitReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was a problem creating your report, please try again later..
         /// </summary>
         public static string FaildCreateComplaint {
             get {
                 return ResourceManager.GetString("FaildCreateComplaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of the asset to be reported is incorrect, please make sure to choose the correct asset number..
+        /// </summary>
+        public static string InValidAsset {
+            get {
+                return ResourceManager.GetString("InValidAsset", resourceCulture);
             }
         }
         

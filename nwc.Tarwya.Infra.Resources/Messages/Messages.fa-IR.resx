@@ -121,9 +121,15 @@
     <value>خدمات فقط در فصل حج در دسترس است</value>
   </data>
   <data name="FaildCreateComplaint" xml:space="preserve">
-    <value>Create Complaint Falid, Please Try Again Later.</value>
+    <value>مشکلی در ایجاد گزارش شما وجود داشت، لطفاً بعداً دوباره امتحان کنید.</value>
   </data>
   <data name="WorkOrderNotFound" xml:space="preserve">
     <value>هیچ سفارش کاری با این شماره وجود ندارد، لطفا دقت کنید که شماره سفارش کار به درستی وارد شود.</value>
+  </data>
+  <data name="InValidAsset" xml:space="preserve">
+    <value>شماره دارایی که باید گزارش شود نادرست است، لطفاً مطمئن شوید که شماره دارایی صحیح را انتخاب کنید.</value>
+  </data>
+  <data name="ComplaintLimitReached" xml:space="preserve">
+    <value>به حداکثر تعداد گزارش های ارسال شده در مورد این دارایی رسیده است.</value>
   </data>
 </root>

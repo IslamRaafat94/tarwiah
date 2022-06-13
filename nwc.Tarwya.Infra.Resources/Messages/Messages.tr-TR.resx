@@ -121,9 +121,15 @@
     <value>Hizmet sadece hac mevsiminde mevcuttur</value>
   </data>
   <data name="FaildCreateComplaint" xml:space="preserve">
-    <value>Create Complaint Falid, Please Try Again Later.</value>
+    <value>Raporunuz oluşturulurken bir sorun oluştu, lütfen daha sonra tekrar deneyin.</value>
   </data>
   <data name="WorkOrderNotFound" xml:space="preserve">
     <value>Bu numara ile herhangi bir iş emri bulunmamaktadır, lütfen iş emri numarasının doğru girildiğinden emin olunuz.</value>
+  </data>
+  <data name="InValidAsset" xml:space="preserve">
+    <value>Raporlanacak varlık numarası yanlış, lütfen doğru varlık numarasını seçtiğinizden emin olun.</value>
+  </data>
+  <data name="ComplaintLimitReached" xml:space="preserve">
+    <value>Bu varlık için gönderilen maksimum rapor sayısına ulaşıldı.</value>
   </data>
 </root>

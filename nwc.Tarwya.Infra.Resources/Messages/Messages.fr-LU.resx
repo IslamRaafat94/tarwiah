@@ -121,9 +121,15 @@
     <value>Service disponible pendant la saison du hajj uniquement</value>
   </data>
   <data name="FaildCreateComplaint" xml:space="preserve">
-    <value>Create Complaint Falid, Please Try Again Later.</value>
+    <value>Un problème est survenu lors de la création de votre rapport, veuillez réessayer plus tard.</value>
   </data>
   <data name="WorkOrderNotFound" xml:space="preserve">
     <value>لا يوجد امر عمل بهذا الرقم, يرجى التاكد من ادخال رقم امر العمل بشكل صحيح.</value>
+  </data>
+  <data name="InValidAsset" xml:space="preserve">
+    <value>Le numéro de l'actif à déclarer est incorrect, veuillez vous assurer de choisir le bon numéro d'actif.</value>
+  </data>
+  <data name="ComplaintLimitReached" xml:space="preserve">
+    <value>Le nombre maximal de rapports soumis sur cet élément a été atteint.</value>
   </data>
 </root>

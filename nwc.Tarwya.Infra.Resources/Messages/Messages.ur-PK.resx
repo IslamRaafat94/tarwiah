@@ -121,9 +121,15 @@
     <value>سروس صرف حج کے موسم کے دوران دستیاب ہے</value>
   </data>
   <data name="FaildCreateComplaint" xml:space="preserve">
-    <value>Create Complaint Falid, Please Try Again Later.</value>
+    <value>آپ کی رپورٹ بنانے میں ایک مسئلہ تھا، براہ کرم بعد میں دوبارہ کوشش کریں۔</value>
   </data>
   <data name="WorkOrderNotFound" xml:space="preserve">
     <value>اس نمبر کے ساتھ کوئی ورک آرڈر نہیں ہے، براہ کرم یقینی بنائیں کہ ورک آرڈر نمبر درست طریقے سے درج کیا گیا ہے۔</value>
+  </data>
+  <data name="InValidAsset" xml:space="preserve">
+    <value>رپورٹ کیے جانے والے اثاثہ کی تعداد غلط ہے، براہ کرم درست اثاثہ نمبر کا انتخاب یقینی بنائیں۔</value>
+  </data>
+  <data name="ComplaintLimitReached" xml:space="preserve">
+    <value>اس اثاثہ پر جمع کرائی گئی رپورٹس کی زیادہ سے زیادہ تعداد تک پہنچ گئی ہے۔</value>
   </data>
 </root>
