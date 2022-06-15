@@ -70,6 +70,15 @@ namespace nwc.Tarwya.Infra.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please Answer all Feedback Questions.
+        /// </summary>
+        public static string CompleteFeedback {
+            get {
+                return ResourceManager.GetString("CompleteFeedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There was a problem creating your report, please try again later..
         /// </summary>
         public static string FaildCreateComplaint {

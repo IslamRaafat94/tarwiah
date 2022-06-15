@@ -132,4 +132,7 @@
   <data name="ComplaintLimitReached" xml:space="preserve">
     <value>Jumlah maksimum laporan yang dikirimkan tentang aset ini telah tercapai.</value>
   </data>
+  <data name="CompleteFeedback" xml:space="preserve">
+    <value>Veuillez répondre à toutes les questions de rétroaction</value>
+  </data>
 </root>

@@ -132,4 +132,7 @@
   <data name="ComplaintLimitReached" xml:space="preserve">
     <value>Bu varlık için gönderilen maksimum rapor sayısına ulaşıldı.</value>
   </data>
+  <data name="CompleteFeedback" xml:space="preserve">
+    <value>Lütfen tüm Geri Bildirim Sorularını Cevaplayın</value>
+  </data>
 </root>

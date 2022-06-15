@@ -132,4 +132,7 @@
   <data name="ComplaintLimitReached" xml:space="preserve">
     <value>اس اثاثہ پر جمع کرائی گئی رپورٹس کی زیادہ سے زیادہ تعداد تک پہنچ گئی ہے۔</value>
   </data>
+  <data name="CompleteFeedback" xml:space="preserve">
+    <value>براہ کرم تمام فیڈ بیک سوالات کے جوابات دیں۔</value>
+  </data>
 </root>

@@ -132,4 +132,7 @@
   <data name="ComplaintLimitReached" xml:space="preserve">
     <value>تم الوصول إلى الحد الأقصى لعدد التقارير التي تم إرسالها حول هذا الأصل.</value>
   </data>
+  <data name="CompleteFeedback" xml:space="preserve">
+    <value>الرجاء الإجابة على جميع أسئلة الملاحظات</value>
+  </data>
 </root>

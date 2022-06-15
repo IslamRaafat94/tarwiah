@@ -8,6 +8,8 @@ using nwc.Tarwya.Application.ViewModels.Shared;
 using nwc.Tarwya.Domain.Models.Models;
 using nwc.Tarwya.Domain.Repositories;
 using nwc.Tarwya.Infra.Core;
+using nwc.Tarwya.Infra.Resources.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +35,10 @@ namespace nwc.Tarwya.Application.Services
 
 		public async Task<bool> CreateFeedback(FeedbackEditableVm model)
 		{
+			foreach (var i in model.Answers)
+				if (i.AnswerValue == 0)
+					throw new Exception(Messages.CompleteFeedback);
+
 			var entity = mapper.Map<Feedback>(model);
 			await FeedbackRepo.AddAsync(entity);
 			return (await FeedbackRepo.SaveChangesAsync()) > 0;

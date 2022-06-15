@@ -41,6 +41,8 @@ namespace nwc.Tarwya.Application.Services
 			: base(settings, mapper)
 		{
 			this.complaintsRepo = _complaintsRepo;
+			this.toiletsRepo = _toiletsRepo;
+			this.areasRepo = _areasRepo;
 			this.integrationService = _integrationService;
 			this.seasonsrepository = _seasonsrepository;
 		}

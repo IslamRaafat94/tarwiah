@@ -132,4 +132,7 @@
   <data name="ComplaintLimitReached" xml:space="preserve">
     <value>The maximum number of reports submitted on this asset has been reached.</value>
   </data>
+  <data name="CompleteFeedback" xml:space="preserve">
+    <value>Please Answer all Feedback Questions</value>
+  </data>
 </root>

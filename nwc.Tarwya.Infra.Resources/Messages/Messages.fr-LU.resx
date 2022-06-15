@@ -132,4 +132,7 @@
   <data name="ComplaintLimitReached" xml:space="preserve">
     <value>Le nombre maximal de rapports soumis sur cet élément a été atteint.</value>
   </data>
+  <data name="CompleteFeedback" xml:space="preserve">
+    <value>Veuillez répondre à toutes les questions de rétroaction</value>
+  </data>
 </root>

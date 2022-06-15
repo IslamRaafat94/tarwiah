@@ -132,4 +132,7 @@
   <data name="ComplaintLimitReached" xml:space="preserve">
     <value>به حداکثر تعداد گزارش های ارسال شده در مورد این دارایی رسیده است.</value>
   </data>
+  <data name="CompleteFeedback" xml:space="preserve">
+    <value>لطفا به تمام سوالات بازخورد پاسخ دهید</value>
+  </data>
 </root>
