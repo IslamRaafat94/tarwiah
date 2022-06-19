@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using nwc.Logger;
+using nwc.Tarwya.Application.Core;
+using nwc.Tarwya.Application.Services;
 using nwc.Tarwya.Application.Services.Contracts;
 using nwc.Tarwya.Application.ViewModels.Areas;
 using nwc.Tarwya.Application.ViewModels.Campaign;
+using nwc.Tarwya.Application.ViewModels.Shared;
 using nwc.Tarwya.Application.ViewModels.Toilet;
 using nwc.Tarwya.Application.ViewModels.ZamZam;
 using nwc.Tarwya.Infra.Core;
@@ -24,18 +28,21 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         private readonly IToiletService toiletService;
         private readonly IZamZamService zamzamLocationsService;
         private readonly IAreasService areasService;
+        private readonly IMemoryCache memoryCache;
 
         public LookUpController(
             ICampaignService _campaignService,
             IToiletService _toiletService,
             IZamZamService _zamzamLocationsService,
-            IAreasService _areasService
-            )
+            IAreasService _areasService,
+			IMemoryCache _memoryCache
+			)
         {
             this.campaignService = _campaignService;
             this.toiletService = _toiletService;
             this.zamzamLocationsService = _zamzamLocationsService;
             this.areasService = _areasService;
+            this.memoryCache  = _memoryCache;
         }
 
         [HttpGet]
@@ -44,8 +51,10 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-                var result = await campaignService.GetCampaignsLookUp();
-                return new Response<List<CampaignLookUp>>(result);
+                var data = await memoryCache.GetOrCreateAsync<List<CampaignLookUp>>(CacheKeys.Campaigns, cashEntry => { return campaignService.GetCampaignsLookUp(); });
+
+                //var result = await campaignService.GetCampaignsLookUp();
+                return new Response<List<CampaignLookUp>>(data);
             }
             catch (Exception ex)
             {
@@ -59,10 +68,11 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-                var result = await toiletService.GetAllActiveToilets()
-                    .Where(i => i.IsActive)
-                    .ToListAsync();
-                return new Response<List<ToiletVm>>(result);
+                var data = await memoryCache.GetOrCreateAsync<List<ToiletVm>>(CacheKeys.Toilets, cashEntry => { return toiletService.GetAllActiveToilets().Where(i => i.IsActive).ToListAsync(); });
+                //var result = await toiletService.GetAllActiveToilets()
+                //    .Where(i => i.IsActive)
+                //    .ToListAsync();
+                return new Response<List<ToiletVm>>(data);
             }
             catch (Exception ex)
             {
@@ -76,9 +86,12 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-                var result = await zamzamLocationsService.GetamZamLocationsLookUp();
+				var data = await memoryCache.GetOrCreateAsync<List<ZamZamLocationLookUpVm>>(CacheKeys.ZemZem, cashEntry => { return zamzamLocationsService.GetamZamLocationsLookUp(); });
 
-                return new Response<List<ZamZamLocationLookUpVm>>(result);
+
+				//var result = await zamzamLocationsService.GetamZamLocationsLookUp();
+
+				return new Response<List<ZamZamLocationLookUpVm>>(data);
             }
             catch (Exception ex)
             {
@@ -92,9 +105,11 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-                var result = await areasService.GetAllAreas().ToListAsync();
+				var data = await memoryCache.GetOrCreateAsync<List<AreaVm>>(CacheKeys.Regions, cashEntry => { return areasService.GetAllAreas().ToListAsync(); });
 
-                return new Response<List<AreaVm>>(result);
+				//var result = await areasService.GetAllAreas().ToListAsync();
+
+				return new Response<List<AreaVm>>(data);
             }
             catch (Exception ex)
             {
