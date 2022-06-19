@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "PREPROD"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "nwc.Tarwya.API_DEV": {

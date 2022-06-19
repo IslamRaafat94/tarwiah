@@ -211,14 +211,14 @@ namespace nwc.Tarwya.RESTFUL_API
             app.UseMvc();
             app.UseStaticFiles();
             app.UseHsts();
-           
 
-            //app.UseSwagger();
-            //app.UseSwaggerUI(s =>
-            //{
-            //    s.SwaggerEndpoint("./swagger/v1/swagger.json", "Tarwya Project API v1.1");
-            //    s.RoutePrefix = string.Empty;
-            //});
+
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("./swagger/v1/swagger.json", "Tarwya Project API v1.1");
+                s.RoutePrefix = string.Empty;
+            });
         }
     }
 }
