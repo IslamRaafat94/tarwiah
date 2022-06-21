@@ -4,6 +4,7 @@ using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -24,6 +25,7 @@ using nwc.Tarwya.Infra.Ioc;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -78,8 +80,11 @@ namespace nwc.Tarwya.Portal
                 .AddUserManager<ApplicationUserManager>()
                 .AddRoleManager<ApplicationRoleManager>()
                 .AddEntityFrameworkStores<IdentityContext>();
+			services.AddDataProtection()
+				.PersistKeysToFileSystem(new DirectoryInfo(systemConfigurations.DataProtectionKeyPath))
+				.SetApplicationName("Tarwiah");
 
-            services.Configure<IdentityOptions>(options =>
+			services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
                 options.Password.RequireDigit = true;
