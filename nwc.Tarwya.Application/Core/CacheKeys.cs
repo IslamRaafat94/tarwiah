@@ -14,5 +14,7 @@ namespace nwc.Tarwya.Application.Core
 		public static string Toilets => "Toilets";
 		public static string ZemZem => "ZEMZEM";
 		public static string Regions => "Regions";
+		public static string FeedbackQuestions => "FeedbackQuestions";
+
 	}
 }

@@ -9,6 +9,7 @@ using nwc.Tarwya.Infra.Core;
 using nwc.Tarwya.RESTFUL_API.Handlers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace nwc.Tarwya.RESTFUL_API.Controllers
@@ -30,7 +31,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-                var data = await memoryCache.GetOrCreateAsync<List<LookUpVm>>(CacheKeys.Categories, cashEntry => { return categoryService.GetCategoriesLookUp(); });
+                var data = await memoryCache.GetOrCreateAsync<List<LookUpVm>>($"{CacheKeys.Categories}_{CultureInfo.CurrentCulture}", cashEntry => { return categoryService.GetCategoriesLookUp(); });
 
                 //var result = await categoryService.GetCategoriesLookUp();
                 return new Response<List<LookUpVm>>(data);
@@ -47,7 +48,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-				var data = await memoryCache.GetOrCreateAsync<List<CategoryItemLookUpVm>>(CacheKeys.SubCategories, cashEntry => { return categoryService.GetSubCategoriesLookUp(CategoryId); });
+				var data = await memoryCache.GetOrCreateAsync<List<CategoryItemLookUpVm>>($"{CacheKeys.SubCategories}_{CultureInfo.CurrentCulture}", cashEntry => { return categoryService.GetSubCategoriesLookUp(CategoryId); });
 
 				//var result = await categoryService.GetSubCategoriesLookUp(CategoryId);
                 return new Response<List<CategoryItemLookUpVm>>(data);

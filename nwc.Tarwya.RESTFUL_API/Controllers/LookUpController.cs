@@ -14,6 +14,7 @@ using nwc.Tarwya.Infra.Core;
 using nwc.Tarwya.RESTFUL_API.Handlers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,7 +52,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-                var data = await memoryCache.GetOrCreateAsync<List<CampaignLookUp>>(CacheKeys.Campaigns, cashEntry => { return campaignService.GetCampaignsLookUp(); });
+                var data = await memoryCache.GetOrCreateAsync<List<CampaignLookUp>>($"{CacheKeys.Campaigns}_{CultureInfo.CurrentCulture}", cashEntry => { return campaignService.GetCampaignsLookUp(); });
 
                 //var result = await campaignService.GetCampaignsLookUp();
                 return new Response<List<CampaignLookUp>>(data);
@@ -68,7 +69,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-                var data = await memoryCache.GetOrCreateAsync<List<ToiletVm>>(CacheKeys.Toilets, cashEntry => { return toiletService.GetAllActiveToilets().Where(i => i.IsActive).ToListAsync(); });
+                var data = await memoryCache.GetOrCreateAsync<List<ToiletVm>>($"{CacheKeys.Toilets}", cashEntry => { return toiletService.GetAllActiveToilets().Where(i => i.IsActive).ToListAsync(); });
                 //var result = await toiletService.GetAllActiveToilets()
                 //    .Where(i => i.IsActive)
                 //    .ToListAsync();
@@ -86,7 +87,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-				var data = await memoryCache.GetOrCreateAsync<List<ZamZamLocationLookUpVm>>(CacheKeys.ZemZem, cashEntry => { return zamzamLocationsService.GetamZamLocationsLookUp(); });
+				var data = await memoryCache.GetOrCreateAsync<List<ZamZamLocationLookUpVm>>($"{CacheKeys.ZemZem}_{CultureInfo.CurrentCulture}", cashEntry => { return zamzamLocationsService.GetamZamLocationsLookUp(); });
 
 
 				//var result = await zamzamLocationsService.GetamZamLocationsLookUp();
