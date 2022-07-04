@@ -66,6 +66,8 @@ namespace nwc.Tarwya.Application.Services
 			if(!isValidAsset)
 				throw new Exception(Messages.InValidAsset);
 
+			vm.UTM = correctXYLocationsFormate(vm.UTM);
+
 			var Complaint = await SaveComplaintinDB(vm);
 
 			bool isSynced = await SyncComplaint(Complaint);
@@ -177,7 +179,7 @@ namespace nwc.Tarwya.Application.Services
 											<SourceSystem>EAM</SourceSystem>
 											<ProcessName>EAMWODP</ProcessName>
 											<DocumentType>EAMWOMID</DocumentType>
-											<OwnerID>nwc\\moali</OwnerID>
+											<OwnerID>nwc\moali</OwnerID>
 											<FileName>{fileName}</FileName>
 											<PrivilegeKey>Payables Manager</PrivilegeKey>
 										</SystemData>
@@ -209,6 +211,13 @@ namespace nwc.Tarwya.Application.Services
 				.ToListAsync();
 
 			return assets.Contains(assetNumber);
+		}
+		private string correctXYLocationsFormate(string location_point)
+		{
+			location_point = location_point.Trim();
+
+			return location_point.Replace(',', ' ');
+
 		}
 	}
 }

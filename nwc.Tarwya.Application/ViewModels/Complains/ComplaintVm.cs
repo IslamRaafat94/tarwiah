@@ -5,6 +5,7 @@ namespace nwc.Tarwya.Application.ViewModels.Complains
 	public class ComplaintVm
 	{
 		public int Id { get; set; }
+		public string ComplaintNo { get { return $"MOB-{Id}"; } }
 		public string AssetNo { get; set; }
 		public string IssuerName { get; set; }
 		public string IssuerMobile { get; set; }
