@@ -48,7 +48,7 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
         {
             try
             {
-				var data = await memoryCache.GetOrCreateAsync<List<CategoryItemLookUpVm>>($"{CacheKeys.SubCategories}_{CultureInfo.CurrentCulture}", cashEntry => { return categoryService.GetSubCategoriesLookUp(CategoryId); });
+				var data = await memoryCache.GetOrCreateAsync<List<CategoryItemLookUpVm>>($"{CacheKeys.SubCategories}_{CategoryId}_{CultureInfo.CurrentCulture}", cashEntry => { return categoryService.GetSubCategoriesLookUp(CategoryId); });
 
 				//var result = await categoryService.GetSubCategoriesLookUp(CategoryId);
                 return new Response<List<CategoryItemLookUpVm>>(data);
