@@ -1,0 +1,162 @@
+﻿@using nwc.Tarwya.Application.ViewModels.Complains;
+@model ComplaintEditableVm
+@{
+    Layout = null;
+    ViewData["Title"] = Labels.Complaints;
+    ViewData["breadcrumb1"] = Labels.Home;
+
+}
+<style>
+    .k-form .k-form-fieldset {
+        margin: 0;
+    }
+
+    .k-form-legend, .k-form-label {
+        display: none !important;
+    }
+
+    .k-label .k-form-label {
+        display: none !important;
+    }
+
+    .swal2-container {
+        z-index: 99999 !important;
+    }
+</style>
+<script>
+    function onFormValidateField(e) {
+        $("#validation-success").html("");
+    }
+
+    function onFormSubmit(e) {
+        e.preventDefault();
+
+        kendo.ui.progress($("#complaintForm"), true);
+
+        var options = {
+            success: function (response, statusText, xhr, $form) {
+                if (response.IsSucess) {
+                    successAlert(response.Data);
+                    kendo.ui.progress($("#complaintForm"), false);
+                    $("#GeneralWnd").data("kendoWindow").close();
+                }
+                else {
+                    errorAlert(response.Error);
+                    kendo.ui.progress($("#complaintForm"), false);
+                }
+            }
+        }
+        $('#complaintForm').ajaxSubmit(options);
+
+    }
+
+    function onFormClear(e) {
+        $("#validation-success").html("");
+    }
+    function filtersubCategory() {
+        return {
+            Id: $("#FieldActivityId").val()
+        };
+    }
+</script>
+<div class='map-box-content'>
+    <h4>Custom Location</h4>
+    <p>AssetId: @Model.AssetNumber</p>
+    <p>G-Location: @Model.wgs84 </p>
+    <p>GIS-Location: @Model.UTM </p>
+</div>
+@(
+        Html.Kendo().Form<ComplaintEditableVm>()
+        .Name("complaintForm")
+        .HtmlAttributes(new { action = Url.Action("CreateComplaint", "Complaint"), method = "POST", data_parsley_validate = "" })
+        .Layout("grid")
+        .Grid(g => g.Cols(1).Gutter(20))
+        .Validatable(v =>
+        {
+            v.ValidateOnBlur(true);
+            v.ValidationSummary(vs => vs.Enable(false));
+        })
+        .Items(items =>
+        {
+            items.Add().Field(i => i.AssetNumber).Editor(c => c.Hidden());
+            items.Add().Field(i => i.wgs84).Editor(c => c.Hidden());
+            items.Add().Field(i => i.AgentLocation).Editor(c => c.Hidden());
+            items.Add().Field(i => i.AgentOs).Editor(c => c.Hidden());
+            items.Add().Field(i => i.AgentLanguage).Editor(c => c.Hidden());
+            items.Add().Field(i => i.UTM).Editor(c => c.Hidden());
+            items.AddGroup()
+            .Label(Labels.Create)
+
+            .Items(i =>
+            {
+                i.Add()
+                .Field(f=>f.FieldActivityId)
+                .Label(l => l.Text(Labels.Categories))
+                .Editor(e =>
+                {
+                    e.DropDownList()
+                      .HtmlAttributes(new { style = "width:100%" })
+                      .DataTextField("Name")
+                      .DataValueField("Id")
+                      .DataSource(source =>
+                      {
+                          source.Read(read =>
+                          {
+                              read.Action("GetCategoriesLookUp", "Category");
+                          });
+                      });
+                })
+                .InputHtmlAttributes(new { placeholder = Labels.Categories });
+
+                i.Add()
+                .Field(f=>f.CategoryItemId)
+                .Label(l => l.Text(Labels.Categories))
+                .Editor(e =>
+                {
+                    e.DropDownList()
+                      .HtmlAttributes(new { style = "width:100%" })
+                      .DataTextField("Name")
+                      .DataValueField("Id")
+                      .DataSource(source =>
+                      {
+                          source.Read(read =>
+                          {
+                              read.Action("GetSubCategoriesLookUp", "Category").Data("filtersubCategory"); ;
+                          });
+                          source.ServerFiltering(true);
+                      })
+                      .Enable(false)
+                      .AutoBind(false)
+                      .CascadeFrom("FieldActivityId");
+                })
+                .InputHtmlAttributes(new { placeholder = Labels.Categories });
+
+                i.Add()
+                .Field(f => f.IssuarName)
+                .Label(l => l.Text(Labels.IssuerName))
+                .InputHtmlAttributes(new { placeholder = Labels.IssuerName });
+
+
+
+                i.Add()
+                .Field(f => f.IssuarMobile)
+                .Label(l => l.Text(Labels.IssuerMobile))
+                .Editor(e =>
+                {
+                    e.MaskedTextBox().Mask("000 0000000");
+                })
+                .InputHtmlAttributes(new { placeholder = Labels.IssuerMobile });
+
+                i.Add()
+                .Field(f => f.Description)
+                .Label(l => l.Text(Labels.Description))
+                .Editor(e => e.TextArea().Rows(5))
+                .InputHtmlAttributes(new { placeholder = Labels.Description });
+            });
+        })
+        .ButtonsTemplate("<button class='k-button k-primary k-form-submit btn btn-primary waves-effect waves-float waves-light' type='submit'>" + Labels.Save + "</button><button class='k-button k-form-clear btn btn-secondary waves-effect waves-float waves-light'>" + Labels.Cancel + "</button>")
+        .Events(ev => ev.ValidateField("onFormValidateField").Submit("onFormSubmit").Clear("onFormClear"))
+    )
+    
+
+

@@ -135,4 +135,7 @@
   <data name="CompleteFeedback" xml:space="preserve">
     <value>Lütfen tüm Geri Bildirim Sorularını Cevaplayın</value>
   </data>
+  <data name="WelcomeKedana" xml:space="preserve">
+    <value>Sevgili Hacı, Size Tarwiya Mobil uygulaması aracılığıyla hizmet vermekten ve tuvalet sifonu ile ilgili şikayette bulunmak için lütfen 920014234 numaralı telefondan Kidana Development Company ile iletişime geçin.</value>
+  </data>
 </root>

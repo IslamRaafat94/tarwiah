@@ -56,11 +56,11 @@ namespace nwc.Tarwya.Application.Services
 
 
 			vm.AssetNumber=vm.AssetNumber.Trim();
-			var exLimit = complaintsRepo.Get(i => i.AssetId == vm.AssetNumber&& i.SubCategoryId==vm.CategoryItemId && i.CreationDate.Date == DateTime.Now.Date)
-				.Count() > 5;
+			//var exLimit = complaintsRepo.Get(i => i.AssetId == vm.AssetNumber&& i.SubCategoryId==vm.CategoryItemId && i.CreationDate.Date == DateTime.Now.Date)
+			//	.Count() > 5;
 
-			if (exLimit)
-				throw new Exception(Messages.ComplaintLimitReached);
+			//if (exLimit)
+			//	throw new Exception(Messages.ComplaintLimitReached);
 
 			bool isValidAsset = await isValidAssetNumber(vm.AssetNumber);
 			if(!isValidAsset)

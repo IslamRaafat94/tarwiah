@@ -11,6 +11,7 @@ using nwc.Tarwya.Application.ViewModels.Shared;
 using nwc.Tarwya.Application.ViewModels.Toilet;
 using nwc.Tarwya.Application.ViewModels.ZamZam;
 using nwc.Tarwya.Infra.Core;
+using nwc.Tarwya.Infra.Resources.Messages;
 using nwc.Tarwya.RESTFUL_API.Handlers;
 using System;
 using System.Collections.Generic;
@@ -116,6 +117,22 @@ namespace nwc.Tarwya.RESTFUL_API.Controllers
             {
                 nwcLogger.Error(ex.Message, ex);
                 return new Response<List<AreaVm>>(ex.GetHashCode().ToString(), ex.Message);
+            }
+        }
+        [HttpGet]
+        [Route("GetContactMessage")]
+        public Response<string> GetContactMessage()
+        {
+            try
+            {
+                var data = Messages.WelcomeKedana;
+
+				return new Response<string>(data);
+            }
+            catch (Exception ex)
+            {
+                nwcLogger.Error(ex.Message, ex);
+                return new Response<string>(ex.GetHashCode().ToString(), ex.Message);
             }
         }
     }

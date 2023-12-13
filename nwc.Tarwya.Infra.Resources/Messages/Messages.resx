@@ -135,4 +135,7 @@
   <data name="CompleteFeedback" xml:space="preserve">
     <value>Please Answer all Feedback Questions</value>
   </data>
+  <data name="WelcomeKedana" xml:space="preserve">
+    <value>Dear pilgrim,It is our pleasure to serve you through Tarwiah Mobile App.To raise complaints about toilets, please call KIDANA Development Company on . 920014234 </value>
+  </data>
 </root>

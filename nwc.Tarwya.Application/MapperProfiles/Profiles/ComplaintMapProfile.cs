@@ -44,6 +44,7 @@ namespace nwc.Tarwya.Application.MapperProfiles.Profiles
 				.ForMember(i => i.Date, s => s.MapFrom(d => d.CreationDate))
 				.ForMember(i => i.IssuerName, s => s.MapFrom(d => d.IssuerName))
 				.ForMember(i => i.IsSynced, s => s.MapFrom(d => d.IsSyncedToCcb))
+				.ForMember(i => i.Source, s => s.MapFrom(d => d.AgetOs))
 				;
 		}
 	}

@@ -41,6 +41,7 @@ namespace nwc.Tarwya.Application.Services
         public async Task<List<LookUpVm>> GetCategoriesLookUp()
         {
             var list = await CategoryRepo.Get(i => i.IsActive && !i.IsDeleted)
+                .OrderBy(i=>i.OrderNo)
                 .AsNoTracking()
                 .ProjectTo<LookUpVm>(mapper.ConfigurationProvider)
                 .ToListAsync();
@@ -63,6 +64,7 @@ namespace nwc.Tarwya.Application.Services
         public async Task<List<CategoryItemLookUpVm>> GetSubCategoriesLookUp(int CategoryId)
         {
             var list = await SubCategoryRepo.Get(i => i.IsActive && !i.IsDeleted && i.CategoryId == CategoryId)
+                .OrderBy(i => i.OrderNo)
                 .AsNoTracking()
                 .ProjectTo<CategoryItemLookUpVm>(mapper.ConfigurationProvider)
                 .ToListAsync();

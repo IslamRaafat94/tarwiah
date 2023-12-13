@@ -135,4 +135,7 @@
   <data name="CompleteFeedback" xml:space="preserve">
     <value>Veuillez répondre à toutes les questions de rétroaction</value>
   </data>
+  <data name="WelcomeKedana" xml:space="preserve">
+    <value>Cher pèlerin, Nous sommes heureux de vous servir via l'application Tarwiya Mobile, et pour déposer une plainte concernant les chasses d'eau, veuillez contacter Kidana Development Company au 920014234</value>
+  </data>
 </root>

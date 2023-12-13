@@ -23,8 +23,10 @@
             <li class="nav-item active">
                 <a href="@Url.Action("Index","Home")" class="nav-link"><i data-feather="pie-chart"></i>@Labels.Dashboard</a>
             </li>
-            <li class="nav-item with-sub">
-                <a href="#" class="nav-link"><i data-feather="package"></i>@Labels.Catalog</a>
+            @if (User.IsInRole("Administrator"))
+            {
+                <li class="nav-item with-sub">
+                    <a href="#" class="nav-link"><i data-feather="package"></i>@Labels.Catalog</a>
                 <ul class="navbar-menu-sub">
                     <li class="nav-sub-item"><a href="@Url.Action("Index","Areas")" class="nav-sub-link"><i data-feather="calendar"></i>@Labels.Areas</a></li>
                     <li class="nav-sub-item"><a href="@Url.Action("Index","Category")" class="nav-sub-link"><i data-feather="calendar"></i>@Labels.Categories</a></li>
@@ -34,8 +36,16 @@
                     <li class="nav-sub-item"><a href="@Url.Action("Index","ZamZam")" class="nav-sub-link"><i data-feather="message-square"></i>@Labels.ZamZam</a></li>
                     <li class="nav-sub-item"><a href="@Url.Action("Index","Seasons")" class="nav-sub-link"><i data-feather="calendar"></i>@Labels.Seasons</a></li>
                 </ul></li>
+            }
             <li class="nav-item"><a href="@Url.Action("Index","Complaint")" class="nav-link"><i data-feather="archive"></i>@Labels.Complaints</a></li>
-            <li class="nav-item"><a href="@Url.Action("Users","Account")" class="nav-link"><i data-feather="archive"></i>@Labels.Users</a></li>
+            @if (User.IsInRole("Administrator"))
+            {
+                <li class="nav-item"><a href="@Url.Action("Users","Account")" class="nav-link"><i data-feather="archive"></i>@Labels.Users</a></li>
+            }
+            @*@if (User.IsInRole("CallCenter"))
+            {
+                <li class="nav-item"><a href="@Url.Action("Index","CallCenter")" class="nav-link"><i data-feather="archive"></i>Call Center</a></li>
+            }*@
             @*<li class="nav-item"><a href="/SyncJobs" class="nav-link"><i data-feather="archive"></i>@Labels.Tasks</a></li>*@
             @*<li class="nav-item"><a href="#" class="nav-link"><i data-feather="archive"></i>@Labels.Logs</a></li>*@
         </ul>

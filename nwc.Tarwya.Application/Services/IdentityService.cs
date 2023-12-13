@@ -57,8 +57,10 @@ namespace nwc.Tarwya.Application.Services
 			});
 
 			var user = await usermanager.FindByNameAsync(model.UserName.Trim());
+			await usermanager.AddPasswordAsync(user, model.Password);
 			var role = await rolemanager.FindByIdAsync(model.RoleId.Value.ToString());
 			await usermanager.AddToRoleAsync(user, role.Name);
+			await usermanager.AddPasswordAsync(user, "Abc123!@#");
 			return true;
 
 		}

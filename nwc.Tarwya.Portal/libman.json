@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "gmaps-marker-clusterer@1.2.2",
+      "destination": "wwwroot/lib/gmaps-marker-clusterer/"
+    },
+    {
+      "library": "gmap3@7.2.0",
+      "destination": "wwwroot/lib/gmap3/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@googlemaps/markerclusterer@2.1.4",
+      "destination": "wwwroot/lib/googlemaps/markerclusterer/"
+    },
+    {
+      "library": "jquery.form@4.3.0",
+      "destination": "wwwroot/lib/jquery.form/"
+    }
+  ]
+}

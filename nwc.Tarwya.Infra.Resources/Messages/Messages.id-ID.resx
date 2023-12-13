@@ -135,4 +135,7 @@
   <data name="CompleteFeedback" xml:space="preserve">
     <value>Veuillez répondre à toutes les questions de rétroaction</value>
   </data>
+  <data name="WelcomeKedana" xml:space="preserve">
+    <value>Peziarah yang terhormat, Kami dengan senang hati melayani Anda melalui aplikasi Tarwiya Mobile, dan untuk mengajukan keluhan terkait penyiraman toilet, silakan hubungi Kidana Development Company di 920014234</value>
+  </data>
 </root>

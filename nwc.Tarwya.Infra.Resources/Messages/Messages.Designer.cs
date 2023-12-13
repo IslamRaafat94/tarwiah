@@ -106,6 +106,15 @@ namespace nwc.Tarwya.Infra.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dear pilgrim,It is our pleasure to serve you through Tarwiah Mobile App.To raise complaints about toilets, please call KIDANA Development Company on . 920014234 .
+        /// </summary>
+        public static string WelcomeKedana {
+            get {
+                return ResourceManager.GetString("WelcomeKedana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is no work order with this number, please make sure that the work order number is entered correctly..
         /// </summary>
         public static string WorkOrderNotFound {

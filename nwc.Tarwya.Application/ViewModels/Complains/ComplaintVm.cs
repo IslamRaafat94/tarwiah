@@ -14,5 +14,6 @@ namespace nwc.Tarwya.Application.ViewModels.Complains
 		public DateTime Date { get; set; }
 		public bool IsSynced { get; set; }
 		public string Image { get; set; }
+		public string Source { get; set; }
 	}
 }

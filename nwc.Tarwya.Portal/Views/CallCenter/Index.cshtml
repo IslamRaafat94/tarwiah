@@ -1,0 +1,281 @@
+﻿@using nwc.Tarwya.Application.ViewModels.Areas
+@{
+    ViewData["Title"] = "Call Center";
+    ViewData["breadcrumb1"] = "Call Center";
+}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvDGnqxmaX_297l3-SmoasLZL3q4NsNc4&callback=initMap&v=weekly" defer></script>
+@*<script>
+    (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+        key: "AIzaSyBvDGnqxmaX_297l3-SmoasLZL3q4NsNc4",
+        v: "weekly",
+        // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
+        // Add other bootstrap parameters as needed, using camel case.
+    });
+</script>*@
+<script src="~/lib/googlemaps/markerclusterer/dist/index.min.js"></script>
+
+<div class="filemgr-wrapper">
+    <!-- filemgr-sidebar -->
+
+    <div class="filemgr-content">
+        <div class="filemgr-content-header">
+            <nav>
+                <div class="search-form" style="">
+                    @(Html.Kendo().ComboBox()
+                        .Name("ddl_toilets")
+                        .DataTextField("Code")
+                        .DataValueField("Id")
+                        .Filter("contains")
+                        .DataSource(source =>
+                        {
+                            source.Read(read =>
+                            {
+                                read.Action("GetToiletsDS", "Toilets");
+                            })
+                            .ServerFiltering(false);
+                        })
+                        .HtmlAttributes(new { style = "width:100%;" })
+                        .Events(e =>
+                        {
+                            e.Select("onSelect");
+                        })
+                        )
+                </div>
+            </nav>
+        </div>
+    </div><!-- search-form -->
+
+</div><!-- filemgr-content-header -->
+<div class="filemgr-content-body ps ps--active-y">
+    <div class="pd-20 pd-lg-25 pd-xl-30">
+        <div id="map" style="overflow: hidden;position: relative;" class="ht-700"></div>
+    </div><!-- filemgr-content-body -->
+</div><!-- filemgr-content -->
+
+
+
+<script>
+    var map;
+    var Polygons = [];
+    var Markers = [];
+    var areas;
+    const reportZoom = 16;
+    var choosedlocationmarker = null;
+
+
+
+    function checkIfPointExistInAreas(point) {
+        var defaultAsset = "";
+        for (let i = 0; i < Polygons.length; i++) {
+            if (google.maps.geometry.poly.containsLocation(point, Polygons[i])) {
+                defaultAsset = Polygons[i].defaultAssetId;
+            }
+        }
+        return defaultAsset;
+    }
+    async function initMap() {
+        const { Polygon } = await google.maps.importLibrary("maps");
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 12.8,
+            center: { lat: 21.394464845743965, lng: 39.94645281321155 },
+        });
+
+        let infoWindow = new google.maps.InfoWindow({
+            content: "Click the map to get Lat/Lng!",
+            position: { lat: -33, lng: 151 },
+        });
+
+        map.addListener("center_changed", () => {
+            // Close the current InfoWindow.
+            //infoWindow.close();
+        });
+
+        map.addListener("click", (mapsMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
+            if (map.getZoom() < reportZoom) {
+                warningAlert("Please Zoom In");
+            } else {
+                var assetId = checkIfPointExistInAreas(mapsMouseEvent.latLng);
+                if (assetId.trim().length == 0) {
+                    warningAlert("Choose Location in mashaer");
+                } else {
+                    if (choosedlocationmarker == null) {
+                        choosedlocationmarker = new google.maps.Marker({
+                            position: mapsMouseEvent.latLng,
+                            map,
+                            title: JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
+                        });
+                    }
+                    else {
+                        choosedlocationmarker.setPosition(mapsMouseEvent.latLng);
+                    }
+
+
+                    var infocontent = "<div class='map-box-content'>" +
+                        "<h4>Custom Location</h4>" +
+                        "<p>AssetId: " + assetId + "</p>" +
+                        "<p>Lat: " + mapsMouseEvent.latLng.lat() + "</p>" +
+                        "<p>Lng: " + mapsMouseEvent.latLng.lng() + "</p>" +
+                        "<button class='btn btn-sm pd-x-15 btn-primary btn-uppercase mg-l-5' onclick='openComplaintEditor(" + "\"" + assetId + "\"," + mapsMouseEvent.latLng.lat() + "," + mapsMouseEvent.latLng.lng() + ")'>Report Complaint</button>" +
+                        "</div>";
+
+                    //Create a new InfoWindow.
+                    infoWindow = new google.maps.InfoWindow({
+                        position: mapsMouseEvent.latLng,
+                    });
+                    infoWindow.setContent(infocontent);
+                    infoWindow.open(map);
+                }
+            }
+        });
+
+        const toiletsAPI = '@Url.Action("GetToiletsLookUp","Toilets")';
+        const toilets = await fetch(toiletsAPI)
+            .then(response => response.json())
+            .then(data => data);
+
+        const areasAPI = '@Url.Action("GetAreas","Areas")';
+        areas = await fetch(areasAPI)
+            .then(response => response.json())
+            .then(data => data);
+
+
+        areas.Data.map((area, i) => {
+
+            const areaPoints = area.Coordinates.map((coor, j) => {
+                return { lat: parseFloat(coor.Lat), lng: parseFloat(coor.Lng) }
+            });
+
+            var polygon = new google.maps.Polygon({
+                paths: areaPoints,
+                strokeColor: "#263878a9",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#263878a9",
+                fillOpacity: 0.35,
+                clickable: false,
+                defaultAssetId: area.DefaultAssetId
+            });
+            polygon.setMap(map);
+            Polygons.push(polygon);
+        });
+
+
+        const markers = toilets.Data.map((position, i) => {
+            //const image = "./dist/assets/img/toiletIcon.png";
+            const image = {
+                url: "./dist/assets/img/toiletIcon.png",
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+                //origin: new google.maps.Point(0, 0), // origin
+                //anchor: new google.maps.Point(0, 0) // anchor
+            };
+            const beachMarker = new google.maps.Marker({
+                position: { lat: parseFloat(position.Latitude), lng: parseFloat(position.Longitude) },
+                map,
+                icon: image,
+                title: position.Code,
+                toiletId: position.Id,
+                Code: position.Code,
+                KedanaCode: position.KedanaCode
+            });
+
+            beachMarker.addListener("click", () => {
+                if (choosedlocationmarker) {
+                    choosedlocationmarker.setMap(null);
+                }
+                map.setCenter(beachMarker.getPosition());
+                map.setZoom(20);
+                // Close the current InfoWindow.
+                infoWindow.close();
+                var infocontent = "<div class='map-box-content'>" +
+                    "<h4>Toilet Number: " + beachMarker["title"] + "</h4>" +
+                    "<p>Kedana Number: " + beachMarker["KedanaCode"] + "</p>" +
+                    "</div>";
+
+                //Create a new InfoWindow.
+                infoWindow = new google.maps.InfoWindow({
+                    position: beachMarker.getPosition(),
+                });
+                infoWindow.setContent(infocontent);
+                infoWindow.open(map);
+            });
+            Markers.push(beachMarker);
+            return beachMarker;
+        });
+        // Add a marker clusterer to manage the markers.
+        const markerCluster = new markerClusterer.MarkerClusterer({ map, markers });
+    }
+    function onSelect(e) {
+        if (e.item) {
+            var dataItem = this.dataItem(e.item.index());
+            var toiletMarker = Markers.find((toilet, i) => {
+                if (toilet["toiletId"] == dataItem.Id) {
+                    return toilet;
+                }
+            });
+            google.maps.event.trigger(toiletMarker, 'click');
+            //var latLng = new google.maps.LatLng(dataItem.Latitude, parseFloat(dataItem.Longitude));
+            //map.setCenter(latLng);
+            //map.setZoom(20);
+        }
+    }
+    function LoadPopUpWindow(options, callbackonClose) {
+        var kwind = $("#GeneralWnd").data("kendoWindow");
+
+        if (kwind) {
+            kwind.setOptions(options);
+            kwind.bind("close", function (e) {
+                if (callbackonClose)
+                    callbackonClose();
+                kwind.content("");
+                kwind.unpin();
+                kwind.restore();
+                $("html, body").css("overflow", "");
+            });
+            kwind.refresh();
+        };
+        return kwind;
+    }
+    async function openComplaintEditor(assetId, lat, lng) {
+
+        const esriAPI = "https://sampleserver5.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer/project?geometries=" + lng + "," + lat + "&inSR=4326&outSR=32637&f=json";
+        const utm = await fetch(esriAPI)
+            .then(response => response.json())
+            .then(data => data.geometries);
+
+        if (utm.length) {
+            var utmString = utm[0].x + "," + utm[0].y;
+            var url = '@Url.Action("GetComplaintEditor","Complaint")';
+            if (assetId) {
+                url = url + '?assetId=' + assetId + '&lat=' + lat + '&lng=' + lng + "&utm=" + utmString;
+            }
+
+            var opt = {
+                content: {
+                    url: url
+                },
+                title: "",
+                width: "27%",
+                height: "65%",
+
+                //position: {
+                //    top: "5%",
+                //    left: "5%",
+                //    right: "5%"
+                //}
+            };
+            var kwind = LoadPopUpWindow(opt, null);
+            kwind.center();
+            kwind.open();
+            kwind.pin();
+        }else{
+            errorAlert('Error! Cannot Get Esri Coordinates.');
+        }
+    }
+    window.initMap = initMap;
+
+
+</script>
+

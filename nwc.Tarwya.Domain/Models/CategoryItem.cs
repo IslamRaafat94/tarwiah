@@ -25,6 +25,7 @@ namespace nwc.Tarwya.Domain.Models.Models
         public string NameTr { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+        public int OrderNo { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual ICollection<Complaint> Complaints { get; set; }

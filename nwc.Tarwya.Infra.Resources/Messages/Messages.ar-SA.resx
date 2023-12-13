@@ -135,4 +135,9 @@
   <data name="CompleteFeedback" xml:space="preserve">
     <value>الرجاء الإجابة على جميع أسئلة الملاحظات</value>
   </data>
+  <data name="WelcomeKedana" xml:space="preserve">
+    <value>عزيزنا الحاج،
+نسعد بخدمتك عبر تطبيق تروية.
+ولرفع بلاغ حول دورات المياه، فضلاً التواصل مع شركة كدانة للتنمية والتطوير على الرقم . 920014234 </value>
+  </data>
 </root>

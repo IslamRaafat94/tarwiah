@@ -135,4 +135,7 @@
   <data name="CompleteFeedback" xml:space="preserve">
     <value>لطفا به تمام سوالات بازخورد پاسخ دهید</value>
   </data>
+  <data name="WelcomeKedana" xml:space="preserve">
+    <value>زائر عزیز خرسندیم از طریق اپلیکیشن ترویه موبایل در خدمت شما عزیزان باشیم و جهت شکایت در خصوص فلاش توالت با شماره تلفن 920014234 شرکت توسعه کیدانا تماس حاصل فرمایید.</value>
+  </data>
 </root>

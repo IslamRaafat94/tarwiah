@@ -12,7 +12,7 @@
     <link href="~/lib/kendo/css/kendo.default-v2.min.css" rel="stylesheet" type="text/css" />
     @*<link href="~/lib/kendo//css/kendo.dataviz.min.css" rel="stylesheet" type="text/css" />
         <link href="~/lib/kendo//css/kendo.dataviz.bootstrap.min.css" rel="stylesheet" type="text/css" />*@
-
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <script src="~/lib/kendo/js/jquery.min.js"></script>
     <script src="~/lib/kendo/js/angular.min.js"></script>
     <script src="~/lib/kendo/js/jszip.min.js"></script>
@@ -70,24 +70,20 @@
             </div>
         </footer>*@
 
-    @(Html.Kendo().Window()
-        .Name("GeneralWnd")
-        .Modal(true)
-        .Iframe(false)
-        .Actions(a =>
-        {
-            a.Close();
-            a.Maximize();
-            a.Pin();
-            a.Refresh();
-        })
-        .Title("")
-        .Visible(false)
-        .Scrollable(true)
-        .Resizable()
-        .Draggable(true)
-
-    )
+    <kendo-window name="GeneralWnd"
+                  title=""
+                  draggable="true"
+                  resizable="true"
+                  modal="true"
+                  iframe="false"
+                  visible="false"
+                  on-open="onWindowOpen"
+                  actions="@(new string[]{"Close","Maximize","Pin","Refresh"})">
+        <content>
+            loading info...
+        </content>
+        <popup-animation enabled="true" />
+    </kendo-window>
     @(Html.Kendo().Notification()
         .Name("staticNotification")
         .AppendTo("#notificationsDiv")
@@ -109,9 +105,15 @@
     <script src="~/lib/Chart.js/chart.min.js"></script>
     <script src="~/dist/lib/jqvmap/jquery.vmap.min.js"></script>
     <script src="~/dist/assets/js/dashforge.js"></script>
+    <script src="~/lib/jquery.form/jquery.form.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+
     <!-- append theme customizer -->
 
     <script>
+        function onWindowOpen() {
+            $("html, body").css("overflow", "hidden");
+        }
         function onGridError(e) {
 
             if (e.errors) {
@@ -139,6 +141,45 @@
                 return "<li data-feather='check-circle' stroke='green'></li>";
             else
                 return "<li data-feather='x-circle' stroke='red'></li>";
+        }
+        function errorAlert(message, title = undefined) {
+            Swal.fire({
+                title: title ? title : "@Html.Raw(Labels.Error)",
+                text: message,
+                icon: "error",
+                showCancelButton: 0,
+                confirmButtonClass: "btn btn-primary w-xs me-2 mt-2",
+                confirmButtonText: "@Html.Raw(Labels.Ok)",
+                cancelButtonClass: "btn btn-danger w-xs mt-2",
+                buttonsStyling: !1,
+                showCloseButton: !0
+            });
+        }
+        function successAlert(message, title = undefined) {
+            Swal.fire({
+                title: title ? title : "@Html.Raw(Labels.Success)",
+                text: message,
+                icon: "success",
+                showCancelButton: 0,
+                confirmButtonClass: "btn btn-primary w-xs me-2 mt-2",
+                confirmButtonText: "@Html.Raw(Labels.Ok)",
+                cancelButtonClass: "btn btn-danger w-xs mt-2",
+                buttonsStyling: !1,
+                showCloseButton: !0
+            });
+        }
+        function warningAlert(message, title = undefined) {
+            Swal.fire({
+                title: title ? title : "@Html.Raw(Labels.warning)",
+                text: message,
+                icon: "warning",
+                showCancelButton: 0,
+                confirmButtonClass: "btn btn-primary w-xs me-2 mt-2",
+                confirmButtonText: "@Html.Raw(Labels.Ok)",
+                cancelButtonClass: "btn btn-danger w-xs mt-2",
+                buttonsStyling: !1,
+                showCloseButton: !0
+            });
         }
     </script>
 </body>

@@ -162,7 +162,7 @@ namespace nwc.Tarwya.Portal
 
             var options = new RequestLocalizationOptions
             {
-                DefaultRequestCulture = new RequestCulture("ar-EG","ar-EG"),
+                DefaultRequestCulture = new RequestCulture("en-US", "en-US"),
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures,
                 RequestCultureProviders = new List<IRequestCultureProvider>
@@ -180,7 +180,7 @@ namespace nwc.Tarwya.Portal
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
             }
 
             app.UseStatusCodePages(async context =>
@@ -202,6 +202,8 @@ namespace nwc.Tarwya.Portal
             //    DisplayStorageConnectionString = false,
 
             //}, Hngfiretorage);
+
+            
 
             app.UseMvc(routes =>
             {
